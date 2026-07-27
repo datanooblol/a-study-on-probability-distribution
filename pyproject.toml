@@ -16,6 +16,8 @@ base = [
 ]
 dev = [
     "ipykernel>=7.3.0",
+    "marimo>=0.23.15",
+    "wigglystuff>=0.5.22",
 ]
 
 [tool.hatch.build.targets.wheel]
