@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrapped Cauchy distribution (wrapcauchy) — Probability Distributions</title>
+<meta name="description" content="Take the notoriously heavy-tailed Cauchy distribution and wrap it around a circle like winding string around a spool -- the result keeps a distinctive">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Wrapped Cauchy</h1>
+  <p class="scipy-name">scipy.stats.wrapcauchy</p>
+
+  <h2>Intuition</h2>
+  <p>Take the notoriously heavy-tailed Cauchy distribution and wrap it around a circle like winding string around a spool -- the result keeps a distinctive sharply-peaked, heavy-tailed circular shape, useful for directional data with occasional wild outlier angles.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{1-c^2}{2\pi(1+c^2-2c\cos x)}, \quad 0 \le x \le 2\pi \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>0.5</code></td><td>shape parameter, 0 &lt; c &lt; 1 (higher = tighter clustering)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Circular statistics with heavy-tailed, outlier-prone directional data</li><li>Modeling wind direction data with occasional extreme gusts</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A spinning arrow on a board mostly points in one favorite direction but every so often flings around wildly to point almost anywhere, more dramatically than the gentler von Mises weathervane would predict.</p>
+    <p class="q">What&#x27;s the probability the arrow&#x27;s angle falls within 1 radian of its favorite direction?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+import numpy as np
+dist = stats.wrapcauchy(c=0.5)
+p_near_zero = dist.cdf(1) + dist.sf(2*np.pi - 1)
+print(&#x27;P(within 1 rad of favorite dir):&#x27;, round(p_near_zero, 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(within 1 rad of favorite dir): 0.6512
+variance: 5.6188</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/wrapcauchy.svg" alt="Wrapped Cauchy chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

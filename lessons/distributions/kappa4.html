@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kappa 4 distribution (kappa4) — Probability Distributions</title>
+<meta name="description" content="Kappa 4 is a &#x27;master&#x27; distribution: by dialing its two shape parameters h and k, it reproduces the logistic, Gumbel, exponential, uniform, generalized">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Kappa 4</h1>
+  <p class="scipy-name">scipy.stats.kappa4</p>
+
+  <h2>Intuition</h2>
+  <p>Kappa 4 is a &#x27;master&#x27; distribution: by dialing its two shape parameters h and k, it reproduces the logistic, Gumbel, exponential, uniform, generalized extreme value, and generalized Pareto distributions all as special cases, making it a favorite for flood-frequency analysis where analysts want one flexible family to try many shapes.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;h,k) = (1-kx)^{1/k-1}\left(1-h(1-kx)^{1/k}\right)^{1/h-1} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>h</code></td><td><code>0.5</code></td><td>shape parameter controlling tail type</td></tr><tr><td><code>k</code></td><td><code>0.2</code></td><td>shape parameter controlling skewness/support bound</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Flood-frequency and hydrological extreme value analysis</li><li>Unifying framework for fitting several extreme-value distribution families</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A river&#x27;s yearly flood height can be modeled with two dials, h and k. Depending on how those dials are set, this one distribution can mimic several completely different flood-risk shapes that scientists have used in the past.</p>
+    <p class="q">What&#x27;s the probability the flood height exceeds 1 unit at these dial settings?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.kappa4(h=0.5, k=0.2)
+print(&#x27;P(flood height &gt; 1):&#x27;, round(dist.sf(1), 4))
+print(&#x27;mean flood height:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(flood height &gt; 1): 0.3008
+mean flood height: 0.6489</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/kappa4.svg" alt="Kappa 4 chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

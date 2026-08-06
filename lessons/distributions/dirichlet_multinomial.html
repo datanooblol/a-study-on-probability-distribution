@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirichlet-Multinomial distribution (dirichlet_multinomial) — Probability Distributions</title>
+<meta name="description" content="Multinomial, but the category probabilities themselves are randomly redrawn from a Dirichlet distribution each time -- so counts end up more spread ou">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge multivariate">Multivariate</span> <span class="badge tier2">extended catalog</span>
+  <h1>Dirichlet-Multinomial</h1>
+  <p class="scipy-name">scipy.stats.dirichlet_multinomial</p>
+
+  <h2>Intuition</h2>
+  <p>Multinomial, but the category probabilities themselves are randomly redrawn from a Dirichlet distribution each time -- so counts end up more spread out (&#x27;overdispersed&#x27;) than plain Multinomial would predict.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(\mathbf{x}) = \binom{n}{x_1,\ldots,x_k} \frac{B(\alpha+\mathbf{x})}{B(\alpha)} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>alpha</code></td><td><code>[2, 3, 5]</code></td><td>concentration for each of the k categories</td></tr><tr><td><code>n</code></td><td><code>10</code></td><td>number of trials</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Overdispersed text/topic count modeling in NLP</li><li>Ecological species-count models with extra variability</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Same pizza-splitting friends as the Dirichlet example, but now imagine repeating the pizza night 10 times, and each friend&#x27;s typical share wobbles a bit differently every single night.</p>
+    <p class="q">Across 10 slices total, what&#x27;s the chance of the exact same 2-3-5 split as the Dirichlet&#x27;s average tendency?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.dirichlet_multinomial(alpha=[2, 3, 5], n=10)
+print(&#x27;P(split = 2,3,5):&#x27;, round(float(dist.pmf([2, 3, 5])), 4))</code></pre>
+  <div class="output">P(split = 2,3,5): 0.0409</div>
+
+  
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

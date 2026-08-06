@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relativistic Breit-Wigner distribution (rel_breitwigner) — Probability Distributions</title>
+<meta name="description" content="Physicists use this to model the measured mass of a short-lived particle resonance: quantum uncertainty smears the particle&#x27;s &#x27;true&#x27; mass into this pe">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Relativistic Breit-Wigner</h1>
+  <p class="scipy-name">scipy.stats.rel_breitwigner</p>
+
+  <h2>Intuition</h2>
+  <p>Physicists use this to model the measured mass of a short-lived particle resonance: quantum uncertainty smears the particle&#x27;s &#x27;true&#x27; mass into this peaked curve, whose width relates directly to how quickly the particle decays -- the default rho=36 mirrors the real Z boson&#x27;s mass-to-width ratio.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\rho) = \frac{k}{(x^2-\rho^2)^2+\rho^2}, \quad k = \frac{2\sqrt2\,\rho^2\sqrt{\rho^2+1}}{\pi\sqrt{\rho^2+\rho\sqrt{\rho^2+1}}} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>rho</code></td><td><code>36</code></td><td>ratio of the resonance mass to its decay width, M0/Gamma</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling particle resonance mass measurements in high-energy physics (e.g. the Z boson)</li><li>Fitting spectral line shapes in nuclear and particle physics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A science-fair project &#x27;weighs&#x27; a wobbly, fast-spinning top by measuring it many times. Because it&#x27;s spinning and unstable, each measurement comes out a little different, clustering around its true mass in this specific peaked shape.</p>
+    <p class="q">What&#x27;s the probability the measured mass falls within 5 units of the resonance peak (rho)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.rel_breitwigner(rho=36)
+print(&#x27;P(|mass - peak| &lt; 5):&#x27;, round(dist.cdf(41) - dist.cdf(31), 4))
+print(&#x27;mean mass:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(|mass - peak| &lt; 5): 0.9375
+mean mass: 35.6921</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/rel_breitwigner.svg" alt="Relativistic Breit-Wigner chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

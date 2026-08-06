@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fatigue Life (Birnbaum-Saunders) distribution (fatiguelife) — Probability Distributions</title>
+<meta name="description" content="Derived from a physical model of material fatigue -- microscopic cracks accumulate randomly with each stress cycle until one crack crosses a critical ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Fatigue Life (Birnbaum-Saunders)</h1>
+  <p class="scipy-name">scipy.stats.fatiguelife</p>
+
+  <h2>Intuition</h2>
+  <p>Derived from a physical model of material fatigue -- microscopic cracks accumulate randomly with each stress cycle until one crack crosses a critical length and the material breaks -- so it&#x27;s the go-to distribution for time-to-failure under repeated stress.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{x+1}{2c\sqrt{2\pi x^3}}\exp\!\left(-\frac{(x-1)^2}{2xc^2}\right), \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1.0</code></td><td>shape parameter related to the coefficient of variation of cycles-to-failure</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Metal fatigue and structural failure-time analysis in engineering</li><li>Reliability testing of components under cyclic stress</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid bends a paperclip back and forth over and over, and tiny invisible cracks build up with each bend until, on one unpredictable bend, it finally snaps in two.</p>
+    <p class="q">What&#x27;s the probability the paperclip survives more than 2 (scaled) bends, and what&#x27;s the expected number of bends before it breaks?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.fatiguelife(c=1.0)
+print(&#x27;P(survives &gt; 2 cycles):&#x27;, round(dist.sf(2), 4))
+print(&#x27;expected cycles to break:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(survives &gt; 2 cycles): 0.2398
+expected cycles to break: 1.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/fatiguelife.svg" alt="Fatigue Life (Birnbaum-Saunders) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

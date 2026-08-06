@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generalized Inverse Gaussian distribution (geninvgauss) — Probability Distributions</title>
+<meta name="description" content="This family generalizes the inverse Gaussian distribution with an extra power-law knob p, and shows up naturally as the distribution of first-passage-">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Generalized Inverse Gaussian</h1>
+  <p class="scipy-name">scipy.stats.geninvgauss</p>
+
+  <h2>Intuition</h2>
+  <p>This family generalizes the inverse Gaussian distribution with an extra power-law knob p, and shows up naturally as the distribution of first-passage-type quantities in physics and as a mixing distribution in Bayesian hierarchical models.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;p,b) = \frac{x^{p-1}}{2K_p(b)}\exp\!\left(-\frac{b}{2}\left(x+\frac1x\right)\right), \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>p</code></td><td><code>1</code></td><td>shape parameter (can be any real number)</td></tr><tr><td><code>b</code></td><td><code>2</code></td><td>shape parameter, b &gt; 0</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Bayesian hierarchical models as a mixing/prior distribution</li><li>First-passage-time modeling in physics and finance</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A hamster runs on a wheel and its exact &#x27;burst of energy level&#x27; at any moment follows this two-knob distribution -- it&#x27;s rarely near zero or extremely huge, clustering instead around a typical energy level shaped by both knobs.</p>
+    <p class="q">What&#x27;s the probability the hamster&#x27;s energy level exceeds 3, and what&#x27;s its expected level?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.geninvgauss(p=1, b=2)
+print(&#x27;P(X &gt; 3):&#x27;, round(dist.sf(3), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &gt; 3): 0.1371
+mean: 1.8143</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/geninvgauss.svg" alt="Generalized Inverse Gaussian chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

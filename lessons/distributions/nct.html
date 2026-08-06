@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noncentral t distribution (nct) — Probability Distributions</title>
+<meta name="description" content="This is the distribution of a t-statistic when the true effect being tested isn&#x27;t actually zero -- it&#x27;s the key ingredient for computing the statistic">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Noncentral t</h1>
+  <p class="scipy-name">scipy.stats.nct</p>
+
+  <h2>Intuition</h2>
+  <p>This is the distribution of a t-statistic when the true effect being tested isn&#x27;t actually zero -- it&#x27;s the key ingredient for computing the statistical power of a t-test (the chance of correctly detecting a real effect of a given size before you even collect data).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\nu,\delta) = \frac{\nu^{\nu/2}\exp\!\left(-\frac{\nu\delta^2}{2(x^2+\nu)}\right)}{\sqrt{\pi}\,\Gamma(\nu/2)\,2^{(\nu-1)/2}(\nu+x^2)^{(\nu+1)/2}}\int_0^\infty y^\nu \exp\!\left[-\frac{1}{2}\left(y-\frac{\delta x}{\sqrt{\nu+x^2}}\right)^2\right]dy \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>df</code></td><td><code>10</code></td><td>degrees of freedom</td></tr><tr><td><code>nc</code></td><td><code>2</code></td><td>noncentrality parameter (standardized effect size)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Statistical power analysis for t-tests in experimental design</li><li>Confidence interval construction for standardized effect sizes</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid wants to know if a new fertilizer really makes plants grow taller. If the fertilizer genuinely works by some real amount, the t-statistic from comparing treated vs. untreated plants follows this noncentral-t shape instead of the ordinary symmetric t distribution.</p>
+    <p class="q">What&#x27;s the probability the t-statistic exceeds 2.0, given the fertilizer has this real effect size?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.nct(df=10, nc=2)
+print(&#x27;P(t &gt; 2.0):&#x27;, round(dist.sf(2.0), 4))
+print(&#x27;mean t:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(t &gt; 2.0): 0.519
+mean t: 2.1674</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/nct.svg" alt="Noncentral t chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

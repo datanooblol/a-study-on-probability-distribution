@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arcsine distribution (arcsine) — Probability Distributions</title>
+<meta name="description" content="The arcsine distribution describes quantities that spend most of their &#x27;time&#x27; near the edges of a range and least near the middle -- famously, the fra">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Arcsine</h1>
+  <p class="scipy-name">scipy.stats.arcsine</p>
+
+  <h2>Intuition</h2>
+  <p>The arcsine distribution describes quantities that spend most of their &#x27;time&#x27; near the edges of a range and least near the middle -- famously, the fraction of time a random walk (like a coin-flipping fortune) spends on the positive side.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{\pi\sqrt{x(1-x)}}, \quad 0 < x < 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Fraction of time a random walk spends positive (arcsine law)</li><li>Modeling proportions clustered near 0 or 1, e.g. voltage in an AC cycle</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Two kids play a long game of tug-of-war where the rope randomly drifts back and forth. If you track what fraction of the whole match one kid was &#x27;winning,&#x27; it&#x27;s surprisingly rare for that fraction to be near 50-50 -- much more often one kid was ahead almost the whole time, or almost none of it.</p>
+    <p class="q">What&#x27;s the probability that one kid was ahead for less than 10% or more than 90% of the match?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.arcsine()
+print(&#x27;P(X&lt;0.1 or X&gt;0.9):&#x27;, round(dist.cdf(0.1) + dist.sf(0.9), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X&lt;0.1 or X&gt;0.9): 0.4097
+mean: 0.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/arcsine.svg" alt="Arcsine chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matrix Normal distribution (matrix_normal) — Probability Distributions</title>
+<meta name="description" content="Multivariate Normal stretched across a whole grid instead of a single vector: every cell in a matrix wobbles Normally, with separate covariance struct">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Matrix Normal</h1>
+  <p class="scipy-name">scipy.stats.matrix_normal</p>
+
+  <h2>Intuition</h2>
+  <p>Multivariate Normal stretched across a whole grid instead of a single vector: every cell in a matrix wobbles Normally, with separate covariance structure for how rows relate to each other and how columns relate to each other.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{X}) \propto \exp\!\left(-\tfrac{1}{2}\text{tr}\!\left[\Sigma_{col}^{-1}(\mathbf{X}-M)^T \Sigma_{row}^{-1}(\mathbf{X}-M)\right]\right) \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mean</code></td><td><code>[[0, 0], [0, 0]]</code></td><td>mean matrix</td></tr><tr><td><code>rowcov</code></td><td><code>[[1, 0], [0, 1]]</code></td><td>covariance between rows</td></tr><tr><td><code>colcov</code></td><td><code>[[1, 0], [0, 1]]</code></td><td>covariance between columns</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Spatiotemporal data (grid of sensors over time)</li><li>Multivariate time series with structured row/column covariance</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Instead of one dart-throwing robot, picture a 2x2 grid of them, where robots in the same row tend to wobble together, and robots in the same column also tend to wobble together.</p>
+    <p class="q">What does one random snapshot of the whole grid&#x27;s wobble look like?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.matrix_normal(mean=np.zeros((2, 2)), rowcov=np.eye(2), colcov=np.eye(2))
+sample = dist.rvs(random_state=0)
+print(&#x27;one sampled 2x2 grid:&#x27;)
+print(np.round(sample, 3))</code></pre>
+  <div class="output">one sampled 2x2 grid:
+[[1.764 0.979]
+ [0.4   2.241]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/matrix_normal.svg" alt="Matrix Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

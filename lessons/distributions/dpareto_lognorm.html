@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Double Pareto-Lognormal distribution (dpareto_lognorm) — Probability Distributions</title>
+<meta name="description" content="This distribution behaves like a lognormal in the middle (most values cluster around a typical size) but has Pareto power-law tails on both the low an">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Double Pareto-Lognormal</h1>
+  <p class="scipy-name">scipy.stats.dpareto_lognorm</p>
+
+  <h2>Intuition</h2>
+  <p>This distribution behaves like a lognormal in the middle (most values cluster around a typical size) but has Pareto power-law tails on both the low and high end -- exactly the shape economists see in real income and city-size data, which look lognormal in the bulk but have fat tails at both extremes.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;u,s,a,b) = \frac{ab}{a+b}\frac{1}{x}\,\phi\!\left(\frac{\ln x-u}{s}\right)\left(R(y_1)+R(y_2)\right), \quad R(t)=\frac{1-\Phi(t)}{\phi(t)} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>u</code></td><td><code>0</code></td><td>location of the underlying lognormal core, mu</td></tr><tr><td><code>s</code></td><td><code>1</code></td><td>spread of the underlying lognormal core, sigma</td></tr><tr><td><code>a</code></td><td><code>2</code></td><td>right (upper) Pareto tail exponent, alpha</td></tr><tr><td><code>b</code></td><td><code>3</code></td><td>left (lower) Pareto tail exponent, beta</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling income, wealth, and city-size distributions with two-sided fat tails</li><li>Internet traffic and file-size modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid tracks the price of every item at a school flea market. Most items cost about the same &#x27;typical&#x27; amount, following a lognormal hump, but a few are given away for pennies and a rare few sell for way more than anyone expected -- both tails trail off more slowly than a lognormal alone would predict.</p>
+    <p class="q">What&#x27;s the probability an item costs more than 5 (in these units), and what&#x27;s the expected price?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.dpareto_lognorm(u=0, s=1, a=2, b=3)
+print(&#x27;P(price &gt; 5):&#x27;, round(dist.sf(5), 4))
+print(&#x27;expected price:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(price &gt; 5): 0.1064
+expected price: 2.4731</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/dpareto_lognorm.svg" alt="Double Pareto-Lognormal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

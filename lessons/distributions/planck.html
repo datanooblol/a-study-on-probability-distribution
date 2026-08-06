@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planck distribution (planck) — Probability Distributions</title>
+<meta name="description" content="This is the discrete exponential distribution on all non-negative integers, named for its role in Planck&#x27;s law of blackbody radiation describing how p">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> <span class="badge tier2">extended catalog</span>
+  <h1>Planck</h1>
+  <p class="scipy-name">scipy.stats.planck</p>
+
+  <h2>Intuition</h2>
+  <p>This is the discrete exponential distribution on all non-negative integers, named for its role in Planck&#x27;s law of blackbody radiation describing how photon energy states are occupied -- it&#x27;s mathematically identical to a geometric distribution, just re-parameterized in terms of a decay rate.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(k;\lambda) = (1-e^{-\lambda})e^{-\lambda k}, \quad k=0,1,2,\ldots \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>lambda_</code></td><td><code>0.5</code></td><td>decay rate parameter (higher = faster drop-off)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Blackbody radiation photon occupation number modeling in physics</li><li>Discrete waiting-time and count modeling equivalent to the geometric distribution</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A vending machine dispenses a random number of extra bonus stickers with each purchase, and getting 0 extra stickers is most common, getting 1 extra is less common, and so on, dropping off at a steady exponential rate the more stickers you&#x27;d need.</p>
+    <p class="q">What&#x27;s the probability of getting exactly 2 bonus stickers?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.planck(lambda_=0.5)
+print(&#x27;P(exactly 2 stickers):&#x27;, round(dist.pmf(2), 4))
+print(&#x27;mean stickers:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 2 stickers): 0.1447
+mean stickers: 1.5415</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/planck.svg" alt="Planck chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

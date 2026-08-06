@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Von Mises-Fisher distribution (vonmises_fisher) — Probability Distributions</title>
+<meta name="description" content="The Normal distribution&#x27;s equivalent for directions instead of positions: points are constrained to the surface of a sphere, clustering around a prefe">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge multivariate">Multivariate</span> <span class="badge tier2">extended catalog</span>
+  <h1>Von Mises-Fisher</h1>
+  <p class="scipy-name">scipy.stats.vonmises_fisher</p>
+
+  <h2>Intuition</h2>
+  <p>The Normal distribution&#x27;s equivalent for directions instead of positions: points are constrained to the surface of a sphere, clustering around a preferred direction mu, with kappa controlling how tightly (kappa=0 is uniform all over the sphere).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{x}) = C_p(\kappa)\, e^{\kappa\, \mu^T \mathbf{x}}, \quad \|\mathbf{x}\| = 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mu</code></td><td><code>[0, 0, 1]</code></td><td>the preferred direction (unit vector)</td></tr><tr><td><code>kappa</code></td><td><code>5.0</code></td><td>concentration -- how tightly clustered around mu</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Directional statistics (wind direction, animal migration heading)</li><li>Embeddings constrained to a hypersphere in machine learning</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A toy compass needle mostly points north, but wobbles a little side to side and up-down instead of pointing exactly true north every time.</p>
+    <p class="q">How much denser is the cloud of needle directions right at true north compared to a direction 90 degrees away?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.vonmises_fisher(mu=[0, 0, 1], kappa=5.0)
+print(&#x27;density at true north (0,0,1):&#x27;, round(float(dist.pdf([0, 0, 1])), 4))
+print(&#x27;density 90 deg off (1,0,0):&#x27;, round(float(dist.pdf([1, 0, 0])), 4))</code></pre>
+  <div class="output">density at true north (0,0,1): 0.7958
+density 90 deg off (1,0,0): 0.0054</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/vonmises_fisher.svg" alt="Von Mises-Fisher chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

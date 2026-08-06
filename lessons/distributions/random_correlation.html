@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Random Correlation Matrix distribution (random_correlation) — Probability Distributions</title>
+<meta name="description" content="Generates a random, valid correlation matrix (1&#x27;s on the diagonal, everything between -1 and 1 off it) that matches a chosen set of eigenvalues -- use">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Random Correlation Matrix</h1>
+  <p class="scipy-name">scipy.stats.random_correlation</p>
+
+  <h2>Intuition</h2>
+  <p>Generates a random, valid correlation matrix (1&#x27;s on the diagonal, everything between -1 and 1 off it) that matches a chosen set of eigenvalues -- useful for stress-testing portfolios or simulations against a specific &#x27;how correlated is everything&#x27; profile.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ \text{Correlation matrices } \mathbf{R} \text{ with prescribed eigenvalues } \{\lambda_i\}, \textstyle\sum \lambda_i = n \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>eigs</code></td><td><code>[0.5, 0.8, 1.2, 1.5]</code></td><td>desired eigenvalues (must sum to the dimension)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Stress-testing portfolio risk models against specific correlation structures</li><li>Simulating multivariate data with a controlled correlation profile</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A teacher wants to randomly pair up how strongly every subject&#x27;s grades relate to every other subject&#x27;s grades (math with science, science with art, etc.), while keeping the overall &#x27;total relatedness&#x27; fixed at a chosen amount.</p>
+    <p class="q">What does one such random, valid correlation matrix between 4 subjects look like?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+sample = stats.random_correlation.rvs(eigs=[0.5, 0.8, 1.2, 1.5], random_state=0)
+print(&#x27;one random correlation matrix:&#x27;)
+print(np.round(sample, 3))</code></pre>
+  <div class="output">one random correlation matrix:
+[[ 1.    -0.132  0.014 -0.24 ]
+ [-0.132  1.     0.457  0.017]
+ [ 0.014  0.457  1.     0.076]
+ [-0.24   0.017  0.076  1.   ]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/random_correlation.svg" alt="Random Correlation Matrix chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

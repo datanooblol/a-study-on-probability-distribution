@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beta-Negative-Binomial distribution (betanbinom) — Probability Distributions</title>
+<meta name="description" content="Just as beta-binomial adds randomness to the success probability of a binomial count, beta-negative-binomial adds that same randomness to a negative b">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> <span class="badge tier2">extended catalog</span>
+  <h1>Beta-Negative-Binomial</h1>
+  <p class="scipy-name">scipy.stats.betanbinom</p>
+
+  <h2>Intuition</h2>
+  <p>Just as beta-binomial adds randomness to the success probability of a binomial count, beta-negative-binomial adds that same randomness to a negative binomial -- counting the number of failures before the n-th success, where the success chance itself varies randomly.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(k;n,a,b) = \binom{n+k-1}{k}\frac{B(a+n,b+k)}{B(a,b)}, \quad k=0,1,2,\ldots \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>n</code></td><td><code>10</code></td><td>target number of successes</td></tr><tr><td><code>a</code></td><td><code>2</code></td><td>shape parameter of the underlying Beta success-probability, alpha</td></tr><tr><td><code>b</code></td><td><code>3</code></td><td>shape parameter of the underlying Beta success-probability, beta</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Overdispersed count/waiting-time modeling with variable success rates</li><li>Insurance claims frequency modeling with heterogeneous risk</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid keeps flipping a strange coin, collected from a jar of coins with different random biases, until they get 10 heads total. Because the coin&#x27;s bias itself is a random pick from that jar, the number of tails they rack up along the way follows a beta-negative-binomial distribution.</p>
+    <p class="q">What&#x27;s the probability the kid needs exactly 4 extra tails before reaching 10 heads?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.betanbinom(n=10, a=2, b=3)
+print(&#x27;P(exactly 4 tails):&#x27;, round(dist.pmf(4), 4))
+print(&#x27;expected tails:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 4 tails): 0.0385
+expected tails: 30.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/betanbinom.svg" alt="Beta-Negative-Binomial chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

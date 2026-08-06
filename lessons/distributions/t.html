@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student&#x27;s t distribution (t) — Probability Distributions</title>
+<meta name="description" content="Looks like the Normal bell curve but with fatter tails -- it shows up when you estimate an average from a *small* sample and don&#x27;t actually know the t">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Student&#x27;s t</h1>
+  <p class="scipy-name">scipy.stats.t</p>
+
+  <h2>Intuition</h2>
+  <p>Looks like the Normal bell curve but with fatter tails -- it shows up when you estimate an average from a *small* sample and don&#x27;t actually know the true spread, only your sample&#x27;s own (uncertain) estimate of it. Small samples deserve fatter tails, because your spread estimate itself might be off; as the sample grows, t quietly turns into Normal.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{\Gamma(\frac{df+1}{2})}{\sqrt{df\pi}\,\Gamma(\frac{df}{2})}\left(1+\frac{x^2}{df}\right)^{-\frac{df+1}{2}} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>df</code></td><td><code>8</code></td><td>degrees of freedom (roughly, sample size - 1)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Confidence intervals and hypothesis tests for a mean with small samples</li><li>Any statistical test where the true variance is unknown and estimated from data</li><li>Robust regression modeling (fatter tails than Normal)</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid wants to know the average number of jellybeans in a bag, but only got to open 9 bags so far, and their guess about how &#x27;spread out&#x27; bag counts are is itself shaky.</p>
+    <p class="q">Based on just those 9 bags, how far from their average guess could the true average plausibly be (using the 8-degrees-of-freedom t distribution)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.t(df=8)
+print(&#x27;critical t-value (95% CI, two-sided):&#x27;, round(dist.ppf(0.975), 4))</code></pre>
+  <div class="output">critical t-value (95% CI, two-sided): 2.306</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/t.svg" alt="Student&#x27;s t chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

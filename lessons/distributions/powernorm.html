@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Normal distribution (powernorm) — Probability Distributions</title>
+<meta name="description" content="Like power lognormal but built from a normal core instead: raising the normal survival function to a power c gives the lifetime distribution of a seri">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Power Normal</h1>
+  <p class="scipy-name">scipy.stats.powernorm</p>
+
+  <h2>Intuition</h2>
+  <p>Like power lognormal but built from a normal core instead: raising the normal survival function to a power c gives the lifetime distribution of a series system of c normally-distributed components, skewing the familiar bell curve toward earlier failure.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = c\,\phi(x)\left[\Phi(-x)\right]^{c-1} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>2</code></td><td>power exponent applied to the normal CDF</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Series-system reliability modeling with normally-distributed component lifetimes</li><li>Order statistics of normal samples (extreme value approximations)</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A relay race team of several runners only finishes as fast as their slowest-starting runner allows (the whole team is only as good as its worst link) -- each runner&#x27;s start time is roughly normal, and the team&#x27;s effective start time follows this power-normal shape.</p>
+    <p class="q">What&#x27;s the probability the team&#x27;s effective start time is below -1?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.powernorm(c=2)
+print(&#x27;P(X &lt; -1):&#x27;, round(dist.cdf(-1), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; -1): 0.2921
+mean: -0.5642</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/powernorm.svg" alt="Power Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

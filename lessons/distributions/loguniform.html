@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log-Uniform (Reciprocal) distribution (loguniform) — Probability Distributions</title>
+<meta name="description" content="A distribution that&#x27;s uniform on the logarithmic scale rather than the linear scale -- it gives equal probability to the range [1,10] as to [10,100] a">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Log-Uniform (Reciprocal)</h1>
+  <p class="scipy-name">scipy.stats.loguniform</p>
+
+  <h2>Intuition</h2>
+  <p>A distribution that&#x27;s uniform on the logarithmic scale rather than the linear scale -- it gives equal probability to the range [1,10] as to [10,100] as to [100,1000], which is exactly the right prior when you know a quantity spans several orders of magnitude but have no idea which one.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a,b) = \frac{1}{x\ln(b/a)}, \quad a \le x \le b \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>1</code></td><td>lower bound of the support</td></tr><tr><td><code>b</code></td><td><code>10</code></td><td>upper bound of the support</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Hyperparameter search priors spanning orders of magnitude in machine learning</li><li>Bayesian priors for scale parameters with unknown order of magnitude</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid is asked to guess how many grains of sand are in a jar, somewhere between 1 and 10,000. Since they truly have no idea whether it&#x27;s in the hundreds or the thousands, guessing &#x27;uniformly on the number of digits&#x27; (log-uniform) makes more sense than guessing uniformly on the raw count.</p>
+    <p class="q">What&#x27;s the probability the guess falls between 1 and 3 (versus the full range up to 10)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.loguniform(a=1, b=10)
+print(&#x27;P(1 &lt; X &lt; 3):&#x27;, round(dist.cdf(3) - dist.cdf(1), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(1 &lt; X &lt; 3): 0.4771
+mean: 3.9087</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/loguniform.svg" alt="Log-Uniform (Reciprocal) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inverse Wishart distribution (invwishart) — Probability Distributions</title>
+<meta name="description" content="The matrix version of &#x27;flip it upside down&#x27;: if a covariance matrix is Wishart-distributed, its inverse is Inverse-Wishart. It&#x27;s the standard Bayesian">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Inverse Wishart</h1>
+  <p class="scipy-name">scipy.stats.invwishart</p>
+
+  <h2>Intuition</h2>
+  <p>The matrix version of &#x27;flip it upside down&#x27;: if a covariance matrix is Wishart-distributed, its inverse is Inverse-Wishart. It&#x27;s the standard Bayesian prior for an unknown covariance matrix, the same role Inverse-Gamma plays for a single unknown variance.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{X}) \propto |\mathbf{X}|^{-\frac{df+p+1}{2}} e^{-\frac{1}{2}\text{tr}(\Sigma \mathbf{X}^{-1})} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>df</code></td><td><code>5</code></td><td>degrees of freedom</td></tr><tr><td><code>scale</code></td><td><code>[[1, 0], [0, 1]]</code></td><td>the underlying scale matrix</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Bayesian prior for an unknown covariance matrix</li><li>Hierarchical models in Bayesian statistics (e.g. Gaussian mixture priors)</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A scientist doesn&#x27;t know in advance how two ingredients in a recipe wobble together, so before seeing any data they draw a plausible &#x27;recipe wobble matrix&#x27; from a big bag of reasonable guesses.</p>
+    <p class="q">What does one such randomly-guessed wobble matrix look like, before any real data is seen?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.invwishart(df=5, scale=np.eye(2))
+sample = dist.rvs(random_state=0)
+print(&#x27;one sampled covariance matrix:&#x27;)
+print(np.round(sample, 3))</code></pre>
+  <div class="output">one sampled covariance matrix:
+[[ 0.223 -0.558]
+ [-0.558  3.401]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/invwishart.svg" alt="Inverse Wishart chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reciprocal Inverse Gaussian distribution (recipinvgauss) — Probability Distributions</title>
+<meta name="description" content="This is exactly what you get by taking 1/X when X follows an inverse Gaussian distribution -- since inverse Gaussian itself models first-passage times">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Reciprocal Inverse Gaussian</h1>
+  <p class="scipy-name">scipy.stats.recipinvgauss</p>
+
+  <h2>Intuition</h2>
+  <p>This is exactly what you get by taking 1/X when X follows an inverse Gaussian distribution -- since inverse Gaussian itself models first-passage times, its reciprocal naturally models rates (like speed = 1/time) derived from those same drift-diffusion processes.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\mu) = \frac{1}{\sqrt{2\pi x}}\exp\!\left(-\frac{(1-\mu x)^2}{2\mu^2 x}\right), \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mu</code></td><td><code>1</code></td><td>shape parameter (mean of the underlying inverse Gaussian&#x27;s reciprocal)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Rate/speed modeling as the reciprocal of first-passage time processes</li><li>Diffusion-model parameter transformations in cognitive science</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Instead of timing how long the snail takes to reach the lettuce (inverse Gaussian), a kid instead calculates the snail&#x27;s average speed for the trip -- 1 divided by the time -- which follows this reciprocal inverse Gaussian shape.</p>
+    <p class="q">What&#x27;s the probability the snail&#x27;s average speed exceeds 1.5?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.recipinvgauss(mu=1)
+print(&#x27;P(speed &gt; 1.5):&#x27;, round(dist.sf(1.5), 4))
+print(&#x27;mean speed:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(speed &gt; 1.5): 0.4939
+mean speed: 2.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/recipinvgauss.svg" alt="Reciprocal Inverse Gaussian chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

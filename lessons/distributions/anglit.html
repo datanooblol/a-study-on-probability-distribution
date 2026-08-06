@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anglit distribution (anglit) — Probability Distributions</title>
+<meta name="description" content="Anglit is a simple bounded, symmetric bump built from a cosine wave -- it&#x27;s mostly a textbook curiosity used to test distribution-fitting code, but it">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Anglit</h1>
+  <p class="scipy-name">scipy.stats.anglit</p>
+
+  <h2>Intuition</h2>
+  <p>Anglit is a simple bounded, symmetric bump built from a cosine wave -- it&#x27;s mostly a textbook curiosity used to test distribution-fitting code, but it behaves like a gentle, rounded alternative to the uniform distribution on a narrow interval.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \cos(2x), \quad -\pi/4 \le x \le \pi/4 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Benchmark distribution for testing statistical software</li><li>Modeling bounded angular measurement noise</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A metronome needle swings gently back and forth in a narrow arc, and you snap a photo at a random instant. The needle spends slightly more time hovering near the center of its swing than near the very edges.</p>
+    <p class="q">What&#x27;s the probability the needle is caught within 0.2 radians of dead center?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.anglit()
+print(&#x27;P(-0.2 &lt; X &lt; 0.2):&#x27;, round(dist.cdf(0.2) - dist.cdf(-0.2), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(-0.2 &lt; X &lt; 0.2): 0.3894
+mean: 0.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/anglit.svg" alt="Anglit chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

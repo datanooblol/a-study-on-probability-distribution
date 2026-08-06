@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burr Type XII distribution (burr12) — Probability Distributions</title>
+<meta name="description" content="Burr Type XII is the &#x27;mirror&#x27; of the Burr distribution above (it&#x27;s the reciprocal-transform relative) and is the classic choice for reliability engine">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Burr Type XII</h1>
+  <p class="scipy-name">scipy.stats.burr12</p>
+
+  <h2>Intuition</h2>
+  <p>Burr Type XII is the &#x27;mirror&#x27; of the Burr distribution above (it&#x27;s the reciprocal-transform relative) and is the classic choice for reliability engineers modeling how long products survive before failing, since it can mimic a bathtub-shaped or steadily increasing hazard.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c,d) = c\,d\,x^{c-1}(1+x^c)^{-d-1}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>3</code></td><td>shape parameter controlling the rise near the origin</td></tr><tr><td><code>d</code></td><td><code>6</code></td><td>shape parameter controlling the tail&#x27;s decay rate</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Reliability and survival analysis (time-to-failure modeling)</li><li>Flood and hydrology data fitting</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A toy company stress-tests a new wind-up robot by counting how many days it runs before its spring breaks. Some break almost immediately, most last a solid while, and a few keep ticking long past when everyone expected them to quit.</p>
+    <p class="q">What&#x27;s the probability the robot lasts more than 1 day, and what&#x27;s the expected number of days it runs?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.burr12(c=3, d=6)
+print(&#x27;P(lasts &gt; 1 day):&#x27;, round(dist.sf(1), 4))
+print(&#x27;expected days:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(lasts &gt; 1 day): 0.0156
+expected days: 0.5109</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/burr12.svg" alt="Burr Type XII chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

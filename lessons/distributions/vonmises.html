@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Von Mises distribution (vonmises) — Probability Distributions</title>
+<meta name="description" content="The &#x27;circular normal&#x27; distribution: it plays the same role for angles and directions that the normal distribution plays for straight-line measurements">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Von Mises</h1>
+  <p class="scipy-name">scipy.stats.vonmises</p>
+
+  <h2>Intuition</h2>
+  <p>The &#x27;circular normal&#x27; distribution: it plays the same role for angles and directions that the normal distribution plays for straight-line measurements, correctly wrapping around so that an angle near +pi is treated as close to an angle near -pi.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\kappa) = \frac{e^{\kappa\cos x}}{2\pi I_0(\kappa)}, \quad -\pi \le x \le \pi \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>kappa</code></td><td><code>3</code></td><td>concentration parameter (higher = tighter clustering around the mean direction)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Directional/circular statistics for wind direction and compass bearings</li><li>Modeling phase angles in signal processing and biological rhythms</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid uses a compass to note which direction a weathervane points every hour on a windy day. It mostly points in one favorite direction but wobbles around it, and because compass directions wrap around (0 and 360 degrees are the same), you need a distribution built specifically for circles.</p>
+    <p class="q">What&#x27;s the probability the weathervane points within 1 radian of its favorite direction?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.vonmises(kappa=3)
+print(&#x27;P(-1 &lt; angle &lt; 1):&#x27;, round(dist.cdf(1) - dist.cdf(-1), 4))
+print(&#x27;circular mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(-1 &lt; angle &lt; 1): 0.8809
+circular mean: -0.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/vonmises.svg" alt="Von Mises chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erlang distribution (erlang) — Probability Distributions</title>
+<meta name="description" content="Erlang is the waiting time until the a-th event of a Poisson process happens -- it&#x27;s the sum of a independent exponential wait times, invented by Agne">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Erlang</h1>
+  <p class="scipy-name">scipy.stats.erlang</p>
+
+  <h2>Intuition</h2>
+  <p>Erlang is the waiting time until the a-th event of a Poisson process happens -- it&#x27;s the sum of a independent exponential wait times, invented by Agner Erlang to model queueing at telephone exchanges.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = \frac{x^{a-1}e^{-x}}{\Gamma(a)}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>3</code></td><td>number of independent exponential stages, k (an integer count)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Queueing theory: waiting time for the k-th arrival/service</li><li>Telecom call-center and network traffic modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid is waiting in line for the ice cream truck, and it takes a random exponential amount of time between each of the 3 customers ahead of them being served. The Erlang distribution tells you how long the kid waits until it&#x27;s finally their turn.</p>
+    <p class="q">What&#x27;s the probability the kid waits more than 5 minutes, and what&#x27;s the expected wait?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.erlang(a=3)
+print(&#x27;P(wait &gt; 5 min):&#x27;, round(dist.sf(5), 4))
+print(&#x27;expected wait:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(wait &gt; 5 min): 0.1247
+expected wait: 3.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/erlang.svg" alt="Erlang chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

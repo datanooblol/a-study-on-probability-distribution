@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unitary Group distribution (unitary_group) — Probability Distributions</title>
+<meta name="description" content="The complex-number version of the Orthogonal Group -- random &#x27;rotations&#x27; in complex vector space. It&#x27;s the mathematical structure quantum computing ga">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Unitary Group</h1>
+  <p class="scipy-name">scipy.stats.unitary_group</p>
+
+  <h2>Intuition</h2>
+  <p>The complex-number version of the Orthogonal Group -- random &#x27;rotations&#x27; in complex vector space. It&#x27;s the mathematical structure quantum computing gates are built from: every valid quantum operation is a unitary matrix.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ \text{Uniform measure over } U(n) = \{\mathbf{U}: \mathbf{U}^{*}\mathbf{U} = I\} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>dim</code></td><td><code>2</code></td><td>dimension of the random unitary (complex) matrix</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling random quantum gates/circuits in quantum computing</li><li>Random matrix theory in physics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Imagine a magical spinner whose arrow can point in directions that mix ordinary spinning with a second, invisible &#x27;imaginary&#x27; spinning dimension -- and it lands on a totally random valid combination.</p>
+    <p class="q">What does one such random valid rotation look like?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.unitary_group(dim=2)
+sample = dist.rvs(random_state=0)
+print(&#x27;one random unitary matrix (magnitudes shown):&#x27;)
+print(np.round(np.abs(sample), 3))</code></pre>
+  <div class="output">one random unitary matrix (magnitudes shown):
+[[0.883 0.469]
+ [0.469 0.883]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/unitary_group.svg" alt="Unitary Group chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half-Cauchy distribution (halfcauchy) — Probability Distributions</title>
+<meta name="description" content="Take a Cauchy distribution and fold it at zero: you get a distribution that&#x27;s zero most likely value but with a notoriously heavy tail, which makes it">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Half-Cauchy</h1>
+  <p class="scipy-name">scipy.stats.halfcauchy</p>
+
+  <h2>Intuition</h2>
+  <p>Take a Cauchy distribution and fold it at zero: you get a distribution that&#x27;s zero most likely value but with a notoriously heavy tail, which makes it a favorite &#x27;weakly informative&#x27; prior for scale parameters in Bayesian statistics because it barely constrains large values.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{2}{\pi(1+x^2)}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Weakly-informative Bayesian prior for scale/variance parameters</li><li>Modeling absolute values of heavy-tailed measurement errors</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid guesses how tall a mystery tower might be, having almost no idea -- their guess is usually small, but they leave the door wide open for it to occasionally be enormous, much more so than a normal-based guess would allow.</p>
+    <p class="q">What&#x27;s the probability the guessed height exceeds 5 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.halfcauchy()
+print(&#x27;P(X &gt; 5):&#x27;, round(dist.sf(5), 4))
+print(&#x27;median:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(X &gt; 5): 0.1257
+median: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/halfcauchy.svg" alt="Half-Cauchy chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

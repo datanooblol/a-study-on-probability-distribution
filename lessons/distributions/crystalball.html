@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crystal Ball distribution (crystalball) — Probability Distributions</title>
+<meta name="description" content="Named after the crystal-ball fortune-telling prop, this distribution is a normal curve that has been given a heavy power-law tail on one side, exactly">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Crystal Ball</h1>
+  <p class="scipy-name">scipy.stats.crystalball</p>
+
+  <h2>Intuition</h2>
+  <p>Named after the crystal-ball fortune-telling prop, this distribution is a normal curve that has been given a heavy power-law tail on one side, exactly the shape seen when a detector&#x27;s Gaussian measurement noise combines with real physical energy loss.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\beta,m) = \begin{cases} N\exp(-x^2/2), & x > -\beta \\ N\,A\,(B-x)^{-m}, & x \le -\beta \end{cases} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>beta</code></td><td><code>2</code></td><td>distance (in std devs) from the mean where the curve switches from Gaussian to power-law tail</td></tr><tr><td><code>m</code></td><td><code>3</code></td><td>power-law exponent of the tail, m &gt; 1</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling particle decay mass spectra with radiative energy loss in physics</li><li>Signal peaks with an asymmetric heavy tail from measurement artifacts</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A carnival strongman game measures how hard people hit a bell -- most hits scatter symmetrically around the average strength, but every so often someone&#x27;s mallet skids and the reading drops way lower than a normal swing would ever produce.</p>
+    <p class="q">What&#x27;s the probability a reading falls more than 2 units below the peak (in the power-law tail), versus staying in the normal-looking bulk?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.crystalball(beta=2, m=3)
+print(&#x27;P(X &lt; -2):&#x27;, round(dist.cdf(-2), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; -2): 0.0398
+mean: -0.0862</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/crystalball.svg" alt="Crystal Ball chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,2231 @@
+{
+  "alpha": {
+    "display": "Alpha",
+    "params": [
+      {
+        "name": "a",
+        "default": 3.5,
+        "desc": "shape parameter controlling how tightly mass clusters near zero"
+      }
+    ],
+    "formula": "f(x;a) = \\frac{1}{x^2\\,\\Phi(a)\\sqrt{2\\pi}} \\exp\\left(-\\frac{1}{2}\\left(a-\\frac{1}{x}\\right)^2\\right), \\quad x > 0",
+    "intuition": "Alpha comes from taking the reciprocal of a shifted normal variable, which squashes most of the mass close to zero but leaves a very heavy right tail -- so heavy that its mean is technically infinite. It shows up when you model a quantity as '1 over something roughly normal'.",
+    "kid_story": "A toy robot's speed is '1 divided by how nervous it is,' and nervousness wobbles like a bell curve. Most days it's only a little nervous, so it zooms off fast, but every once in a great while it's almost perfectly calm and shoots away impossibly fast.",
+    "kid_question": "What's the probability the robot's speed value is below 1, and what's its median speed?",
+    "use_cases": [
+      "Modeling reciprocal transformations of normal measurement errors",
+      "Reliability engineering for extreme-tail failure-time modeling"
+    ],
+    "code": "dist = stats.alpha(a=3.5)\nprint('P(X < 1):', round(dist.cdf(1), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "anglit": {
+    "display": "Anglit",
+    "params": [],
+    "formula": "f(x) = \\cos(2x), \\quad -\\pi/4 \\le x \\le \\pi/4",
+    "intuition": "Anglit is a simple bounded, symmetric bump built from a cosine wave -- it's mostly a textbook curiosity used to test distribution-fitting code, but it behaves like a gentle, rounded alternative to the uniform distribution on a narrow interval.",
+    "kid_story": "A metronome needle swings gently back and forth in a narrow arc, and you snap a photo at a random instant. The needle spends slightly more time hovering near the center of its swing than near the very edges.",
+    "kid_question": "What's the probability the needle is caught within 0.2 radians of dead center?",
+    "use_cases": [
+      "Benchmark distribution for testing statistical software",
+      "Modeling bounded angular measurement noise"
+    ],
+    "code": "dist = stats.anglit()\nprint('P(-0.2 < X < 0.2):', round(dist.cdf(0.2) - dist.cdf(-0.2), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "arcsine": {
+    "display": "Arcsine",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{\\pi\\sqrt{x(1-x)}}, \\quad 0 < x < 1",
+    "intuition": "The arcsine distribution describes quantities that spend most of their 'time' near the edges of a range and least near the middle -- famously, the fraction of time a random walk (like a coin-flipping fortune) spends on the positive side.",
+    "kid_story": "Two kids play a long game of tug-of-war where the rope randomly drifts back and forth. If you track what fraction of the whole match one kid was 'winning,' it's surprisingly rare for that fraction to be near 50-50 -- much more often one kid was ahead almost the whole time, or almost none of it.",
+    "kid_question": "What's the probability that one kid was ahead for less than 10% or more than 90% of the match?",
+    "use_cases": [
+      "Fraction of time a random walk spends positive (arcsine law)",
+      "Modeling proportions clustered near 0 or 1, e.g. voltage in an AC cycle"
+    ],
+    "code": "dist = stats.arcsine()\nprint('P(X<0.1 or X>0.9):', round(dist.cdf(0.1) + dist.sf(0.9), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "argus": {
+    "display": "ARGUS",
+    "params": [
+      {
+        "name": "chi",
+        "default": 1.0,
+        "desc": "curvature parameter controlling how sharply the density peaks and falls to zero at x=1"
+      }
+    ],
+    "formula": "f(x;\\chi) = \\frac{\\chi^3}{\\sqrt{2\\pi}\\,\\Psi(\\chi)}\\, x\\sqrt{1-x^2}\\, \\exp\\left(-\\frac{\\chi^2(1-x^2)}{2}\\right), \\quad 0 < x < 1",
+    "intuition": "Built by particle physicists at the ARGUS experiment, this distribution models the reconstructed mass of particle decay background: it starts at zero at both ends of a bounded range and bulges in the middle, with the bulge's sharpness set by chi.",
+    "kid_story": "A candy machine drops a gumball that rolls down a curved ramp of fixed length. It almost never stops right at the very start or the very end of the ramp -- it usually rolls to somewhere comfortably in the middle before friction stops it.",
+    "kid_question": "What's the probability the gumball stops in the middle third of the ramp (between x=0.33 and x=0.67), and where does it stop on average?",
+    "use_cases": [
+      "Modeling combinatorial background mass spectra in particle physics",
+      "Bounded 'peaked in the middle, zero at both ends' phenomena"
+    ],
+    "code": "dist = stats.argus(chi=1.0)\nprint('P(0.33<X<0.67):', round(dist.cdf(0.67) - dist.cdf(0.33), 4))\nprint('mean stop point:', round(dist.mean(), 4))"
+  },
+  "betaprime": {
+    "display": "Beta Prime",
+    "params": [
+      {
+        "name": "a",
+        "default": 5,
+        "desc": "first shape parameter, alpha"
+      },
+      {
+        "name": "b",
+        "default": 6,
+        "desc": "second shape parameter, beta"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{x^{a-1}(1+x)^{-a-b}}{B(a,b)}, \\quad x > 0",
+    "intuition": "Beta prime is what you get when you take the odds ratio p/(1-p) of a Beta-distributed probability p -- it lives on all positive numbers instead of just [0,1], making it useful whenever you care about a ratio of two positive random quantities.",
+    "kid_story": "Two friends split a bag of marbles randomly between them using a Beta-distributed split. If you instead ask 'how many times more marbles does friend A have than friend B,' that ratio follows a Beta Prime distribution.",
+    "kid_question": "What's the probability friend A has less than twice as many marbles as friend B, and what's the expected ratio?",
+    "use_cases": [
+      "Modeling ratios of independent gamma-distributed quantities",
+      "Bayesian priors for variance ratios and odds ratios"
+    ],
+    "code": "dist = stats.betaprime(a=5, b=6)\nprint('P(ratio < 2):', round(dist.cdf(2), 4))\nprint('expected ratio:', round(dist.mean(), 4))"
+  },
+  "bradford": {
+    "display": "Bradford",
+    "params": [
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter controlling how strongly probability is skewed toward small x"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{c}{\\ln(1+c)\\,(1+cx)}, \\quad 0 \\le x \\le 1",
+    "intuition": "Bradford's distribution captures a 'law of scattering' observed in library science: items ranked by relevance or popularity fall off in a specific logarithmic way, with most items squeezed toward the low end of a bounded range.",
+    "kid_story": "A librarian ranks 100 books from most to least borrowed and marks each one's position on a number line from 0 to 1. Way more books cluster near the popular end than spread evenly across the shelf.",
+    "kid_question": "What fraction of books are expected to fall in the top (lowest x) 20% of the ranked line?",
+    "use_cases": [
+      "Bradford's law of scattering in library and information science",
+      "Modeling skewed rank/popularity distributions"
+    ],
+    "code": "dist = stats.bradford(c=3)\nprint('P(X < 0.2):', round(dist.cdf(0.2), 4))\nprint('mean rank position:', round(dist.mean(), 4))"
+  },
+  "burr": {
+    "display": "Burr (Type XII, Burr-12 mirrored)",
+    "params": [
+      {
+        "name": "c",
+        "default": 10.5,
+        "desc": "shape parameter controlling the tail's power-law decay rate"
+      },
+      {
+        "name": "d",
+        "default": 4.3,
+        "desc": "second shape parameter controlling density near the origin"
+      }
+    ],
+    "formula": "f(x;c,d) = c\\,d\\,x^{-c-1}(1+x^{-c})^{-d-1}, \\quad x > 0",
+    "intuition": "The Burr distribution is a flexible two-shape-parameter family widely used to fit income, wealth, and insurance-loss data because it can produce a wide range of skewness and tail-heaviness just by tuning c and d.",
+    "kid_story": "A kid collects trading cards and tracks how many hours each card took to trade away. Most cards trade fast, but the c and d knobs on this distribution let statisticians dial in exactly how many stubborn, slow-to-trade cards show up in the long tail.",
+    "kid_question": "What's the probability a card takes more than 2 hours to trade, and what's the median trading time?",
+    "use_cases": [
+      "Income and wealth distribution modeling in economics",
+      "Insurance claim size and reliability/failure-time modeling"
+    ],
+    "code": "dist = stats.burr(c=10.5, d=4.3)\nprint('P(X > 2):', round(dist.sf(2), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "burr12": {
+    "display": "Burr Type XII",
+    "params": [
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter controlling the rise near the origin"
+      },
+      {
+        "name": "d",
+        "default": 6,
+        "desc": "shape parameter controlling the tail's decay rate"
+      }
+    ],
+    "formula": "f(x;c,d) = c\\,d\\,x^{c-1}(1+x^c)^{-d-1}, \\quad x > 0",
+    "intuition": "Burr Type XII is the 'mirror' of the Burr distribution above (it's the reciprocal-transform relative) and is the classic choice for reliability engineers modeling how long products survive before failing, since it can mimic a bathtub-shaped or steadily increasing hazard.",
+    "kid_story": "A toy company stress-tests a new wind-up robot by counting how many days it runs before its spring breaks. Some break almost immediately, most last a solid while, and a few keep ticking long past when everyone expected them to quit.",
+    "kid_question": "What's the probability the robot lasts more than 1 day, and what's the expected number of days it runs?",
+    "use_cases": [
+      "Reliability and survival analysis (time-to-failure modeling)",
+      "Flood and hydrology data fitting"
+    ],
+    "code": "dist = stats.burr12(c=3, d=6)\nprint('P(lasts > 1 day):', round(dist.sf(1), 4))\nprint('expected days:', round(dist.mean(), 4))"
+  },
+  "chi": {
+    "display": "Chi",
+    "params": [
+      {
+        "name": "df",
+        "default": 5,
+        "desc": "degrees of freedom"
+      }
+    ],
+    "formula": "f(x;k) = \\frac{x^{k-1}e^{-x^2/2}}{2^{k/2-1}\\Gamma(k/2)}, \\quad x \\ge 0",
+    "intuition": "If you take k independent standard-normal 'wiggles' (one per dimension), the chi distribution is the length of the resulting vector -- the square root of a chi-squared random variable. Maxwell and Rayleigh are just chi with 3 and 2 degrees of freedom.",
+    "kid_story": "A robot arm has 5 independent motors, each nudging it a tiny random bit in its own direction, like little bell-curve wiggles. The chi distribution tells you how far the arm's tip ends up from where it was supposed to be, in total.",
+    "kid_question": "What's the probability the tip ends up more than 3 units from its target, and what's the expected total drift?",
+    "use_cases": [
+      "Distance/magnitude of a multivariate normal vector from its mean",
+      "Deriving standard deviation estimator distributions in statistics"
+    ],
+    "code": "dist = stats.chi(df=5)\nprint('P(distance > 3):', round(dist.sf(3), 4))\nprint('expected distance:', round(dist.mean(), 4))"
+  },
+  "cosine": {
+    "display": "Cosine",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{2\\pi}\\left(1+\\cos(x)\\right), \\quad -\\pi \\le x \\le \\pi",
+    "intuition": "The cosine distribution is a smooth, bell-shaped alternative to the normal distribution on a bounded interval -- it's often used as a cheap, closed-form stand-in for the normal curve because it has similar shape but simple, exact formulas.",
+    "kid_story": "A pendulum swings gently and you photograph its angle at a random moment. It's most often caught hovering near the middle of its swing and progressively rarer as you look toward the far edges.",
+    "kid_question": "What's the probability the pendulum's angle is caught within 1 radian of center?",
+    "use_cases": [
+      "Closed-form approximation to the normal distribution",
+      "Directional/angular data smoothing"
+    ],
+    "code": "dist = stats.cosine()\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "crystalball": {
+    "display": "Crystal Ball",
+    "params": [
+      {
+        "name": "beta",
+        "default": 2,
+        "desc": "distance (in std devs) from the mean where the curve switches from Gaussian to power-law tail"
+      },
+      {
+        "name": "m",
+        "default": 3,
+        "desc": "power-law exponent of the tail, m > 1"
+      }
+    ],
+    "formula": "f(x;\\beta,m) = \\begin{cases} N\\exp(-x^2/2), & x > -\\beta \\\\ N\\,A\\,(B-x)^{-m}, & x \\le -\\beta \\end{cases}",
+    "intuition": "Named after the crystal-ball fortune-telling prop, this distribution is a normal curve that has been given a heavy power-law tail on one side, exactly the shape seen when a detector's Gaussian measurement noise combines with real physical energy loss.",
+    "kid_story": "A carnival strongman game measures how hard people hit a bell -- most hits scatter symmetrically around the average strength, but every so often someone's mallet skids and the reading drops way lower than a normal swing would ever produce.",
+    "kid_question": "What's the probability a reading falls more than 2 units below the peak (in the power-law tail), versus staying in the normal-looking bulk?",
+    "use_cases": [
+      "Modeling particle decay mass spectra with radiative energy loss in physics",
+      "Signal peaks with an asymmetric heavy tail from measurement artifacts"
+    ],
+    "code": "dist = stats.crystalball(beta=2, m=3)\nprint('P(X < -2):', round(dist.cdf(-2), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "dgamma": {
+    "display": "Double Gamma",
+    "params": [
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "shape parameter of each one-sided gamma half"
+      }
+    ],
+    "formula": "f(x;a) = \\frac{1}{2\\Gamma(a)}|x|^{a-1}e^{-|x|}, \\quad x \\in \\mathbb{R}",
+    "intuition": "Double gamma glues two mirror-image gamma distributions together at zero, giving a symmetric distribution with a sharper peak (or flatter middle) and heavier tails than the normal, depending on shape a.",
+    "kid_story": "A see-saw is perfectly balanced, and how far it tips left or right each time follows the same 'gamma' pattern on both sides -- equally likely to tip left as right, but with a distinctive peaked-and-tailed shape rather than a plain bell curve.",
+    "kid_question": "What's the probability the see-saw tips more than 2 units to either side?",
+    "use_cases": [
+      "Symmetric heavy-tailed error modeling as an alternative to the normal",
+      "Signal processing residuals with peaked, fat-tailed noise"
+    ],
+    "code": "dist = stats.dgamma(a=2)\nprint('P(|tip| > 2):', round(2 * dist.sf(2), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "dpareto_lognorm": {
+    "display": "Double Pareto-Lognormal",
+    "params": [
+      {
+        "name": "u",
+        "default": 0,
+        "desc": "location of the underlying lognormal core, mu"
+      },
+      {
+        "name": "s",
+        "default": 1,
+        "desc": "spread of the underlying lognormal core, sigma"
+      },
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "right (upper) Pareto tail exponent, alpha"
+      },
+      {
+        "name": "b",
+        "default": 3,
+        "desc": "left (lower) Pareto tail exponent, beta"
+      }
+    ],
+    "formula": "f(x;u,s,a,b) = \\frac{ab}{a+b}\\frac{1}{x}\\,\\phi\\!\\left(\\frac{\\ln x-u}{s}\\right)\\left(R(y_1)+R(y_2)\\right), \\quad R(t)=\\frac{1-\\Phi(t)}{\\phi(t)}",
+    "intuition": "This distribution behaves like a lognormal in the middle (most values cluster around a typical size) but has Pareto power-law tails on both the low and high end -- exactly the shape economists see in real income and city-size data, which look lognormal in the bulk but have fat tails at both extremes.",
+    "kid_story": "A kid tracks the price of every item at a school flea market. Most items cost about the same 'typical' amount, following a lognormal hump, but a few are given away for pennies and a rare few sell for way more than anyone expected -- both tails trail off more slowly than a lognormal alone would predict.",
+    "kid_question": "What's the probability an item costs more than 5 (in these units), and what's the expected price?",
+    "use_cases": [
+      "Modeling income, wealth, and city-size distributions with two-sided fat tails",
+      "Internet traffic and file-size modeling"
+    ],
+    "code": "dist = stats.dpareto_lognorm(u=0, s=1, a=2, b=3)\nprint('P(price > 5):', round(dist.sf(5), 4))\nprint('expected price:', round(dist.mean(), 4))"
+  },
+  "dweibull": {
+    "display": "Double Weibull",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "shape parameter of each one-sided Weibull half"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{c}{2}|x|^{c-1}e^{-|x|^c}, \\quad x \\in \\mathbb{R}",
+    "intuition": "Double Weibull mirrors a Weibull distribution around zero, producing a symmetric distribution whose peakedness (pointy vs. flat-topped) is tunable through the shape parameter c, unlike the fixed shape of the normal curve.",
+    "kid_story": "A dart lands left or right of the bullseye's vertical line with equal chance, and how far off it lands follows a Weibull-shaped spread on each side -- sometimes clustered tight near the line, sometimes with a pointier peak than a normal dartboard error would give.",
+    "kid_question": "What's the probability the dart lands more than 1.5 units from the line, on either side?",
+    "use_cases": [
+      "Symmetric residual/error modeling with tunable peakedness",
+      "Signal and vibration data with non-Gaussian symmetric noise"
+    ],
+    "code": "dist = stats.dweibull(c=1.5)\nprint('P(|offset| > 1.5):', round(2 * dist.sf(1.5), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "erlang": {
+    "display": "Erlang",
+    "params": [
+      {
+        "name": "a",
+        "default": 3,
+        "desc": "number of independent exponential stages, k (an integer count)"
+      }
+    ],
+    "formula": "f(x;a) = \\frac{x^{a-1}e^{-x}}{\\Gamma(a)}, \\quad x \\ge 0",
+    "intuition": "Erlang is the waiting time until the a-th event of a Poisson process happens -- it's the sum of a independent exponential wait times, invented by Agner Erlang to model queueing at telephone exchanges.",
+    "kid_story": "A kid is waiting in line for the ice cream truck, and it takes a random exponential amount of time between each of the 3 customers ahead of them being served. The Erlang distribution tells you how long the kid waits until it's finally their turn.",
+    "kid_question": "What's the probability the kid waits more than 5 minutes, and what's the expected wait?",
+    "use_cases": [
+      "Queueing theory: waiting time for the k-th arrival/service",
+      "Telecom call-center and network traffic modeling"
+    ],
+    "code": "dist = stats.erlang(a=3)\nprint('P(wait > 5 min):', round(dist.sf(5), 4))\nprint('expected wait:', round(dist.mean(), 4))"
+  },
+  "exponnorm": {
+    "display": "Exponentially Modified Normal",
+    "params": [
+      {
+        "name": "K",
+        "default": 1.5,
+        "desc": "ratio of the exponential's mean to the normal's std dev, stretching the tail"
+      }
+    ],
+    "formula": "f(x;K) = \\frac{1}{2K}\\exp\\!\\left(\\frac{1}{2K^2}-\\frac{x}{K}\\right)\\text{erfc}\\!\\left(-\\frac{x-1/K}{\\sqrt2}\\right)",
+    "intuition": "This is what you get when you add a normal random variable to an independent exponential one -- a Gaussian bump with one side dragged into a long exponential tail, exactly the shape seen in chromatography peaks and reaction-time data.",
+    "kid_story": "A kid's reaction time in a game is normally quick and consistent, but sometimes their mind wanders for an extra random exponential delay before they press the button, dragging out the slow end of their times.",
+    "kid_question": "What's the probability their reaction time exceeds 2 seconds, and what's their average reaction time?",
+    "use_cases": [
+      "Human reaction-time modeling in psychology experiments",
+      "Chromatography peak shape analysis in analytical chemistry"
+    ],
+    "code": "dist = stats.exponnorm(K=1.5)\nprint('P(time > 2s):', round(dist.sf(2), 4))\nprint('mean reaction time:', round(dist.mean(), 4))"
+  },
+  "exponpow": {
+    "display": "Exponential Power",
+    "params": [
+      {
+        "name": "b",
+        "default": 2.7,
+        "desc": "shape parameter controlling how fast the tail is crushed"
+      }
+    ],
+    "formula": "f(x;b) = b\\,x^{b-1}\\exp\\!\\left(1+x^b-e^{x^b}\\right), \\quad x \\ge 0",
+    "intuition": "Exponential power stacks an exponential function on top of a power, which crushes the tail down much faster than a plain exponential once x passes 1 -- useful for modeling data with a hard, fast-vanishing upper limit.",
+    "kid_story": "A kid launches a paper rocket, and its flight distance almost never goes much past a certain point because the 'exponential of a power' shape slams the probability down to nearly zero very abruptly past that range.",
+    "kid_question": "What's the probability the rocket flies past 1.2 units, and what's the median flight distance?",
+    "use_cases": [
+      "Modeling sharply-bounded lifetime or extreme-value data",
+      "Reliability analysis with rapidly increasing hazard rates"
+    ],
+    "code": "dist = stats.exponpow(b=2.7)\nprint('P(X > 1.2):', round(dist.sf(1.2), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "exponweib": {
+    "display": "Exponentiated Weibull",
+    "params": [
+      {
+        "name": "a",
+        "default": 2.5,
+        "desc": "exponentiation power applied to the Weibull CDF"
+      },
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "Weibull shape parameter"
+      }
+    ],
+    "formula": "f(x;a,c) = a\\,c\\,x^{c-1}\\left(1-e^{-x^c}\\right)^{a-1}e^{-x^c}, \\quad x > 0",
+    "intuition": "This generalizes the Weibull distribution by raising its CDF to a power, which lets it produce a bathtub-shaped hazard rate (high risk early, low in the middle, rising again later) that plain Weibull cannot -- important for modeling real-world equipment lifetimes.",
+    "kid_story": "A new video-game console might fail right out of the box due to manufacturing defects, is usually rock-solid for years afterward, then starts wearing out again as it ages -- exactly the up-down-up failure risk this distribution is built to capture.",
+    "kid_question": "What's the probability the console survives past 1.5 years, and what's its expected lifetime?",
+    "use_cases": [
+      "Bathtub-curve reliability and failure-time modeling",
+      "Wind speed and hydrology extreme-value modeling"
+    ],
+    "code": "dist = stats.exponweib(a=2.5, c=1.5)\nprint('P(survives > 1.5 yrs):', round(dist.sf(1.5), 4))\nprint('expected lifetime:', round(dist.mean(), 4))"
+  },
+  "fatiguelife": {
+    "display": "Fatigue Life (Birnbaum-Saunders)",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.0,
+        "desc": "shape parameter related to the coefficient of variation of cycles-to-failure"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{x+1}{2c\\sqrt{2\\pi x^3}}\\exp\\!\\left(-\\frac{(x-1)^2}{2xc^2}\\right), \\quad x \\ge 0",
+    "intuition": "Derived from a physical model of material fatigue -- microscopic cracks accumulate randomly with each stress cycle until one crack crosses a critical length and the material breaks -- so it's the go-to distribution for time-to-failure under repeated stress.",
+    "kid_story": "A kid bends a paperclip back and forth over and over, and tiny invisible cracks build up with each bend until, on one unpredictable bend, it finally snaps in two.",
+    "kid_question": "What's the probability the paperclip survives more than 2 (scaled) bends, and what's the expected number of bends before it breaks?",
+    "use_cases": [
+      "Metal fatigue and structural failure-time analysis in engineering",
+      "Reliability testing of components under cyclic stress"
+    ],
+    "code": "dist = stats.fatiguelife(c=1.0)\nprint('P(survives > 2 cycles):', round(dist.sf(2), 4))\nprint('expected cycles to break:', round(dist.mean(), 4))"
+  },
+  "fisk": {
+    "display": "Fisk (Log-Logistic)",
+    "params": [
+      {
+        "name": "c",
+        "default": 3.5,
+        "desc": "shape parameter controlling tail heaviness"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{c\\,x^{c-1}}{(1+x^c)^2}, \\quad x > 0",
+    "intuition": "Fisk, also called the log-logistic distribution, is what you get if the logarithm of your data follows a logistic curve -- it looks similar to the lognormal but has a heavier, slower-decaying tail, which makes it popular for income and survival data.",
+    "kid_story": "A kid tracks how long each of their paper airplanes stays in the air. Most fly for a typical, similar amount of time, but this distribution's heavier tail means the occasional lucky plane rides a breeze for way longer than you'd expect from a plain bell curve.",
+    "kid_question": "What's the probability a flight lasts longer than 2 (scaled) time units, and what's the median flight time?",
+    "use_cases": [
+      "Income distribution and economic inequality modeling",
+      "Survival analysis with a non-monotonic hazard rate"
+    ],
+    "code": "dist = stats.fisk(c=3.5)\nprint('P(flight time > 2):', round(dist.sf(2), 4))\nprint('median flight time:', round(dist.median(), 4))"
+  },
+  "foldcauchy": {
+    "display": "Folded Cauchy",
+    "params": [
+      {
+        "name": "c",
+        "default": 1,
+        "desc": "location of the original (pre-folding) Cauchy peak"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{1}{\\pi(1+(x-c)^2)} + \\frac{1}{\\pi(1+(x+c)^2)}, \\quad x \\ge 0",
+    "intuition": "Take a Cauchy distribution (famous for wild, mean-less outliers) and fold the negative half onto the positive side by taking absolute values -- you get a distribution of magnitudes that still has the Cauchy's notoriously heavy, unpredictable tail.",
+    "kid_story": "A weather vane's compass error is Cauchy-distributed around a slightly off-center reading, and a kid only cares about the size of the error, not its direction, so all the negative errors get folded on top of the positive ones.",
+    "kid_question": "What's the probability the folded error exceeds 3 units?",
+    "use_cases": [
+      "Modeling absolute measurement error magnitude with heavy tails",
+      "Robustness testing for statistical estimators against extreme outliers"
+    ],
+    "code": "dist = stats.foldcauchy(c=1)\nprint('P(|error| > 3):', round(dist.sf(3), 4))\nprint('median error magnitude:', round(dist.median(), 4))"
+  },
+  "foldnorm": {
+    "display": "Folded Normal",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "location of the original (pre-folding) normal mean, in std-dev units"
+      }
+    ],
+    "formula": "f(x;c) = \\sqrt{\\frac{2}{\\pi}}\\cosh(cx)\\exp\\!\\left(-\\frac{x^2+c^2}{2}\\right), \\quad x \\ge 0",
+    "intuition": "If a measurement error is normally distributed around some nonzero true value but you can only observe its magnitude (like a distance, which can't be negative), the result is a folded normal -- a normal curve with its negative half flipped up on top of the positive half.",
+    "kid_story": "A kid's toy car is supposed to stop exactly 1.5 meters from a wall, but bumps and wobbles push it a normal-random amount off target in either direction. Since the kid only measures how far the car ended up from the target (never which direction), the negative misses get folded into positive distances.",
+    "kid_question": "What's the probability the car's measured distance from target exceeds 1 meter?",
+    "use_cases": [
+      "Modeling absolute measurement error when only magnitude is observable",
+      "Manufacturing tolerance analysis for dimensions that can't be negative"
+    ],
+    "code": "dist = stats.foldnorm(c=1.5)\nprint('P(distance > 1):', round(dist.sf(1), 4))\nprint('mean distance:', round(dist.mean(), 4))"
+  },
+  "gausshyper": {
+    "display": "Gauss Hypergeometric",
+    "params": [
+      {
+        "name": "a",
+        "default": 1.5,
+        "desc": "shape parameter, exponent on x"
+      },
+      {
+        "name": "b",
+        "default": 2.0,
+        "desc": "shape parameter, exponent on (1-x)"
+      },
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "exponent on the (1+zx) tilt term"
+      },
+      {
+        "name": "z",
+        "default": 1.0,
+        "desc": "tilt strength parameter, z > -1"
+      }
+    ],
+    "formula": "f(x;a,b,c,z) = C\\,x^{a-1}(1-x)^{b-1}(1+zx)^{-c}, \\quad 0 \\le x \\le 1,\\ C = \\frac{1}{B(a,b)\\,{}_2F_1(c,a;a+b;-z)}",
+    "intuition": "This is a Beta distribution that's been given an extra 'tilt' knob (z, c) allowing it to skew the usual Beta shape further -- it generalizes Beta the way a weighted coin generalizes a fair one, and shows up in Bayesian queueing-theory priors.",
+    "kid_story": "A spinner is built like the usual Beta-distributed spinner (favoring some directions over others) but then someone glues a weight onto one side, tilting the odds even further using the extra z knob.",
+    "kid_question": "What's the probability the tilted spinner lands past the midpoint (X > 0.5)?",
+    "use_cases": [
+      "Bayesian prior distributions for queueing system parameters",
+      "Flexible bounded-variable modeling beyond what Beta can capture"
+    ],
+    "code": "dist = stats.gausshyper(a=1.5, b=2.0, c=1.5, z=1.0)\nprint('P(X > 0.5):', round(dist.sf(0.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "genexpon": {
+    "display": "Generalized Exponential",
+    "params": [
+      {
+        "name": "a",
+        "default": 1,
+        "desc": "shape parameter controlling the baseline hazard"
+      },
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "shape parameter controlling extra early hazard"
+      },
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter controlling how fast the extra hazard fades"
+      }
+    ],
+    "formula": "f(x;a,b,c) = \\left(a+b\\left(1-e^{-cx}\\right)\\right)\\exp\\!\\left(-ax-bx+\\frac{b}{c}\\left(1-e^{-cx}\\right)\\right), \\quad x \\ge 0",
+    "intuition": "This generalizes the plain exponential distribution by letting the 'risk rate' change over time instead of staying constant -- risk starts elevated and settles down toward a steady baseline, useful for anything with an early burn-in period of extra risk.",
+    "kid_story": "A new puppy is extra clumsy and prone to knocking things over during its first few weeks home, but that risk fades and settles into a steady, lower baseline of occasional mischief as it grows up.",
+    "kid_question": "What's the probability the puppy causes no more mischief incidents after 1 time unit, and what's the expected time to its next incident?",
+    "use_cases": [
+      "Reliability modeling of systems with an early-life burn-in hazard",
+      "Survival analysis with time-varying risk"
+    ],
+    "code": "dist = stats.genexpon(a=1, b=2, c=3)\nprint('P(time to incident > 1):', round(dist.sf(1), 4))\nprint('expected time:', round(dist.mean(), 4))"
+  },
+  "genextreme": {
+    "display": "Generalized Extreme Value",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.1,
+        "desc": "shape parameter (0 gives Gumbel-like, positive gives bounded, negative gives heavy tail)"
+      }
+    ],
+    "formula": "f(x;c) = \\exp\\!\\left(-(1-cx)^{1/c}\\right)(1-cx)^{1/c-1}, \\quad c \\ne 0",
+    "intuition": "The single distribution that describes the maximum of many independent random values, no matter what those values' original distribution was -- it unifies the Gumbel, Frechet, and Weibull extreme-value families under one shape parameter c, which is why it's the backbone of flood, heatwave, and market-crash risk modeling.",
+    "kid_story": "Every year a town records its single hottest day. Whatever the day-to-day weather looks like, the yearly record-high temperatures themselves follow this one universal 'extremes' pattern as the years go by.",
+    "kid_question": "What's the probability next year's record high exceeds 1 unit above the historical baseline?",
+    "use_cases": [
+      "Flood, heatwave, and extreme weather risk analysis in climate science",
+      "Financial risk modeling of maximum losses (extreme value theory)"
+    ],
+    "code": "dist = stats.genextreme(c=0.1)\nprint('P(record > 1):', round(dist.sf(1), 4))\nprint('mean record value:', round(dist.mean(), 4))"
+  },
+  "gengamma": {
+    "display": "Generalized Gamma",
+    "params": [
+      {
+        "name": "a",
+        "default": 5,
+        "desc": "shape parameter (like gamma's shape)"
+      },
+      {
+        "name": "c",
+        "default": 2,
+        "desc": "power-transform shape parameter"
+      }
+    ],
+    "formula": "f(x;a,c) = \\frac{|c|\\,x^{ca-1}e^{-x^c}}{\\Gamma(a)}, \\quad x > 0",
+    "intuition": "Generalized gamma adds a power-transform knob c on top of the ordinary gamma distribution, letting it mimic gamma, Weibull, exponential, and half-normal distributions all as special cases just by adjusting a and c.",
+    "kid_story": "A vending machine dispenses candy after a random wait, and by tuning two knobs -- how many 'stages' of waiting (a) and how the wait stretches or compresses (c) -- you can make the machine behave like several different familiar waiting-time toys, all with one master dial.",
+    "kid_question": "What's the probability the wait exceeds 2 units, and what's the expected wait?",
+    "use_cases": [
+      "Flexible lifetime/survival modeling that nests Weibull and gamma as special cases",
+      "Hydrology: modeling rainfall and streamflow amounts"
+    ],
+    "code": "dist = stats.gengamma(a=5, c=2)\nprint('P(wait > 2):', round(dist.sf(2), 4))\nprint('expected wait:', round(dist.mean(), 4))"
+  },
+  "genhalflogistic": {
+    "display": "Generalized Half-Logistic",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.5,
+        "desc": "shape parameter setting the finite upper bound at 1/c"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{2(1-cx)^{1/c-1}}{\\left(1+(1-cx)^{1/c}\\right)^2}, \\quad 0 \\le x \\le 1/c",
+    "intuition": "This stretches the half-logistic distribution's infinite tail into a hard, finite cutoff at 1/c -- useful whenever a quantity behaves like a logistic decay but is physically guaranteed to stop at some maximum value.",
+    "kid_story": "A kid slides down a playground slide whose length is fixed. Their speed decays the way a half-logistic distribution would, but no matter what, they can never travel past the very end of the slide.",
+    "kid_question": "What's the probability the kid's measured distance exceeds 1.5 units, given the slide effectively caps out at 1/c = 2?",
+    "use_cases": [
+      "Modeling bounded lifetime or decay data with a hard physical limit",
+      "Truncated hazard-rate modeling in reliability engineering"
+    ],
+    "code": "dist = stats.genhalflogistic(c=0.5)\nprint('support upper bound:', round(dist.support()[1], 4))\nprint('P(X > 1.5):', round(dist.sf(1.5), 4))"
+  },
+  "genhyperbolic": {
+    "display": "Generalized Hyperbolic",
+    "params": [
+      {
+        "name": "p",
+        "default": 0.5,
+        "desc": "tail/shape parameter, lambda"
+      },
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "tail-heaviness parameter, alpha (a > 0)"
+      },
+      {
+        "name": "b",
+        "default": 1,
+        "desc": "skewness parameter, beta (|b| < a)"
+      }
+    ],
+    "formula": "f(x;p,a,b) = \\frac{(a^2-b^2)^{p/2}}{\\sqrt{2\\pi}\\,a^{p-1/2}K_p\\!\\left(\\sqrt{a^2-b^2}\\right)}\\,e^{bx}\\,\\frac{K_{p-1/2}\\!\\left(a\\sqrt{1+x^2}\\right)}{\\left(\\sqrt{1+x^2}\\right)^{1/2-p}}",
+    "intuition": "A very flexible bell-shaped family that can be tuned to look normal, exponential-tailed, or heavy-tailed, and skewed in either direction -- it's the workhorse behind modern financial return models because real asset prices have fatter tails and more skew than a normal curve allows.",
+    "kid_story": "A kid's weekly allowance savings usually grows by a typical, predictable amount, but every so often -- a bit more often than a plain bell curve would suggest -- there's either a windfall or an unexpectedly bad week, and the swings aren't perfectly symmetric either.",
+    "kid_question": "What's the probability this week's change is negative, and what's the expected change?",
+    "use_cases": [
+      "Financial asset return modeling (fat tails and skew)",
+      "Turbulence and particle physics data with heavy-tailed fluctuations"
+    ],
+    "code": "dist = stats.genhyperbolic(p=0.5, a=2, b=1)\nprint('P(X < 0):', round(dist.cdf(0), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "geninvgauss": {
+    "display": "Generalized Inverse Gaussian",
+    "params": [
+      {
+        "name": "p",
+        "default": 1,
+        "desc": "shape parameter (can be any real number)"
+      },
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "shape parameter, b > 0"
+      }
+    ],
+    "formula": "f(x;p,b) = \\frac{x^{p-1}}{2K_p(b)}\\exp\\!\\left(-\\frac{b}{2}\\left(x+\\frac1x\\right)\\right), \\quad x > 0",
+    "intuition": "This family generalizes the inverse Gaussian distribution with an extra power-law knob p, and shows up naturally as the distribution of first-passage-type quantities in physics and as a mixing distribution in Bayesian hierarchical models.",
+    "kid_story": "A hamster runs on a wheel and its exact 'burst of energy level' at any moment follows this two-knob distribution -- it's rarely near zero or extremely huge, clustering instead around a typical energy level shaped by both knobs.",
+    "kid_question": "What's the probability the hamster's energy level exceeds 3, and what's its expected level?",
+    "use_cases": [
+      "Bayesian hierarchical models as a mixing/prior distribution",
+      "First-passage-time modeling in physics and finance"
+    ],
+    "code": "dist = stats.geninvgauss(p=1, b=2)\nprint('P(X > 3):', round(dist.sf(3), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "genlogistic": {
+    "display": "Generalized Logistic",
+    "params": [
+      {
+        "name": "c",
+        "default": 2,
+        "desc": "shape parameter controlling skewness"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{c\\,e^{-x}}{(1+e^{-x})^{c+1}}, \\quad x \\in \\mathbb{R}",
+    "intuition": "Generalized logistic stretches one tail of the ordinary (symmetric) logistic distribution, letting it model skewed data while keeping the logistic's convenient, simple algebraic form -- often used in hydrology for modeling skewed rainfall extremes.",
+    "kid_story": "A kid measures how much rain falls each week. Most weeks are near-average, but the amount can spike up much more easily than it can spike down, giving the distribution a lopsided long tail on the wet side.",
+    "kid_question": "What's the probability rainfall exceeds 2 units in a given week, and what's the expected amount?",
+    "use_cases": [
+      "Hydrology: modeling skewed rainfall and flood extremes",
+      "Skewed alternative to the logistic distribution in growth modeling"
+    ],
+    "code": "dist = stats.genlogistic(c=2)\nprint('P(rainfall > 2):', round(dist.sf(2), 4))\nprint('expected rainfall:', round(dist.mean(), 4))"
+  },
+  "gennorm": {
+    "display": "Generalized Normal",
+    "params": [
+      {
+        "name": "beta",
+        "default": 1.5,
+        "desc": "shape parameter (2 gives normal, 1 gives Laplace, large values approach uniform)"
+      }
+    ],
+    "formula": "f(x;\\beta) = \\frac{\\beta}{2\\Gamma(1/\\beta)}e^{-|x|^\\beta}",
+    "intuition": "Generalized normal is a dial that morphs a pointy Laplace distribution (beta=1) into the familiar bell curve (beta=2) and onward toward a flat-topped, nearly uniform shape (large beta) -- one formula, a whole spectrum of peakedness.",
+    "kid_story": "A dartboard's scatter pattern can be pointy-peaked like a tent, rounded like a normal bell, or nearly flat-topped depending on how a single 'peakedness' dial is set on the dart-throwing machine.",
+    "kid_question": "With the dial set to beta=1.5, what's the probability a dart lands within 1 unit of the bullseye?",
+    "use_cases": [
+      "Modeling image and signal noise with tunable peakedness (image compression)",
+      "Robust statistics: interpolating between Laplace and normal error models"
+    ],
+    "code": "dist = stats.gennorm(beta=1.5)\nprint('P(|X| < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "genpareto": {
+    "display": "Generalized Pareto",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.3,
+        "desc": "shape parameter (0 gives exponential tail, positive gives heavy Pareto tail, negative gives bounded support)"
+      }
+    ],
+    "formula": "f(x;c) = (1+cx)^{-1-1/c}, \\quad x \\ge 0,\\ c \\ne 0",
+    "intuition": "This is the universal shape that the tail of almost any distribution converges to once you look only at values above a very high threshold -- the mathematical backbone of 'peaks over threshold' extreme-value risk analysis, from insurance losses to flood levels.",
+    "kid_story": "A theme park logs the wait times that are unusually long -- only counting waits already past 30 minutes. However bumpy the full wait-time data looks overall, these extreme long waits themselves settle into this one universal 'excess over threshold' shape.",
+    "kid_question": "Given a wait is already past the threshold, what's the probability the excess wait exceeds 2 more units, and what's the expected excess wait?",
+    "use_cases": [
+      "Peaks-over-threshold extreme value analysis for insurance and flood risk",
+      "Modeling exceedances in financial risk (Value at Risk)"
+    ],
+    "code": "dist = stats.genpareto(c=0.3)\nprint('P(excess > 2):', round(dist.sf(2), 4))\nprint('expected excess:', round(dist.mean(), 4))"
+  },
+  "gibrat": {
+    "display": "Gibrat",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{x\\sqrt{2\\pi}}e^{-(\\ln x)^2/2}, \\quad x > 0",
+    "intuition": "Gibrat's distribution is simply a lognormal with the underlying normal fixed at mean 0 and standard deviation 1 -- it embodies 'Gibrat's law,' the classic finding that firm and city sizes grow by random multiplicative percentage shocks rather than fixed additive amounts.",
+    "kid_story": "A kid's lemonade stand doubles or shrinks by a random percentage each month rather than gaining or losing a fixed number of dollars -- run that multiplicative randomness for a while and the stand's eventual size follows Gibrat's distribution.",
+    "kid_question": "What's the probability the lemonade stand's relative size ends up above 2 (i.e. more than double the baseline)?",
+    "use_cases": [
+      "Gibrat's law: modeling proportional growth of firm and city sizes",
+      "Multiplicative random-growth processes in economics"
+    ],
+    "code": "dist = stats.gibrat()\nprint('P(size > 2x):', round(dist.sf(2), 4))\nprint('median size:', round(dist.median(), 4))"
+  },
+  "gompertz": {
+    "display": "Gompertz",
+    "params": [
+      {
+        "name": "c",
+        "default": 1,
+        "desc": "shape parameter controlling how quickly the mortality/hazard rate rises"
+      }
+    ],
+    "formula": "f(x;c) = c\\,e^x\\exp\\!\\left(-c(e^x-1)\\right), \\quad x \\ge 0",
+    "intuition": "The Gompertz distribution models a hazard rate that grows exponentially with time -- the classic pattern of human aging, where your risk of dying keeps accelerating the older you get, which is exactly why it's used in actuarial mortality tables.",
+    "kid_story": "A kid's grandparent explains that as people get older, the chance something goes wrong with their health each year climbs faster and faster, unlike a young kid's fairly constant, low, day-to-day risk.",
+    "kid_question": "What's the probability a person (in these standardized age units) survives past age 1.5, and what's their expected lifetime?",
+    "use_cases": [
+      "Actuarial mortality and life-table modeling",
+      "Modeling accelerating failure/hazard rates in aging populations"
+    ],
+    "code": "dist = stats.gompertz(c=1)\nprint('P(survives past 1.5):', round(dist.sf(1.5), 4))\nprint('expected lifetime:', round(dist.mean(), 4))"
+  },
+  "gumbel_l": {
+    "display": "Gumbel (left-skewed / minimum)",
+    "params": [],
+    "formula": "f(x) = e^{x}\\exp\\!\\left(-e^{x}\\right), \\quad x \\in \\mathbb{R}",
+    "intuition": "Gumbel-left is the mirror image of the standard Gumbel: it describes the distribution of the minimum of many independent random values, with a sharp cutoff on the right and a long tail stretching left -- the natural home for 'weakest link' failure modeling.",
+    "kid_story": "A chain is only as strong as its weakest link, and out of a hundred links, the strength of the very weakest one follows this left-skewed shape -- most chains have a fairly predictable weak point, but occasionally a chain has one especially fragile link.",
+    "kid_question": "What's the probability the weakest link's strength falls below -1 (in standardized units)?",
+    "use_cases": [
+      "Weakest-link material strength and failure modeling",
+      "Modeling minimum values in extreme-value theory (e.g. lowest annual temperature)"
+    ],
+    "code": "dist = stats.gumbel_l()\nprint('P(X < -1):', round(dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "gumbel_r": {
+    "display": "Gumbel (right-skewed / maximum)",
+    "params": [],
+    "formula": "f(x) = e^{-x}\\exp\\!\\left(-e^{-x}\\right), \\quad x \\in \\mathbb{R}",
+    "intuition": "Gumbel-right describes the distribution of the maximum of many independent random values -- it's the classic model for record-breaking events, with a long tail stretching to the right for the rare occasion the record gets smashed.",
+    "kid_story": "A track team records the fastest sprint time set at each week's practice. Most weeks' best times cluster close together, but the shape has a long right tail for the rare week someone has a legendary breakout run.",
+    "kid_question": "What's the probability this week's best time (standardized) exceeds 1?",
+    "use_cases": [
+      "Modeling maximum river flood levels and record-breaking weather",
+      "Extreme value theory for maxima (annual peak stock returns, wind speeds)"
+    ],
+    "code": "dist = stats.gumbel_r()\nprint('P(record > 1):', round(dist.sf(1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "halfcauchy": {
+    "display": "Half-Cauchy",
+    "params": [],
+    "formula": "f(x) = \\frac{2}{\\pi(1+x^2)}, \\quad x \\ge 0",
+    "intuition": "Take a Cauchy distribution and fold it at zero: you get a distribution that's zero most likely value but with a notoriously heavy tail, which makes it a favorite 'weakly informative' prior for scale parameters in Bayesian statistics because it barely constrains large values.",
+    "kid_story": "A kid guesses how tall a mystery tower might be, having almost no idea -- their guess is usually small, but they leave the door wide open for it to occasionally be enormous, much more so than a normal-based guess would allow.",
+    "kid_question": "What's the probability the guessed height exceeds 5 units?",
+    "use_cases": [
+      "Weakly-informative Bayesian prior for scale/variance parameters",
+      "Modeling absolute values of heavy-tailed measurement errors"
+    ],
+    "code": "dist = stats.halfcauchy()\nprint('P(X > 5):', round(dist.sf(5), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "halfgennorm": {
+    "display": "Half Generalized Normal",
+    "params": [
+      {
+        "name": "beta",
+        "default": 1.2,
+        "desc": "shape parameter (1 gives exponential, 2 gives half-normal)"
+      }
+    ],
+    "formula": "f(x;\\beta) = \\frac{\\beta}{\\Gamma(1/\\beta)}e^{-x^\\beta}, \\quad x \\ge 0",
+    "intuition": "This is the one-sided (positive-only) version of the generalized normal, sliding smoothly between the exponential distribution and the half-normal distribution as the shape parameter beta changes, useful for magnitude data whose 'peakedness' at zero isn't fixed.",
+    "kid_story": "A kid measures how far each of their thrown beanbags lands from a starting line (only distance, never direction), and the shape parameter beta lets you dial in whether short throws are super common or fairly rare.",
+    "kid_question": "What's the probability a beanbag lands more than 1.5 units away?",
+    "use_cases": [
+      "Modeling positive-only signal magnitude with tunable decay shape",
+      "Image and audio noise magnitude modeling"
+    ],
+    "code": "dist = stats.halfgennorm(beta=1.2)\nprint('P(X > 1.5):', round(dist.sf(1.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "halflogistic": {
+    "display": "Half-Logistic",
+    "params": [],
+    "formula": "f(x) = \\frac{2e^{-x}}{(1+e^{-x})^2}, \\quad x \\ge 0",
+    "intuition": "The positive half of the logistic distribution, folded at zero -- it behaves like a slightly heavier-tailed cousin of the half-normal, popular in reliability engineering because its hazard rate increases in a simple, well-understood way.",
+    "kid_story": "A kid's toy drone can only fly a positive distance from the launch pad before it needs to land, and how far it typically gets follows this shape -- shorter flights are common, longer ones taper off but not too abruptly.",
+    "kid_question": "What's the probability the drone flies farther than 2 units?",
+    "use_cases": [
+      "Reliability and survival analysis with increasing hazard rate",
+      "Modeling positive-only residuals in regression diagnostics"
+    ],
+    "code": "dist = stats.halflogistic()\nprint('P(X > 2):', round(dist.sf(2), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "halfnorm": {
+    "display": "Half-Normal",
+    "params": [],
+    "formula": "f(x) = \\sqrt{2/\\pi}\\,e^{-x^2/2}, \\quad x \\ge 0",
+    "intuition": "The positive half of a normal distribution centered at zero -- this is exactly the distribution of the absolute value (magnitude) of any zero-mean normal random variable, so it naturally models measurement errors when you only care about size, not sign.",
+    "kid_story": "A kid's tape measure has a normal-random reading error centered on zero, but the kid only ever records how far off the reading was, never in which direction, so all the errors fold up into positive-only half-normal distances.",
+    "kid_question": "What's the probability the measurement error exceeds 1 unit in size?",
+    "use_cases": [
+      "Modeling magnitude of zero-centered measurement error",
+      "Bayesian prior for standard deviation parameters"
+    ],
+    "code": "dist = stats.halfnorm()\nprint('P(|error| > 1):', round(dist.sf(1), 4))\nprint('mean error size:', round(dist.mean(), 4))"
+  },
+  "hypsecant": {
+    "display": "Hyperbolic Secant",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{\\pi}\\,\\text{sech}(x)",
+    "intuition": "A symmetric, bell-shaped curve that sits between the normal and Cauchy distributions in tail weight -- lighter tails than Cauchy but heavier than normal -- and turns up naturally in the physics of optical soliton pulses.",
+    "kid_story": "A kid strums a guitar string and watches the vibration pulse spread out; the shape of that pulse's envelope traces out this exact hyperbolic-secant bump, a little fatter in the tails than a plain bell curve.",
+    "kid_question": "What's the probability the pulse's measured value falls between -1 and 1?",
+    "use_cases": [
+      "Optical soliton pulse shape modeling in physics",
+      "Symmetric moderate-tailed alternative to the normal distribution"
+    ],
+    "code": "dist = stats.hypsecant()\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "invgamma": {
+    "display": "Inverse Gamma",
+    "params": [
+      {
+        "name": "a",
+        "default": 4,
+        "desc": "shape parameter"
+      }
+    ],
+    "formula": "f(x;a) = \\frac{x^{-a-1}e^{-1/x}}{\\Gamma(a)}, \\quad x > 0",
+    "intuition": "The inverse gamma is exactly what you get by taking 1/X when X follows a gamma distribution -- it's the standard conjugate Bayesian prior for an unknown variance, because it keeps the math tidy when combined with normal-distributed data.",
+    "kid_story": "A scientist isn't sure how 'wobbly' a new measuring instrument is, so they use the inverse gamma distribution as their starting guess for the wobble size (the variance) before collecting any real data to update their belief.",
+    "kid_question": "What's the probability the guessed variance is less than 0.5, and what's the expected variance guess?",
+    "use_cases": [
+      "Conjugate Bayesian prior for variance parameters",
+      "Modeling reciprocal quantities like precision-to-variance conversions"
+    ],
+    "code": "dist = stats.invgamma(a=4)\nprint('P(variance < 0.5):', round(dist.cdf(0.5), 4))\nprint('expected variance:', round(dist.mean(), 4))"
+  },
+  "invgauss": {
+    "display": "Inverse Gaussian (Wald)",
+    "params": [
+      {
+        "name": "mu",
+        "default": 1,
+        "desc": "mean of the distribution, in units of the scale"
+      }
+    ],
+    "formula": "f(x;\\mu) = \\frac{1}{\\sqrt{2\\pi x^3}}\\exp\\!\\left(-\\frac{(x-\\mu)^2}{2\\mu^2 x}\\right), \\quad x > 0",
+    "intuition": "Despite the name, this has nothing to do with the normal distribution's shape -- it's the exact distribution of the first time a random walk with a steady drift crosses a fixed level, which is why it naturally models 'time to reach a goal' processes.",
+    "kid_story": "A snail crawls toward a lettuce leaf, drifting steadily forward but wobbling randomly side to side and even backward sometimes. The inverse Gaussian distribution is exactly how long it takes the snail to finally reach the leaf.",
+    "kid_question": "What's the probability the snail reaches the leaf within 1.5 time units?",
+    "use_cases": [
+      "First-passage time modeling for drift-diffusion processes",
+      "Modeling reaction times and response latencies in cognitive science"
+    ],
+    "code": "dist = stats.invgauss(mu=1)\nprint('P(reaches leaf by t=1.5):', round(dist.cdf(1.5), 4))\nprint('mean time:', round(dist.mean(), 4))"
+  },
+  "invweibull": {
+    "display": "Inverse Weibull (Frechet)",
+    "params": [
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter controlling tail heaviness"
+      }
+    ],
+    "formula": "f(x;c) = c\\,x^{-c-1}e^{-x^{-c}}, \\quad x > 0",
+    "intuition": "Also known as the Frechet distribution, this is one of the three classic extreme-value families and describes the distribution of the maximum of samples drawn from a distribution with a heavy power-law tail -- think record-breaking rainfall or record stock gains.",
+    "kid_story": "A kid tracks the single biggest wave that rolls in each day at the beach. Most days the biggest wave is a fairly typical size, but the Frechet shape leaves real room for an occasional monster wave far bigger than the rest.",
+    "kid_question": "What's the probability the day's biggest wave exceeds 2 units?",
+    "use_cases": [
+      "Extreme value theory for maxima of heavy-tailed data (Frechet family)",
+      "Modeling maximum wind speeds and flood peaks in climate risk"
+    ],
+    "code": "dist = stats.invweibull(c=3)\nprint('P(wave > 2):', round(dist.sf(2), 4))\nprint('median wave size:', round(dist.median(), 4))"
+  },
+  "irwinhall": {
+    "display": "Irwin-Hall",
+    "params": [
+      {
+        "name": "n",
+        "default": 4,
+        "desc": "number of independent uniform(0,1) variables summed"
+      }
+    ],
+    "formula": "f(x;n) = \\frac{1}{(n-1)!}\\sum_{k=0}^{\\lfloor x\\rfloor}(-1)^k\\binom{n}{k}(x-k)^{n-1}, \\quad 0 \\le x \\le n",
+    "intuition": "Irwin-Hall is simply the sum of n independent standard uniform random numbers -- roll n dice-like uniform draws and add them up, and as n grows the lumpy piecewise-polynomial result looks more and more like a normal curve (a hands-on illustration of the Central Limit Theorem).",
+    "kid_story": "A kid picks 4 random decimal numbers between 0 and 1 (like 0.3, 0.71, 0.05, 0.62) and adds them all up. Do that over and over, and the running totals pile up into this specific bell-ish shape, never below 0 or above 4.",
+    "kid_question": "What's the probability the sum of the 4 random numbers exceeds 3?",
+    "use_cases": [
+      "Central Limit Theorem demonstrations and dice-sum simulations",
+      "Cardinal B-spline construction in numerical computing and computer graphics"
+    ],
+    "code": "dist = stats.irwinhall(n=4)\nprint('P(sum > 3):', round(dist.sf(3), 4))\nprint('mean sum:', round(dist.mean(), 4))"
+  },
+  "jf_skew_t": {
+    "display": "Jones-Faddy Skew-t",
+    "params": [
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "left-tail shape parameter"
+      },
+      {
+        "name": "b",
+        "default": 8,
+        "desc": "right-tail shape parameter"
+      }
+    ],
+    "formula": "f(x;a,b) = C_{a,b}^{-1}\\left(1+\\frac{x}{\\sqrt{a+b+x^2}}\\right)^{a+1/2}\\left(1-\\frac{x}{\\sqrt{a+b+x^2}}\\right)^{b+1/2}",
+    "intuition": "Jones and Faddy's skew-t distribution generalizes the Student's t distribution by letting the two tails have independently different weights (a controls one side, b the other) -- when a equals b it reduces exactly to a symmetric t distribution with 2a degrees of freedom.",
+    "kid_story": "A kid's grades on quizzes usually cluster tightly around their average, but they're more likely to have one really bad surprise quiz than one incredibly lucky one -- the a and b knobs here let you dial in exactly how lopsided that surprise risk is.",
+    "kid_question": "What's the probability a quiz score falls more than 2 units below average?",
+    "use_cases": [
+      "Skewed financial return modeling with independently tunable tails",
+      "Robust regression error modeling with asymmetric outlier risk"
+    ],
+    "code": "dist = stats.jf_skew_t(a=2, b=8)\nprint('P(X < -2):', round(dist.cdf(-2), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "johnsonsb": {
+    "display": "Johnson SB (bounded)",
+    "params": [
+      {
+        "name": "a",
+        "default": 1,
+        "desc": "shape parameter controlling skewness"
+      },
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "shape parameter controlling how tightly mass concentrates"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{b}{x(1-x)\\sqrt{2\\pi}}\\exp\\!\\left(-\\frac{1}{2}\\left(a+b\\ln\\frac{x}{1-x}\\right)^2\\right), \\quad 0 < x < 1",
+    "intuition": "Johnson SB transforms a normal random variable through a logit-style function to squeeze it onto a bounded (0,1) interval -- it's part of the Johnson system, a set of transformations built to fit almost any real dataset's shape by matching its mean, variance, skewness and kurtosis.",
+    "kid_story": "A teacher grades homework as a percentage from 0% to 100%. Rather than a plain uniform spread, the scores cluster and skew in a specific way that this bounded, transformed-normal shape captures well.",
+    "kid_question": "What's the probability a score falls below 0.4 (40%)?",
+    "use_cases": [
+      "Fitting bounded empirical data (percentages, proportions) to a flexible parametric shape",
+      "Financial modeling of bounded asset prices or ratios"
+    ],
+    "code": "dist = stats.johnsonsb(a=1, b=2)\nprint('P(X < 0.4):', round(dist.cdf(0.4), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "johnsonsu": {
+    "display": "Johnson SU (unbounded)",
+    "params": [
+      {
+        "name": "a",
+        "default": 1,
+        "desc": "shape parameter controlling skewness"
+      },
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "shape parameter controlling tail behavior"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{b}{\\sqrt{x^2+1}\\sqrt{2\\pi}}\\exp\\!\\left(-\\frac{1}{2}\\left(a+b\\,\\text{arcsinh}(x)\\right)^2\\right)",
+    "intuition": "Johnson SU transforms a normal variable through an inverse-hyperbolic-sine function to produce a flexible, unbounded distribution that can be skewed and either lighter- or heavier-tailed than normal -- widely used in finance because it fits real skewed asset-return data much better than a plain normal curve.",
+    "kid_story": "A kid's daily allowance changes each week by an amount that's usually small but can occasionally swing much further in one direction than the other -- unlike a normal bell curve, this shape lets the swings be properly lopsided and fat-tailed.",
+    "kid_question": "What's the probability this week's change is less than -1?",
+    "use_cases": [
+      "Financial return and risk modeling (skewed, fat-tailed data)",
+      "Fitting arbitrary skewed continuous data via the Johnson distribution system"
+    ],
+    "code": "dist = stats.johnsonsu(a=1, b=2)\nprint('P(X < -1):', round(dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "kappa3": {
+    "display": "Kappa 3",
+    "params": [
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "shape parameter"
+      }
+    ],
+    "formula": "f(x;a) = a\\left(a+x^a\\right)^{-(a+1)/a}, \\quad x > 0",
+    "intuition": "A flexible three-parameter-family member (here with location/scale fixed) developed by Mielke and Johnson for meteorological data, particularly precipitation amounts, since it can capture a wide range of skewness with just one free shape parameter.",
+    "kid_story": "A weather station records how much rain falls during each storm. Most storms drop a modest, similar amount, but the kappa-3 shape's single knob lets meteorologists tune exactly how often a storm dumps way more rain than usual.",
+    "kid_question": "What's the probability a storm's rainfall exceeds 2 units?",
+    "use_cases": [
+      "Precipitation and meteorological extreme data modeling",
+      "Flexible skewed-data fitting with a single shape parameter"
+    ],
+    "code": "dist = stats.kappa3(a=2)\nprint('P(rainfall > 2):', round(dist.sf(2), 4))\nprint('mean rainfall:', round(dist.mean(), 4))"
+  },
+  "kappa4": {
+    "display": "Kappa 4",
+    "params": [
+      {
+        "name": "h",
+        "default": 0.5,
+        "desc": "shape parameter controlling tail type"
+      },
+      {
+        "name": "k",
+        "default": 0.2,
+        "desc": "shape parameter controlling skewness/support bound"
+      }
+    ],
+    "formula": "f(x;h,k) = (1-kx)^{1/k-1}\\left(1-h(1-kx)^{1/k}\\right)^{1/h-1}",
+    "intuition": "Kappa 4 is a 'master' distribution: by dialing its two shape parameters h and k, it reproduces the logistic, Gumbel, exponential, uniform, generalized extreme value, and generalized Pareto distributions all as special cases, making it a favorite for flood-frequency analysis where analysts want one flexible family to try many shapes.",
+    "kid_story": "A river's yearly flood height can be modeled with two dials, h and k. Depending on how those dials are set, this one distribution can mimic several completely different flood-risk shapes that scientists have used in the past.",
+    "kid_question": "What's the probability the flood height exceeds 1 unit at these dial settings?",
+    "use_cases": [
+      "Flood-frequency and hydrological extreme value analysis",
+      "Unifying framework for fitting several extreme-value distribution families"
+    ],
+    "code": "dist = stats.kappa4(h=0.5, k=0.2)\nprint('P(flood height > 1):', round(dist.sf(1), 4))\nprint('mean flood height:', round(dist.mean(), 4))"
+  },
+  "ksone": {
+    "display": "Kolmogorov-Smirnov One-Sided",
+    "params": [
+      {
+        "name": "n",
+        "default": 20,
+        "desc": "sample size used in the one-sided KS test statistic"
+      }
+    ],
+    "formula": "P(D_n^+ < d) = 1 - d\\sum_{j=0}^{\\lfloor n(1-d)\\rfloor}\\binom{n}{j}\\left(\\frac{j}{n}+d\\right)^{j-1}\\left(1-d-\\frac{j}{n}\\right)^{n-j}",
+    "intuition": "This is the exact sampling distribution of the one-sided Kolmogorov-Smirnov statistic -- the biggest amount by which an empirical cumulative distribution built from n data points can stray above the true distribution -- and it's the basis of the classic KS goodness-of-fit test.",
+    "kid_story": "A kid rolls a die 20 times and draws a running tally chart, comparing it to what a perfectly fair die 'should' look like. This distribution measures the single biggest gap between the kid's chart and the fair-die ideal, in one direction.",
+    "kid_question": "With 20 rolls, what's the probability that biggest one-sided gap exceeds 0.3?",
+    "use_cases": [
+      "Kolmogorov-Smirnov goodness-of-fit hypothesis testing",
+      "Assessing how well an empirical sample matches a theoretical distribution"
+    ],
+    "code": "dist = stats.ksone(n=20)\nprint('P(D+ > 0.3):', round(dist.sf(0.3), 4))\nprint('mean D+:', round(dist.mean(), 4))"
+  },
+  "kstwo": {
+    "display": "Kolmogorov-Smirnov Two-Sided",
+    "params": [
+      {
+        "name": "n",
+        "default": 20,
+        "desc": "sample size used in the two-sided KS test statistic"
+      }
+    ],
+    "formula": "F_n(d) = P(D_n \\le d), \\quad D_n = \\sup_x |F_{\\text{emp}}(x) - F(x)|",
+    "intuition": "The two-sided cousin of ksone, this is the exact finite-sample distribution of the largest gap in either direction between an empirical CDF built from n points and the true distribution -- it's what scipy's kstest function actually uses to compute p-values.",
+    "kid_story": "Same die-rolling kid as before, but now checking the biggest gap between their tally chart and the fair-die ideal in either direction (too high or too low), not just one specific direction.",
+    "kid_question": "With 20 rolls, what's the probability that biggest two-sided gap exceeds 0.3?",
+    "use_cases": [
+      "Kolmogorov-Smirnov two-sided goodness-of-fit testing",
+      "Computing exact p-values for the scipy.stats.kstest function"
+    ],
+    "code": "dist = stats.kstwo(n=20)\nprint('P(D > 0.3):', round(dist.sf(0.3), 4))\nprint('mean D:', round(dist.mean(), 4))"
+  },
+  "kstwobign": {
+    "display": "Kolmogorov (asymptotic two-sided KS)",
+    "params": [],
+    "formula": "F(x) = 1 - 2\\sum_{k=1}^{\\infty}(-1)^{k-1}e^{-2k^2x^2}, \\quad x > 0",
+    "intuition": "This is the limiting shape of the two-sided KS statistic as the sample size n grows to infinity (specifically, sqrt(n) times the KS statistic converges to this) -- the classical Kolmogorov distribution used for large-sample goodness-of-fit testing.",
+    "kid_story": "Instead of just 20 die rolls, imagine the kid rolls the die a million times. The scaled biggest gap between their tally and the ideal fair-die chart settles down into this one universal shape, no matter how many rolls they eventually do (as long as it's a lot).",
+    "kid_question": "What's the probability the scaled statistic exceeds 1.2?",
+    "use_cases": [
+      "Large-sample Kolmogorov-Smirnov goodness-of-fit testing",
+      "Asymptotic theory for empirical process convergence"
+    ],
+    "code": "dist = stats.kstwobign()\nprint('P(X > 1.2):', round(dist.sf(1.2), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "landau": {
+    "display": "Landau",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{\\pi}\\int_0^\\infty e^{-t\\ln t - xt}\\sin(\\pi t)\\,dt",
+    "intuition": "The Landau distribution describes the energy lost by a fast charged particle passing through a thin layer of material -- most collisions cost a little energy, but occasionally one violent collision costs a lot, giving a sharp peak with an extremely long, heavy right tail (it doesn't even have a finite mean).",
+    "kid_story": "A pinball rockets through a row of bumpers. Most of the time it loses a modest, predictable bit of speed at each bumper, but every so often it clips one bumper dead-on and loses a huge, unpredictable chunk of speed all at once.",
+    "kid_question": "What's the probability the energy loss is below 1 (in standardized units)?",
+    "use_cases": [
+      "Modeling energy loss (ionization) of charged particles in detector physics",
+      "Heavy-tailed fluctuation modeling where no finite mean exists"
+    ],
+    "code": "dist = stats.landau()\nprint('P(X < 1):', round(dist.cdf(1), 4))\nprint('mode (most likely loss):', round(dist.pdf(0), 4))"
+  },
+  "laplace_asymmetric": {
+    "display": "Asymmetric Laplace",
+    "params": [
+      {
+        "name": "kappa",
+        "default": 2,
+        "desc": "asymmetry parameter (1 gives the ordinary symmetric Laplace)"
+      }
+    ],
+    "formula": "f(x;\\kappa) = \\begin{cases} \\dfrac{1}{\\kappa+\\kappa^{-1}}e^{-x\\kappa}, & x \\ge 0 \\\\[4pt] \\dfrac{1}{\\kappa+\\kappa^{-1}}e^{x/\\kappa}, & x < 0 \\end{cases}",
+    "intuition": "This stretches the classic 'double exponential' Laplace distribution so one side decays faster than the other, giving a sharp peak with two differently-weighted tails -- it's the backbone of quantile regression, since minimizing an asymmetric loss naturally produces this distribution.",
+    "kid_story": "A kid's daily walk to school usually takes about the same time, but when they're late they tend to be only a little late, while on lucky fast days they can sometimes shave off a lot more time than usual -- the two sides of their timing error aren't equally spread.",
+    "kid_question": "What's the probability the time deviation is more negative than -1 (running notably early)?",
+    "use_cases": [
+      "Quantile regression and asymmetric loss modeling in statistics",
+      "Financial modeling of asymmetric gains/losses"
+    ],
+    "code": "dist = stats.laplace_asymmetric(kappa=2)\nprint('P(X < -1):', round(dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "levy": {
+    "display": "Levy",
+    "params": [],
+    "formula": "f(x) = \\sqrt{\\frac{1}{2\\pi x^3}}\\exp\\!\\left(-\\frac{1}{2x}\\right), \\quad x > 0",
+    "intuition": "One of only a few stable distributions with a known closed-form pdf, Levy is extremely heavy-tailed -- it has infinite mean and variance -- and describes the first time a simple random walk returns to its starting point, which is why it also appears at the heart of Levy flight foraging models in biology.",
+    "kid_story": "A hungry seagull hops around a beach looking for food, mostly taking short hops but every so often taking one wildly long hop far across the sand -- this unpredictable mix of mostly-short-but-occasionally-huge hops is a Levy flight, powered by the Levy distribution.",
+    "kid_question": "What's the probability the seagull's next hop distance exceeds 3 units?",
+    "use_cases": [
+      "Levy flight foraging models in animal movement ecology",
+      "First-return-time modeling for one-dimensional random walks"
+    ],
+    "code": "dist = stats.levy()\nprint('P(hop distance > 3):', round(dist.sf(3), 4))\nprint('median hop distance:', round(dist.median(), 4))"
+  },
+  "levy_l": {
+    "display": "Levy (left-skewed)",
+    "params": [],
+    "formula": "f(x) = \\sqrt{\\frac{1}{2\\pi |x|^3}}\\exp\\!\\left(-\\frac{1}{2|x|}\\right), \\quad x \\le 0",
+    "intuition": "The mirror image of the Levy distribution reflected onto the negative numbers -- same extremely heavy, infinite-mean tail, just facing the other direction, useful whenever the 'wild jump' phenomenon naturally points toward negative values (like sudden negative shocks).",
+    "kid_story": "Instead of a seagull hopping toward food, imagine a marble rolling down a hill that occasionally takes one enormous unpredictable tumble further downhill, in an unbounded 'always toward negative' direction.",
+    "kid_question": "What's the probability the marble's tumble distance is more negative than -3?",
+    "use_cases": [
+      "Modeling sudden negative shocks or jumps in a process",
+      "Stable-distribution theory (alpha=0.5 stable family member)"
+    ],
+    "code": "dist = stats.levy_l()\nprint('P(X < -3):', round(dist.cdf(-3), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "levy_stable": {
+    "display": "Levy-Stable",
+    "params": [
+      {
+        "name": "alpha",
+        "default": 1.5,
+        "desc": "stability/tail-index parameter, 0 < alpha <= 2 (2 = normal, 1 = Cauchy)"
+      },
+      {
+        "name": "beta",
+        "default": 0,
+        "desc": "skewness parameter, -1 <= beta <= 1"
+      }
+    ],
+    "formula": "\\varphi(t;\\alpha,\\beta) = \\exp\\!\\left(it\\mu - |ct|^{\\alpha}\\left(1-i\\beta\\,\\text{sign}(t)\\Phi\\right)\\right)",
+    "intuition": "The stable distributions are the only distributions that a sum of many i.i.d. random variables can converge to (a generalization of the Central Limit Theorem beyond just the normal case) -- alpha controls tail heaviness (2 = normal, smaller = wilder jumps) and beta controls skew, with no closed-form pdf except at special values.",
+    "kid_story": "A stock trader watches daily price swings that are wilder and more lopsided than a plain bell curve would predict -- big surprise jumps happen more often than 'normal' would suggest, and this whole family of distributions was built specifically to describe exactly that kind of wild, self-similar randomness.",
+    "kid_question": "What's the probability the standardized price swing exceeds 2?",
+    "use_cases": [
+      "Financial market return modeling with heavy tails and skew",
+      "Generalized Central Limit Theorem for sums of heavy-tailed variables"
+    ],
+    "code": "dist = stats.levy_stable(alpha=1.5, beta=0)\nprint('P(X > 2):', round(dist.sf(2), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "loggamma": {
+    "display": "Log-Gamma",
+    "params": [
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter (same as the underlying gamma's shape)"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{\\exp(cx-e^x)}{\\Gamma(c)}, \\quad x \\in \\mathbb{R}",
+    "intuition": "This is the distribution of the logarithm of a gamma-distributed random variable -- it turns gamma's always-positive, right-skewed shape into a distribution defined on the whole real line with a long left tail instead, useful whenever you naturally work in log-space.",
+    "kid_story": "A scientist tracks the logarithm of bacteria population counts in a petri dish, since populations grow multiplicatively. Because the raw counts are gamma-shaped, their logarithms follow this log-gamma pattern instead.",
+    "kid_question": "What's the probability the log-population value exceeds 1.5?",
+    "use_cases": [
+      "Log-transformed gamma data analysis in biology and reliability",
+      "Extreme value and order statistics theory"
+    ],
+    "code": "dist = stats.loggamma(c=3)\nprint('P(X > 1.5):', round(dist.sf(1.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "loglaplace": {
+    "display": "Log-Laplace",
+    "params": [
+      {
+        "name": "c",
+        "default": 3,
+        "desc": "shape parameter controlling how sharply the peak falls off on the log scale"
+      }
+    ],
+    "formula": "f(x;c) = \\begin{cases} \\dfrac{c}{2}x^{c-1}, & 0 < x < 1 \\\\[4pt] \\dfrac{c}{2}x^{-c-1}, & x \\ge 1 \\end{cases}",
+    "intuition": "Just as the Laplace distribution is a sharp double-exponential peak on the linear scale, log-Laplace is that same sharp peak transferred onto a multiplicative (log) scale -- it's a popular alternative to the lognormal for financial returns and city/firm sizes because it has a sharper peak and heavier tails.",
+    "kid_story": "A kid tracks the price of a rare trading card over months. It usually stays close to a typical price, but the log-Laplace shape means sudden multiplicative jumps up or down happen more dramatically than a smooth lognormal curve would suggest.",
+    "kid_question": "What's the probability the card's price ratio exceeds 2 (i.e. more than doubles)?",
+    "use_cases": [
+      "Alternative to lognormal for financial asset price and return modeling",
+      "City and firm size distribution modeling with sharper peaks"
+    ],
+    "code": "dist = stats.loglaplace(c=3)\nprint('P(price ratio > 2):', round(dist.sf(2), 4))\nprint('median price ratio:', round(dist.median(), 4))"
+  },
+  "loguniform": {
+    "display": "Log-Uniform (Reciprocal)",
+    "params": [
+      {
+        "name": "a",
+        "default": 1,
+        "desc": "lower bound of the support"
+      },
+      {
+        "name": "b",
+        "default": 10,
+        "desc": "upper bound of the support"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{1}{x\\ln(b/a)}, \\quad a \\le x \\le b",
+    "intuition": "A distribution that's uniform on the logarithmic scale rather than the linear scale -- it gives equal probability to the range [1,10] as to [10,100] as to [100,1000], which is exactly the right prior when you know a quantity spans several orders of magnitude but have no idea which one.",
+    "kid_story": "A kid is asked to guess how many grains of sand are in a jar, somewhere between 1 and 10,000. Since they truly have no idea whether it's in the hundreds or the thousands, guessing 'uniformly on the number of digits' (log-uniform) makes more sense than guessing uniformly on the raw count.",
+    "kid_question": "What's the probability the guess falls between 1 and 3 (versus the full range up to 10)?",
+    "use_cases": [
+      "Hyperparameter search priors spanning orders of magnitude in machine learning",
+      "Bayesian priors for scale parameters with unknown order of magnitude"
+    ],
+    "code": "dist = stats.loguniform(a=1, b=10)\nprint('P(1 < X < 3):', round(dist.cdf(3) - dist.cdf(1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "lomax": {
+    "display": "Lomax (Pareto Type II)",
+    "params": [
+      {
+        "name": "c",
+        "default": 2,
+        "desc": "shape parameter (tail index)"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{c}{(1+x)^{c+1}}, \\quad x \\ge 0",
+    "intuition": "Lomax is just a Pareto distribution shifted so it starts at zero instead of one -- it's the classic model for 'excess over a threshold' waiting times and losses, and it has the memoryless-ish property that its hazard rate decreases over time (unlike the constant-hazard exponential).",
+    "kid_story": "A kid times how long it takes for their pet hamster to come out of its hiding tube once called. Most times are short, but the longer the hamster has already been hiding, the more likely it is to keep hiding even longer -- the wait times pile up in this Lomax shape.",
+    "kid_question": "What's the probability the hamster takes longer than 3 (scaled) time units to emerge?",
+    "use_cases": [
+      "Insurance claim size and reinsurance excess-of-loss modeling",
+      "Internet traffic file-size and web-request duration modeling"
+    ],
+    "code": "dist = stats.lomax(c=2)\nprint('P(wait > 3):', round(dist.sf(3), 4))\nprint('mean wait:', round(dist.mean(), 4))"
+  },
+  "maxwell": {
+    "display": "Maxwell",
+    "params": [],
+    "formula": "f(x) = \\sqrt{2/\\pi}\\,x^2 e^{-x^2/2}, \\quad x \\ge 0",
+    "intuition": "The Maxwell (Maxwell-Boltzmann) distribution is the speed of a gas molecule bouncing around in three dimensions when each of its velocity components is an independent normal random variable -- it's the physics behind why gas molecules have a most-likely speed but a long tail of much faster outliers.",
+    "kid_story": "Imagine a room full of bouncy balls zipping around randomly in all directions, each direction's speed component wobbling like a bell curve. The overall speed of any one ball (never negative, since speed can't be negative) follows the Maxwell distribution.",
+    "kid_question": "What's the probability a ball's speed exceeds 2.5 units, and what's its expected speed?",
+    "use_cases": [
+      "Kinetic theory of gases: molecular speed distribution in physics",
+      "Modeling 3D vector magnitudes from independent normal components"
+    ],
+    "code": "dist = stats.maxwell()\nprint('P(speed > 2.5):', round(dist.sf(2.5), 4))\nprint('expected speed:', round(dist.mean(), 4))"
+  },
+  "mielke": {
+    "display": "Mielke (Dagum)",
+    "params": [
+      {
+        "name": "k",
+        "default": 4,
+        "desc": "shape parameter controlling the rise near zero"
+      },
+      {
+        "name": "s",
+        "default": 3,
+        "desc": "shape parameter controlling the tail decay"
+      }
+    ],
+    "formula": "f(x;k,s) = \\frac{k\\,x^{k-1}}{(1+x^s)^{1+k/s}}, \\quad x > 0",
+    "intuition": "Also known as the Dagum distribution in economics, this is a close cousin of the Burr distribution used specifically to model personal income -- it can capture the realistic shape where most people earn a moderate amount but income spreads into a long, heavy right tail.",
+    "kid_story": "A kid surveys allowance amounts across their whole school. Most kids get a similar, modest allowance, but a few get quite a bit more -- this distribution is the economist's favorite tool for describing exactly that kind of income spread.",
+    "kid_question": "What's the probability an allowance exceeds 1.5 (scaled) units?",
+    "use_cases": [
+      "Personal income distribution modeling in economics (Dagum distribution)",
+      "Precipitation and rainfall amount modeling"
+    ],
+    "code": "dist = stats.mielke(k=4, s=3)\nprint('P(allowance > 1.5):', round(dist.sf(1.5), 4))\nprint('median allowance:', round(dist.median(), 4))"
+  },
+  "moyal": {
+    "display": "Moyal",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{\\sqrt{2\\pi}}\\exp\\!\\left(-\\frac{1}{2}\\left(x+e^{-x}\\right)\\right)",
+    "intuition": "Moyal's distribution is a close, easier-to-compute approximation to the Landau distribution, describing energy loss of a fast charged particle through matter -- it has a sharp rise, a peak, and an exponentially-decaying tail, shaped like a smoothed-out asymmetric bump.",
+    "kid_story": "A marble rolls through a row of soft pillows, losing a bit of speed at each one. Most of the time it loses a similar typical amount, and this shape captures the slight lean toward occasionally losing a bit more.",
+    "kid_question": "What's the probability the energy loss falls between -1 and 1?",
+    "use_cases": [
+      "Approximating energy loss (ionization) distributions in particle detectors",
+      "Radiation and high-energy physics fluctuation modeling"
+    ],
+    "code": "dist = stats.moyal()\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "nakagami": {
+    "display": "Nakagami",
+    "params": [
+      {
+        "name": "nu",
+        "default": 1.5,
+        "desc": "shape parameter (fading/spread parameter, nu >= 0.5)"
+      }
+    ],
+    "formula": "f(x;\\nu) = \\frac{2\\nu^\\nu}{\\Gamma(\\nu)}x^{2\\nu-1}e^{-\\nu x^2}, \\quad x \\ge 0",
+    "intuition": "Developed to model radio signal fading, Nakagami generalizes the Rayleigh distribution (which it equals at nu=1) with a single shape parameter that controls how severely a wireless signal's strength fluctuates as it bounces off buildings and obstacles on its way to your phone.",
+    "kid_story": "A kid's walkie-talkie signal gets stronger and weaker as they walk around a big building, bouncing off walls and corners in unpredictable ways. The Nakagami distribution describes exactly how those signal-strength bounces are spread out.",
+    "kid_question": "What's the probability the signal strength exceeds 1.5 units?",
+    "use_cases": [
+      "Wireless and radio signal fading models in telecommunications engineering",
+      "Ultrasound and medical imaging signal amplitude modeling"
+    ],
+    "code": "dist = stats.nakagami(nu=1.5)\nprint('P(signal > 1.5):', round(dist.sf(1.5), 4))\nprint('mean signal strength:', round(dist.mean(), 4))"
+  },
+  "ncf": {
+    "display": "Noncentral F",
+    "params": [
+      {
+        "name": "dfn",
+        "default": 10,
+        "desc": "numerator degrees of freedom"
+      },
+      {
+        "name": "dfd",
+        "default": 20,
+        "desc": "denominator degrees of freedom"
+      },
+      {
+        "name": "nc",
+        "default": 3,
+        "desc": "noncentrality parameter (effect size)"
+      }
+    ],
+    "formula": "f(x;d_1,d_2,\\lambda) = \\sum_{k=0}^\\infty \\frac{e^{-\\lambda/2}(\\lambda/2)^k}{k!}\\,\\frac{(d_1/d_2)^{d_1/2+k}\\,x^{d_1/2+k-1}}{B\\!\\left(\\frac{d_1}{2}+k,\\frac{d_2}{2}\\right)\\left(1+\\frac{d_1}{d_2}x\\right)^{(d_1+d_2)/2+k}}",
+    "intuition": "This is the distribution of the F-statistic in ANOVA when the null hypothesis (no real group difference) is actually false -- the noncentrality parameter measures the true effect size, and statisticians use it to compute the statistical power of an F-test before running the experiment.",
+    "kid_story": "A science-fair judge compares average scores across several different classroom projects using an F-test. If there really is a genuine difference between the classrooms (not just random noise), the F-statistic follows this noncentral shape instead of the plain central F distribution.",
+    "kid_question": "What's the probability the F-statistic exceeds 2, given there's a real effect present?",
+    "use_cases": [
+      "Statistical power analysis for ANOVA and F-tests",
+      "Effect-size detection in experimental design"
+    ],
+    "code": "dist = stats.ncf(dfn=10, dfd=20, nc=3)\nprint('P(F > 2):', round(dist.sf(2), 4))\nprint('mean F:', round(dist.mean(), 4))"
+  },
+  "nct": {
+    "display": "Noncentral t",
+    "params": [
+      {
+        "name": "df",
+        "default": 10,
+        "desc": "degrees of freedom"
+      },
+      {
+        "name": "nc",
+        "default": 2,
+        "desc": "noncentrality parameter (standardized effect size)"
+      }
+    ],
+    "formula": "f(x;\\nu,\\delta) = \\frac{\\nu^{\\nu/2}\\exp\\!\\left(-\\frac{\\nu\\delta^2}{2(x^2+\\nu)}\\right)}{\\sqrt{\\pi}\\,\\Gamma(\\nu/2)\\,2^{(\\nu-1)/2}(\\nu+x^2)^{(\\nu+1)/2}}\\int_0^\\infty y^\\nu \\exp\\!\\left[-\\frac{1}{2}\\left(y-\\frac{\\delta x}{\\sqrt{\\nu+x^2}}\\right)^2\\right]dy",
+    "intuition": "This is the distribution of a t-statistic when the true effect being tested isn't actually zero -- it's the key ingredient for computing the statistical power of a t-test (the chance of correctly detecting a real effect of a given size before you even collect data).",
+    "kid_story": "A kid wants to know if a new fertilizer really makes plants grow taller. If the fertilizer genuinely works by some real amount, the t-statistic from comparing treated vs. untreated plants follows this noncentral-t shape instead of the ordinary symmetric t distribution.",
+    "kid_question": "What's the probability the t-statistic exceeds 2.0, given the fertilizer has this real effect size?",
+    "use_cases": [
+      "Statistical power analysis for t-tests in experimental design",
+      "Confidence interval construction for standardized effect sizes"
+    ],
+    "code": "dist = stats.nct(df=10, nc=2)\nprint('P(t > 2.0):', round(dist.sf(2.0), 4))\nprint('mean t:', round(dist.mean(), 4))"
+  },
+  "ncx2": {
+    "display": "Noncentral Chi-Squared",
+    "params": [
+      {
+        "name": "df",
+        "default": 5,
+        "desc": "degrees of freedom"
+      },
+      {
+        "name": "nc",
+        "default": 3,
+        "desc": "noncentrality parameter"
+      }
+    ],
+    "formula": "f(x;k,\\lambda) = \\frac12 e^{-(x+\\lambda)/2}\\left(\\frac{x}{\\lambda}\\right)^{k/4-1/2}I_{k/2-1}\\!\\left(\\sqrt{\\lambda x}\\right), \\quad x > 0",
+    "intuition": "If you sum k squared normal variables that each have a nonzero mean instead of zero mean, you get a noncentral chi-squared -- the noncentrality parameter lambda captures how far those means are from zero, and it's the distribution behind statistical power calculations for chi-squared tests.",
+    "kid_story": "A kid throws 5 darts at a target, but their aim is slightly off-center rather than perfectly centered. The total squared distance of all 5 darts from the bullseye follows this noncentral chi-squared shape instead of the usual centered version.",
+    "kid_question": "What's the probability the total squared distance exceeds 10?",
+    "use_cases": [
+      "Statistical power analysis for chi-squared goodness-of-fit tests",
+      "Signal detection theory (radar/sonar signal-plus-noise power)"
+    ],
+    "code": "dist = stats.ncx2(df=5, nc=3)\nprint('P(total > 10):', round(dist.sf(10), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "norminvgauss": {
+    "display": "Normal Inverse Gaussian",
+    "params": [
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "tail-heaviness parameter, alpha (a > 0)"
+      },
+      {
+        "name": "b",
+        "default": 0.5,
+        "desc": "skewness (asymmetry) parameter, beta (|b| < a)"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{a\\,K_1\\!\\left(a\\sqrt{1+x^2}\\right)}{\\pi\\sqrt{1+x^2}}\\exp\\!\\left(\\sqrt{a^2-b^2}+bx\\right)",
+    "intuition": "Built by mixing a normal distribution with random variance drawn from an inverse Gaussian, this produces a bell-shaped curve with fatter tails and adjustable skew -- a mainstay of quantitative finance for modeling stock returns, which are never quite as tame as a plain normal curve suggests.",
+    "kid_story": "A kid tracks their video game high scores each week. The scores cluster around a typical level like a bell curve, but every so often there's a much bigger jump (or drop) than a plain bell curve would predict -- exactly the extra 'fat tail' this distribution is built to capture.",
+    "kid_question": "What's the probability this week's score change exceeds 1.5?",
+    "use_cases": [
+      "Financial asset return modeling with fat tails and skew",
+      "Turbulence and physical fluctuation modeling"
+    ],
+    "code": "dist = stats.norminvgauss(a=2, b=0.5)\nprint('P(X > 1.5):', round(dist.sf(1.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "pearson3": {
+    "display": "Pearson Type III",
+    "params": [
+      {
+        "name": "skew",
+        "default": 1.5,
+        "desc": "skewness of the distribution (0 recovers the normal distribution)"
+      }
+    ],
+    "formula": "f(x;\\gamma) = \\frac{|\\beta|}{\\Gamma(\\alpha)}\\bigl(\\beta(x-\\zeta)\\bigr)^{\\alpha-1}e^{-\\beta(x-\\zeta)}, \\quad \\beta=\\frac{2}{\\gamma},\\ \\alpha=\\frac{4}{\\gamma^2},\\ \\zeta=-\\frac{\\alpha}{\\beta}",
+    "intuition": "Pearson Type III is a shifted, scaled gamma distribution reparameterized directly in terms of skewness, letting you dial in exactly how lopsided the curve is -- it's the officially recommended distribution for U.S. flood-frequency analysis (as the log-Pearson III) because real river flow data is rarely symmetric.",
+    "kid_story": "A kid records the water level of a creek every spring. Most years it's a fairly typical level, occasionally it's notably higher, but it almost never drops far below normal -- the skew parameter dials in exactly that kind of lopsided spread.",
+    "kid_question": "What's the probability the water level exceeds 2 units above baseline?",
+    "use_cases": [
+      "Flood-frequency analysis (log-Pearson III is the US federal standard)",
+      "Hydrology and streamflow data modeling"
+    ],
+    "code": "dist = stats.pearson3(skew=1.5)\nprint('P(level > 2):', round(dist.sf(2), 4))\nprint('mean level:', round(dist.mean(), 4))"
+  },
+  "powerlaw": {
+    "display": "Power Function",
+    "params": [
+      {
+        "name": "a",
+        "default": 2.5,
+        "desc": "shape (power) parameter"
+      }
+    ],
+    "formula": "f(x;a) = a\\,x^{a-1}, \\quad 0 \\le x \\le 1",
+    "intuition": "The simplest possible bounded power-law shape: a raw x^(a-1) density on [0,1] that's the a-th order statistic pattern of uniform samples -- when a>1 mass piles up near 1, when a<1 it piles up near 0, and a=1 reduces exactly to the uniform distribution.",
+    "kid_story": "A kid runs a raffle where the ticket that gets picked already has a bias baked in: because of how the power-law dial is set, tickets with higher numbers (closer to the top of the range) are more likely to win than lower ones.",
+    "kid_question": "What's the probability the winning ticket value is below 0.5?",
+    "use_cases": [
+      "Order statistics: distribution of the maximum of uniform samples",
+      "Modeling skewed bounded proportions in reliability testing"
+    ],
+    "code": "dist = stats.powerlaw(a=2.5)\nprint('P(X < 0.5):', round(dist.cdf(0.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "powerlognorm": {
+    "display": "Power Lognormal",
+    "params": [
+      {
+        "name": "c",
+        "default": 2,
+        "desc": "power exponent applied to the lognormal CDF"
+      },
+      {
+        "name": "s",
+        "default": 1,
+        "desc": "shape parameter of the underlying lognormal, sigma"
+      }
+    ],
+    "formula": "f(x;c,s) = \\frac{c}{xs}\\,\\phi\\!\\left(\\frac{\\ln x}{s}\\right)\\left[\\Phi\\!\\left(-\\frac{\\ln x}{s}\\right)\\right]^{c-1}, \\quad x > 0",
+    "intuition": "This raises the survival function of a lognormal distribution to a power c, which is exactly what happens to the lifetime distribution of a 'series system' made of c identical lognormal-lifetime components -- the whole system fails as soon as its weakest component does.",
+    "kid_story": "A string of holiday lights has several bulbs wired so that if any single bulb burns out, the whole string goes dark. Each bulb's lifetime is lognormal, and this distribution describes how long the whole string lasts before the first bulb quits.",
+    "kid_question": "What's the probability the light string lasts past 2 (scaled) time units?",
+    "use_cases": [
+      "Series-system reliability modeling (weakest-component failure)",
+      "Modeling lifetime of systems built from lognormal-lifetime components"
+    ],
+    "code": "dist = stats.powerlognorm(c=2, s=1)\nprint('P(lasts > 2):', round(dist.sf(2), 4))\nprint('median lifetime:', round(dist.median(), 4))"
+  },
+  "powernorm": {
+    "display": "Power Normal",
+    "params": [
+      {
+        "name": "c",
+        "default": 2,
+        "desc": "power exponent applied to the normal CDF"
+      }
+    ],
+    "formula": "f(x;c) = c\\,\\phi(x)\\left[\\Phi(-x)\\right]^{c-1}",
+    "intuition": "Like power lognormal but built from a normal core instead: raising the normal survival function to a power c gives the lifetime distribution of a series system of c normally-distributed components, skewing the familiar bell curve toward earlier failure.",
+    "kid_story": "A relay race team of several runners only finishes as fast as their slowest-starting runner allows (the whole team is only as good as its worst link) -- each runner's start time is roughly normal, and the team's effective start time follows this power-normal shape.",
+    "kid_question": "What's the probability the team's effective start time is below -1?",
+    "use_cases": [
+      "Series-system reliability modeling with normally-distributed component lifetimes",
+      "Order statistics of normal samples (extreme value approximations)"
+    ],
+    "code": "dist = stats.powernorm(c=2)\nprint('P(X < -1):', round(dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "rdist": {
+    "display": "R-distribution",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "shape parameter"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{(1-x^2)^{c/2-1}}{B(1/2,\\,c/2)}, \\quad -1 \\le x \\le 1",
+    "intuition": "The R-distribution is the exact distribution of a single coordinate of a random point picked uniformly on the surface of a c-dimensional sphere -- it's bounded between -1 and 1 and its shape parameter directly reflects how many dimensions that sphere lives in.",
+    "kid_story": "A kid spins a bubble-shaped ball randomly and marks where a fixed dot on its equator ends up, projected flat onto a ruler from -1 to 1. Where that dot lands follows the R-distribution, shaped by how many dimensions the 'ball' really has.",
+    "kid_question": "What's the probability the mark falls between -0.5 and 0.5?",
+    "use_cases": [
+      "Directional statistics: coordinate distribution of points on a hypersphere",
+      "Correlation coefficient sampling distribution derivations"
+    ],
+    "code": "dist = stats.rdist(c=1.5)\nprint('P(-0.5 < X < 0.5):', round(dist.cdf(0.5) - dist.cdf(-0.5), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "recipinvgauss": {
+    "display": "Reciprocal Inverse Gaussian",
+    "params": [
+      {
+        "name": "mu",
+        "default": 1,
+        "desc": "shape parameter (mean of the underlying inverse Gaussian's reciprocal)"
+      }
+    ],
+    "formula": "f(x;\\mu) = \\frac{1}{\\sqrt{2\\pi x}}\\exp\\!\\left(-\\frac{(1-\\mu x)^2}{2\\mu^2 x}\\right), \\quad x \\ge 0",
+    "intuition": "This is exactly what you get by taking 1/X when X follows an inverse Gaussian distribution -- since inverse Gaussian itself models first-passage times, its reciprocal naturally models rates (like speed = 1/time) derived from those same drift-diffusion processes.",
+    "kid_story": "Instead of timing how long the snail takes to reach the lettuce (inverse Gaussian), a kid instead calculates the snail's average speed for the trip -- 1 divided by the time -- which follows this reciprocal inverse Gaussian shape.",
+    "kid_question": "What's the probability the snail's average speed exceeds 1.5?",
+    "use_cases": [
+      "Rate/speed modeling as the reciprocal of first-passage time processes",
+      "Diffusion-model parameter transformations in cognitive science"
+    ],
+    "code": "dist = stats.recipinvgauss(mu=1)\nprint('P(speed > 1.5):', round(dist.sf(1.5), 4))\nprint('mean speed:', round(dist.mean(), 4))"
+  },
+  "reciprocal": {
+    "display": "Reciprocal (Log-Uniform, alias)",
+    "params": [
+      {
+        "name": "a",
+        "default": 1,
+        "desc": "lower bound of the support"
+      },
+      {
+        "name": "b",
+        "default": 10,
+        "desc": "upper bound of the support"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{1}{x\\ln(b/a)}, \\quad a \\le x \\le b",
+    "intuition": "Reciprocal is scipy's alias for exactly the same distribution as loguniform: it's uniform on the log scale, which is the natural way to express 'I know the order of magnitude range but nothing more' for a positive quantity spanning several powers of ten.",
+    "kid_story": "A kid guesses how many jellybeans are in a giant jar, somewhere between 1 and 10,000, and treats each power of ten as equally likely rather than each individual count -- that's exactly the reciprocal distribution's logic.",
+    "kid_question": "What's the probability the guess falls between 1 and 3?",
+    "use_cases": [
+      "Same as loguniform: hyperparameter search and scale-parameter priors",
+      "Historically used in resistor/component value selection ('preferred numbers')"
+    ],
+    "code": "dist = stats.reciprocal(a=1, b=10)\nprint('P(1 < X < 3):', round(dist.cdf(3) - dist.cdf(1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "rel_breitwigner": {
+    "display": "Relativistic Breit-Wigner",
+    "params": [
+      {
+        "name": "rho",
+        "default": 36,
+        "desc": "ratio of the resonance mass to its decay width, M0/Gamma"
+      }
+    ],
+    "formula": "f(x;\\rho) = \\frac{k}{(x^2-\\rho^2)^2+\\rho^2}, \\quad k = \\frac{2\\sqrt2\\,\\rho^2\\sqrt{\\rho^2+1}}{\\pi\\sqrt{\\rho^2+\\rho\\sqrt{\\rho^2+1}}}",
+    "intuition": "Physicists use this to model the measured mass of a short-lived particle resonance: quantum uncertainty smears the particle's 'true' mass into this peaked curve, whose width relates directly to how quickly the particle decays -- the default rho=36 mirrors the real Z boson's mass-to-width ratio.",
+    "kid_story": "A science-fair project 'weighs' a wobbly, fast-spinning top by measuring it many times. Because it's spinning and unstable, each measurement comes out a little different, clustering around its true mass in this specific peaked shape.",
+    "kid_question": "What's the probability the measured mass falls within 5 units of the resonance peak (rho)?",
+    "use_cases": [
+      "Modeling particle resonance mass measurements in high-energy physics (e.g. the Z boson)",
+      "Fitting spectral line shapes in nuclear and particle physics"
+    ],
+    "code": "dist = stats.rel_breitwigner(rho=36)\nprint('P(|mass - peak| < 5):', round(dist.cdf(41) - dist.cdf(31), 4))\nprint('mean mass:', round(dist.mean(), 4))"
+  },
+  "rice": {
+    "display": "Rice",
+    "params": [
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "noncentrality shape parameter, ratio of signal strength to noise std dev"
+      }
+    ],
+    "formula": "f(x;b) = x\\exp\\!\\left(-\\frac{x^2+b^2}{2}\\right)I_0(xb), \\quad x \\ge 0",
+    "intuition": "The Rice distribution is the magnitude of a 2D vector with a fixed nonzero 'signal' component plus independent normal noise in both directions -- it's exactly what happens to radio or radar signal strength when a real signal is present but corrupted by Gaussian noise (it reduces to Rayleigh when there's no signal at all).",
+    "kid_story": "A kid uses a metal detector that's genuinely picking up a buried coin (a real signal), but the reading also jitters around from random electrical noise in both the north-south and east-west directions -- the detector's total reading strength follows the Rice distribution.",
+    "kid_question": "What's the probability the detector reading exceeds 3?",
+    "use_cases": [
+      "Radar and radio signal detection with Gaussian noise (signal-plus-noise magnitude)",
+      "MRI image magnitude noise modeling in medical imaging"
+    ],
+    "code": "dist = stats.rice(b=2)\nprint('P(reading > 3):', round(dist.sf(3), 4))\nprint('mean reading:', round(dist.mean(), 4))"
+  },
+  "semicircular": {
+    "display": "Wigner Semicircle",
+    "params": [],
+    "formula": "f(x) = \\frac{2}{\\pi}\\sqrt{1-x^2}, \\quad -1 \\le x \\le 1",
+    "intuition": "Famous in random matrix theory: the eigenvalues of a large random symmetric matrix, properly rescaled, pile up into this exact semicircular shape (Wigner's semicircle law) -- a strikingly universal pattern that appears regardless of the details of how the random matrix was built.",
+    "kid_story": "A kid builds a big grid of dominoes tied together with random-strength springs and measures the natural 'wobble frequencies' of the whole connected system. Plot enough of those frequencies and they trace out a perfect semicircle, no matter the fine details of the springs.",
+    "kid_question": "What's the probability a randomly chosen wobble frequency falls between -0.5 and 0.5?",
+    "use_cases": [
+      "Random matrix theory: eigenvalue distribution (Wigner's semicircle law)",
+      "Nuclear physics energy-level spacing statistics"
+    ],
+    "code": "dist = stats.semicircular()\nprint('P(-0.5 < X < 0.5):', round(dist.cdf(0.5) - dist.cdf(-0.5), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "skewcauchy": {
+    "display": "Skew-Cauchy",
+    "params": [
+      {
+        "name": "a",
+        "default": 0.5,
+        "desc": "skewness parameter, -1 < a < 1"
+      }
+    ],
+    "formula": "f(x;a) = \\frac{1}{\\pi\\left(\\dfrac{x^2}{(a\\,\\text{sign}(x)+1)^2}+1\\right)}",
+    "intuition": "This stretches one side of the notoriously wild, mean-less Cauchy distribution more than the other, still keeping the classic Cauchy's extreme unpredictability but adding asymmetry -- useful for robust statistics when outliers are expected but not expected to be symmetric.",
+    "kid_story": "A weather vane sometimes gets stuck and swings wildly in gusty wind, but a nearby wall makes it more likely to swing extra far to one particular side than the other, so its wild swings are Cauchy-like but lopsided.",
+    "kid_question": "What's the probability the vane's reading exceeds 3 on the favored side?",
+    "use_cases": [
+      "Robust statistics with asymmetric heavy-tailed outlier modeling",
+      "Financial modeling of skewed, extreme return distributions"
+    ],
+    "code": "dist = stats.skewcauchy(a=0.5)\nprint('P(X > 3):', round(dist.sf(3), 4))\nprint('median:', round(dist.median(), 4))"
+  },
+  "skewnorm": {
+    "display": "Skew-Normal",
+    "params": [
+      {
+        "name": "a",
+        "default": 4,
+        "desc": "skewness parameter (0 recovers the ordinary normal distribution)"
+      }
+    ],
+    "formula": "f(x;a) = 2\\,\\phi(x)\\,\\Phi(ax)",
+    "intuition": "Skew-normal takes the familiar bell curve and tilts it, letting one tail stretch out further than the other while keeping most of the normal distribution's convenient mathematics -- exactly what you want when data is roughly bell-shaped but has a noticeable lean.",
+    "kid_story": "A kid measures how many minutes late the school bus is each morning. It's almost never early, occasionally exactly on time, and most often just a couple minutes late -- but some mornings it's dramatically late, giving the timing a distinct rightward lean.",
+    "kid_question": "What's the probability the bus is more than 1 unit late (in standardized minutes)?",
+    "use_cases": [
+      "Modeling skewed near-normal biological and physical measurements",
+      "Selection-effect modeling in econometrics and biostatistics"
+    ],
+    "code": "dist = stats.skewnorm(a=4)\nprint('P(X > 1):', round(dist.sf(1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "studentized_range": {
+    "display": "Studentized Range",
+    "params": [
+      {
+        "name": "k",
+        "default": 3,
+        "desc": "number of groups/samples being compared"
+      },
+      {
+        "name": "df",
+        "default": 10,
+        "desc": "degrees of freedom for the variance estimate"
+      }
+    ],
+    "formula": "f(x;k,\\nu) = \\frac{k(k-1)\\nu^{\\nu/2}}{\\Gamma(\\nu/2)2^{\\nu/2-1}}\\int_0^\\infty\\!\\int_{-\\infty}^\\infty s^\\nu e^{-\\nu s^2/2}\\phi(z)\\phi(sx+z)\\left[\\Phi(sx+z)-\\Phi(z)\\right]^{k-2}dz\\,ds",
+    "intuition": "This is the distribution of the range (max minus min) of k sample means divided by their estimated standard error -- the exact tool behind Tukey's HSD post-hoc test, which compares every pair of group means after an ANOVA without inflating the false-positive rate.",
+    "kid_story": "A science class splits into 3 teams to grow plants under different lights, then compares the tallest team's average against the shortest team's average. This distribution tells you how big that gap needs to be before it's more than what random luck alone would explain.",
+    "kid_question": "What's the probability the range between the tallest and shortest team averages exceeds 4 (in standardized units)?",
+    "use_cases": [
+      "Tukey's HSD post-hoc multiple comparison test after ANOVA",
+      "Quality control range-chart statistical process control"
+    ],
+    "code": "dist = stats.studentized_range(k=3, df=10)\nprint('P(range > 4):', round(dist.sf(4), 4))\nprint('mean range:', round(dist.mean(), 4))"
+  },
+  "trapezoid": {
+    "display": "Trapezoidal",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.3,
+        "desc": "start of the flat plateau, as a fraction of the support"
+      },
+      {
+        "name": "d",
+        "default": 0.7,
+        "desc": "end of the flat plateau, as a fraction of the support"
+      }
+    ],
+    "formula": "f(x;c,d) = \\begin{cases} \\dfrac{2x}{c(d-c+1)}, & 0 \\le x < c \\\\[6pt] \\dfrac{2}{d-c+1}, & c \\le x < d \\\\[6pt] \\dfrac{2(1-x)}{(1-d)(d-c+1)}, & d \\le x \\le 1 \\end{cases}",
+    "intuition": "A ramp up, a flat plateau, then a ramp down -- trapezoidal is the natural choice when you're confident a quantity lies somewhere in a central 'most likely' range but want to allow gradually tapering probability toward the edges, a common expert-elicitation shape in risk analysis.",
+    "kid_story": "A kid guesses how long a movie will take to finish loading: it's very unlikely to load instantly or take forever, and there's one central stretch of time (the plateau) where it's equally likely to finish at any moment.",
+    "kid_question": "What's the probability the movie finishes loading during the flat 'most likely' plateau, between x=0.3 and x=0.7?",
+    "use_cases": [
+      "Risk analysis and expert-elicited uncertainty modeling (project scheduling)",
+      "Fuzzy logic membership function construction"
+    ],
+    "code": "dist = stats.trapezoid(c=0.3, d=0.7)\nprint('P(0.3 < X < 0.7):', round(dist.cdf(0.7) - dist.cdf(0.3), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "triang": {
+    "display": "Triangular",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.5,
+        "desc": "location of the peak, as a fraction of the support"
+      }
+    ],
+    "formula": "f(x;c) = \\begin{cases} \\dfrac{2x}{c}, & 0 \\le x \\le c \\\\[4pt] \\dfrac{2(1-x)}{1-c}, & c \\le x \\le 1 \\end{cases}",
+    "intuition": "The simplest possible 'best guess plus a range' distribution: given only a minimum, maximum, and single most-likely value, the triangular distribution is the natural shape to draw between them, which is why it's a staple of project-planning and simulation software.",
+    "kid_story": "A kid estimates how long it'll take to finish a jigsaw puzzle: it definitely won't be done in 5 minutes, definitely won't take 3 hours, and their best single guess is right around 45 minutes -- so the probability ramps up to that guess and back down.",
+    "kid_question": "What's the probability the puzzle takes less time than the peak guess (X < 0.5)?",
+    "use_cases": [
+      "Project management time/cost estimation (PERT-style triangular estimates)",
+      "Monte Carlo simulation input when only min/max/mode are known"
+    ],
+    "code": "dist = stats.triang(c=0.5)\nprint('P(X < 0.5):', round(dist.cdf(0.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "truncexpon": {
+    "display": "Truncated Exponential",
+    "params": [
+      {
+        "name": "b",
+        "default": 4.5,
+        "desc": "upper truncation point (in units of the scale)"
+      }
+    ],
+    "formula": "f(x;b) = \\frac{e^{-x}}{1-e^{-b}}, \\quad 0 \\le x \\le b",
+    "intuition": "An exponential distribution that's been given a hard ceiling -- useful whenever a naturally exponential wait time or lifetime is physically capped, such as a lightbulb that's guaranteed to be replaced during scheduled maintenance before it can burn out naturally.",
+    "kid_story": "A kid's phone battery drains following an exponential-like pattern, but the kid always plugs it in to recharge by bedtime (4.5 hours after unplugging it at the latest), so the battery life is never allowed to run past that cutoff.",
+    "kid_question": "What's the probability the battery lasts longer than 3 hours (out of the capped 4.5)?",
+    "use_cases": [
+      "Modeling capped/censored lifetime data in reliability engineering",
+      "Scheduled-maintenance replacement time modeling"
+    ],
+    "code": "dist = stats.truncexpon(b=4.5)\nprint('P(lasts > 3 hrs):', round(dist.sf(3), 4))\nprint('mean lifetime:', round(dist.mean(), 4))"
+  },
+  "truncnorm": {
+    "display": "Truncated Normal",
+    "params": [
+      {
+        "name": "a",
+        "default": -2,
+        "desc": "lower truncation bound (in standard-deviation units)"
+      },
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "upper truncation bound (in standard-deviation units)"
+      }
+    ],
+    "formula": "f(x;a,b) = \\frac{\\phi(x)}{\\Phi(b)-\\Phi(a)}, \\quad a \\le x \\le b",
+    "intuition": "A normal distribution with the tails chopped off and the remaining middle rescaled to still integrate to 1 -- essential whenever you know a normally-behaved quantity has hard physical limits, like a test score that can't go below 0 or above 100.",
+    "kid_story": "A carnival ring-toss game scores points that would naturally spread out like a bell curve, but the machine only displays scores between -2 and 2 standard deviations from average, clipping off anything wilder than that.",
+    "kid_question": "What's the probability a displayed score falls between -1 and 1?",
+    "use_cases": [
+      "Modeling physically bounded normal quantities (test scores, physical dimensions)",
+      "Bayesian priors with hard constraints on parameter ranges"
+    ],
+    "code": "dist = stats.truncnorm(a=-2, b=2)\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "truncpareto": {
+    "display": "Truncated Pareto",
+    "params": [
+      {
+        "name": "b",
+        "default": 2,
+        "desc": "Pareto shape (tail index)"
+      },
+      {
+        "name": "c",
+        "default": 10,
+        "desc": "upper truncation point (standardized so support is [1, c])"
+      }
+    ],
+    "formula": "f(x;b,c) = \\frac{b}{1-c^{-b}}\\,\\frac{1}{x^{b+1}}, \\quad 1 \\le x \\le c",
+    "intuition": "Pure Pareto distributions have an infinite upper tail, but real-world 'power law' quantities (city populations, crater sizes, word frequencies) always run into a practical ceiling -- truncated Pareto keeps the classic power-law shape while enforcing that hard upper limit.",
+    "kid_story": "A kid catalogs the sizes of craters on the moon in a textbook. Crater sizes follow a power-law pattern where small craters vastly outnumber large ones, but the biggest crater in the book can't be bigger than the single largest one ever recorded.",
+    "kid_question": "What's the probability a randomly chosen crater size (in these units) exceeds 5?",
+    "use_cases": [
+      "Modeling power-law data with a known physical or empirical upper limit",
+      "City size, crater size, and word-frequency distributions with finite bounds"
+    ],
+    "code": "dist = stats.truncpareto(b=2, c=10)\nprint('P(size > 5):', round(dist.sf(5), 4))\nprint('mean size:', round(dist.mean(), 4))"
+  },
+  "truncweibull_min": {
+    "display": "Truncated Weibull Minimum",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "Weibull shape parameter"
+      },
+      {
+        "name": "a",
+        "default": 0.1,
+        "desc": "lower truncation bound"
+      },
+      {
+        "name": "b",
+        "default": 3,
+        "desc": "upper truncation bound"
+      }
+    ],
+    "formula": "f(x;c,a,b) = \\frac{c\\,x^{c-1}e^{-x^c}}{e^{-a^c}-e^{-b^c}}, \\quad a < x \\le b",
+    "intuition": "A Weibull lifetime distribution restricted to a known observation window -- exactly what happens in a reliability study where you only get to observe failures that occur between the study's start and end dates, never before or after.",
+    "kid_story": "A science teacher runs a classroom experiment tracking how long balloons stay inflated, but the experiment only runs between day 0.1 and day 3 -- any balloon that popped before or is still going after gets cut out of the data, so only failures inside that window count.",
+    "kid_question": "What's the probability a recorded balloon pops before day 1.5, given it's within the observed window?",
+    "use_cases": [
+      "Reliability analysis with censored/windowed observation periods",
+      "Survival analysis of failures observed only within a study window"
+    ],
+    "code": "dist = stats.truncweibull_min(c=1.5, a=0.1, b=3)\nprint('P(X < 1.5):', round(dist.cdf(1.5), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "tukeylambda": {
+    "display": "Tukey Lambda",
+    "params": [
+      {
+        "name": "lam",
+        "default": 0.14,
+        "desc": "shape parameter (0 gives logistic, 0.14 approximates normal, 1 gives uniform)"
+      }
+    ],
+    "formula": "Q(p;\\lambda) = \\frac{p^\\lambda-(1-p)^\\lambda}{\\lambda}",
+    "intuition": "Tukey lambda is defined by its quantile (inverse-CDF) function rather than a closed-form pdf, and a single knob lambda smoothly sweeps through shapes from heavy-tailed logistic, through something extremely close to normal (near lambda=0.14), all the way to the flat uniform distribution (lambda=1).",
+    "kid_story": "A toy 'shape machine' has one dial: turn it one way and the output looks like a fat-tailed logistic curve, turn it to the sweet spot and it looks almost exactly like a normal bell curve, turn it further and it flattens all the way out to a uniform block.",
+    "kid_question": "At the near-normal setting (lambda=0.14), what's the probability the output falls between -1 and 1?",
+    "use_cases": [
+      "Flexible family for exploratory data analysis and QQ-plot shape diagnostics",
+      "Simulating data with tunable tail weight for robustness studies"
+    ],
+    "code": "dist = stats.tukeylambda(lam=0.14)\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "vonmises": {
+    "display": "Von Mises",
+    "params": [
+      {
+        "name": "kappa",
+        "default": 3,
+        "desc": "concentration parameter (higher = tighter clustering around the mean direction)"
+      }
+    ],
+    "formula": "f(x;\\kappa) = \\frac{e^{\\kappa\\cos x}}{2\\pi I_0(\\kappa)}, \\quad -\\pi \\le x \\le \\pi",
+    "intuition": "The 'circular normal' distribution: it plays the same role for angles and directions that the normal distribution plays for straight-line measurements, correctly wrapping around so that an angle near +pi is treated as close to an angle near -pi.",
+    "kid_story": "A kid uses a compass to note which direction a weathervane points every hour on a windy day. It mostly points in one favorite direction but wobbles around it, and because compass directions wrap around (0 and 360 degrees are the same), you need a distribution built specifically for circles.",
+    "kid_question": "What's the probability the weathervane points within 1 radian of its favorite direction?",
+    "use_cases": [
+      "Directional/circular statistics for wind direction and compass bearings",
+      "Modeling phase angles in signal processing and biological rhythms"
+    ],
+    "code": "dist = stats.vonmises(kappa=3)\nprint('P(-1 < angle < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('circular mean:', round(dist.mean(), 4))"
+  },
+  "vonmises_line": {
+    "display": "Von Mises (linear support)",
+    "params": [
+      {
+        "name": "kappa",
+        "default": 3,
+        "desc": "concentration parameter (higher = tighter clustering around the mean)"
+      }
+    ],
+    "formula": "f(x;\\kappa) = \\frac{e^{\\kappa\\cos x}}{2\\pi I_0(\\kappa)}, \\quad -\\pi \\le x \\le \\pi",
+    "intuition": "This uses the exact same formula as the circular von Mises distribution, but scipy treats it as an ordinary distribution on the real line (no wraparound at the edges) -- useful when you want the von Mises bump shape for a bounded linear quantity rather than a genuinely circular one.",
+    "kid_story": "A kid uses the same 'clustered bump' shape as the weathervane example, but this time to describe a swing's push-strength setting on a fixed dial from -pi to pi, where the two ends of the dial are treated as genuinely different, not wrapped together.",
+    "kid_question": "What's the probability the dial setting falls within 1 unit of its most likely value?",
+    "use_cases": [
+      "Bounded-interval bump-shaped data without circular wraparound semantics",
+      "Modeling concentrated data on a fixed linear range using the von Mises shape"
+    ],
+    "code": "dist = stats.vonmises_line(kappa=3)\nprint('P(-1 < X < 1):', round(dist.cdf(1) - dist.cdf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "wald": {
+    "display": "Wald",
+    "params": [],
+    "formula": "f(x) = \\frac{1}{\\sqrt{2\\pi x^3}}\\exp\\!\\left(-\\frac{(x-1)^2}{2x}\\right), \\quad x > 0",
+    "intuition": "Wald is simply the inverse Gaussian distribution with its mean locked at exactly 1 -- a fixed reference version of the same 'first time a drifting random walk crosses a level' story, often used as a standardized building block in sequential-testing theory.",
+    "kid_story": "Same snail-crawling-to-the-lettuce story as inverse Gaussian, but now the lettuce is always placed at exactly the snail's typical average travel unit away, giving one fixed, standard version of the race to compare against.",
+    "kid_question": "What's the probability the snail reaches the lettuce within 0.8 time units?",
+    "use_cases": [
+      "Sequential probability ratio testing in statistics",
+      "Standardized first-passage-time modeling in drift-diffusion processes"
+    ],
+    "code": "dist = stats.wald()\nprint('P(reaches leaf by t=0.8):', round(dist.cdf(0.8), 4))\nprint('mean time:', round(dist.mean(), 4))"
+  },
+  "weibull_max": {
+    "display": "Weibull Maximum",
+    "params": [
+      {
+        "name": "c",
+        "default": 1.5,
+        "desc": "shape parameter"
+      }
+    ],
+    "formula": "f(x;c) = c\\,(-x)^{c-1}\\exp\\!\\left(-(-x)^c\\right), \\quad x \\le 0",
+    "intuition": "The mirror image of the ordinary (minimum) Weibull distribution, reflected onto the negative numbers -- it's the exact distribution of the maximum of many Weibull-tailed values, used whenever the quantity of interest is naturally capped from above rather than below.",
+    "kid_story": "A kid tracks the highest score anyone gets across many rounds of a game where scores are Weibull-shaped and can never exceed a hard ceiling of 0 (measured as 'distance below the maximum possible score'), so it always comes out negative or zero.",
+    "kid_question": "What's the probability the score is above -1 (close to the ceiling)?",
+    "use_cases": [
+      "Modeling maximum values with a hard upper physical limit",
+      "Extreme value theory: minimal-strength-link reflected onto maxima"
+    ],
+    "code": "dist = stats.weibull_max(c=1.5)\nprint('P(X > -1):', round(dist.sf(-1), 4))\nprint('mean:', round(dist.mean(), 4))"
+  },
+  "wrapcauchy": {
+    "display": "Wrapped Cauchy",
+    "params": [
+      {
+        "name": "c",
+        "default": 0.5,
+        "desc": "shape parameter, 0 < c < 1 (higher = tighter clustering)"
+      }
+    ],
+    "formula": "f(x;c) = \\frac{1-c^2}{2\\pi(1+c^2-2c\\cos x)}, \\quad 0 \\le x \\le 2\\pi",
+    "intuition": "Take the notoriously heavy-tailed Cauchy distribution and wrap it around a circle like winding string around a spool -- the result keeps a distinctive sharply-peaked, heavy-tailed circular shape, useful for directional data with occasional wild outlier angles.",
+    "kid_story": "A spinning arrow on a board mostly points in one favorite direction but every so often flings around wildly to point almost anywhere, more dramatically than the gentler von Mises weathervane would predict.",
+    "kid_question": "What's the probability the arrow's angle falls within 1 radian of its favorite direction?",
+    "use_cases": [
+      "Circular statistics with heavy-tailed, outlier-prone directional data",
+      "Modeling wind direction data with occasional extreme gusts"
+    ],
+    "code": "import numpy as np\ndist = stats.wrapcauchy(c=0.5)\np_near_zero = dist.cdf(1) + dist.sf(2*np.pi - 1)\nprint('P(within 1 rad of favorite dir):', round(p_near_zero, 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "betabinom": {
+    "display": "Beta-Binomial",
+    "params": [
+      {
+        "name": "n",
+        "default": 10,
+        "desc": "number of trials"
+      },
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "shape parameter of the underlying Beta success-probability, alpha"
+      },
+      {
+        "name": "b",
+        "default": 3,
+        "desc": "shape parameter of the underlying Beta success-probability, beta"
+      }
+    ],
+    "formula": "f(k;n,a,b) = \\binom{n}{k}\\frac{B(k+a,n-k+b)}{B(a,b)}, \\quad k=0,1,\\ldots,n",
+    "intuition": "Beta-binomial is what you get when the coin you're flipping n times doesn't have a fixed known bias -- instead, its success probability is itself random, drawn from a Beta distribution -- which produces more spread-out ('overdispersed') counts than a plain binomial with a fixed p.",
+    "kid_story": "A kid visits 10 different houses trick-or-treating, and each house has its own random chance of giving out candy (some houses are more generous than others, varying randomly). The total number of houses that give candy follows a beta-binomial, not a plain binomial, because the odds themselves vary house to house.",
+    "kid_question": "What's the probability exactly 6 out of the 10 houses give candy?",
+    "use_cases": [
+      "Overdispersed count data modeling in ecology and epidemiology",
+      "Bayesian A/B testing with variable per-user conversion rates"
+    ],
+    "code": "dist = stats.betabinom(n=10, a=2, b=3)\nprint('P(exactly 6 houses):', round(dist.pmf(6), 4))\nprint('expected houses:', round(dist.mean(), 4))"
+  },
+  "betanbinom": {
+    "display": "Beta-Negative-Binomial",
+    "params": [
+      {
+        "name": "n",
+        "default": 10,
+        "desc": "target number of successes"
+      },
+      {
+        "name": "a",
+        "default": 2,
+        "desc": "shape parameter of the underlying Beta success-probability, alpha"
+      },
+      {
+        "name": "b",
+        "default": 3,
+        "desc": "shape parameter of the underlying Beta success-probability, beta"
+      }
+    ],
+    "formula": "f(k;n,a,b) = \\binom{n+k-1}{k}\\frac{B(a+n,b+k)}{B(a,b)}, \\quad k=0,1,2,\\ldots",
+    "intuition": "Just as beta-binomial adds randomness to the success probability of a binomial count, beta-negative-binomial adds that same randomness to a negative binomial -- counting the number of failures before the n-th success, where the success chance itself varies randomly.",
+    "kid_story": "A kid keeps flipping a strange coin, collected from a jar of coins with different random biases, until they get 10 heads total. Because the coin's bias itself is a random pick from that jar, the number of tails they rack up along the way follows a beta-negative-binomial distribution.",
+    "kid_question": "What's the probability the kid needs exactly 4 extra tails before reaching 10 heads?",
+    "use_cases": [
+      "Overdispersed count/waiting-time modeling with variable success rates",
+      "Insurance claims frequency modeling with heterogeneous risk"
+    ],
+    "code": "dist = stats.betanbinom(n=10, a=2, b=3)\nprint('P(exactly 4 tails):', round(dist.pmf(4), 4))\nprint('expected tails:', round(dist.mean(), 4))"
+  },
+  "boltzmann": {
+    "display": "Boltzmann",
+    "params": [
+      {
+        "name": "lambda_",
+        "default": 1,
+        "desc": "decay rate parameter (higher = faster drop-off toward low values)"
+      },
+      {
+        "name": "N",
+        "default": 10,
+        "desc": "number of possible outcome values, 0 through N-1"
+      }
+    ],
+    "formula": "f(k;\\lambda,N) = \\frac{(1-e^{-\\lambda})e^{-\\lambda k}}{1-e^{-\\lambda N}}, \\quad k=0,1,\\ldots,N-1",
+    "intuition": "This is the discrete, truncated version of the exponential distribution -- named for the physics of energy levels in a system at thermal equilibrium, where lower energy states are exponentially more likely than higher ones, but there's only a finite number of levels available.",
+    "kid_story": "A video game has 10 possible power-up levels a mystery box can drop, numbered 0 through 9. Low-numbered (common) power-ups drop far more often than high-numbered (rare) ones, following an exponential-style drop-off, but the box can never drop level 10 or higher because it doesn't exist.",
+    "kid_question": "What's the probability the mystery box drops a power-up at level 2 or lower?",
+    "use_cases": [
+      "Statistical mechanics: energy level occupation at thermal equilibrium",
+      "Modeling truncated exponential-decay count data with a hard maximum"
+    ],
+    "code": "dist = stats.boltzmann(lambda_=1, N=10)\nprint('P(level <= 2):', round(dist.cdf(2), 4))\nprint('mean level:', round(dist.mean(), 4))"
+  },
+  "dlaplace": {
+    "display": "Discrete Laplace",
+    "params": [
+      {
+        "name": "a",
+        "default": 0.8,
+        "desc": "decay rate parameter (higher = tighter clustering around zero)"
+      }
+    ],
+    "formula": "f(k;a) = \\tanh(a/2)\\,e^{-a|k|}, \\quad k \\in \\mathbb{Z}",
+    "intuition": "The integer-valued cousin of the Laplace distribution: a sharp peak at zero with two symmetric, exponentially-decaying tails in both directions -- a natural model for rounding errors or integer-valued noise that's more likely to be small than large, in either direction.",
+    "kid_story": "A kid counts how many steps off-target their beanbag toss lands, left or right of a target line drawn on the ground, only in whole-step units. Small misses (in either direction) are common, big misses get rarer and rarer symmetrically.",
+    "kid_question": "What's the probability the beanbag lands within 2 steps of the target line, in either direction?",
+    "use_cases": [
+      "Discretized noise modeling for digital signal quantization error",
+      "Integer-valued financial tick-size and rounding error modeling"
+    ],
+    "code": "dist = stats.dlaplace(a=0.8)\nprint('P(|steps off| <= 2):', round(dist.cdf(2) - dist.cdf(-3), 4))\nprint('variance:', round(dist.var(), 4))"
+  },
+  "logser": {
+    "display": "Logarithmic Series",
+    "params": [
+      {
+        "name": "p",
+        "default": 0.6,
+        "desc": "shape parameter, 0 < p < 1"
+      }
+    ],
+    "formula": "f(k;p) = \\frac{-p^k}{k\\ln(1-p)}, \\quad k=1,2,3,\\ldots",
+    "intuition": "The logarithmic series distribution is the classic model in ecology for 'species abundance' -- most species in a habitat are observed just once or a few times, and progressively fewer species are seen many times, matching exactly this rapidly-decaying pattern.",
+    "kid_story": "A kid on a nature walk tallies how many times they spot each type of bug. Most bug species get spotted just once, a fair number get spotted twice, and only a rare few super-common bugs get spotted many, many times.",
+    "kid_question": "What's the probability a given bug species was spotted exactly 3 times?",
+    "use_cases": [
+      "Species abundance modeling in ecology (Fisher's logarithmic series)",
+      "Word-frequency and linguistic corpus modeling"
+    ],
+    "code": "dist = stats.logser(p=0.6)\nprint('P(spotted exactly 3 times):', round(dist.pmf(3), 4))\nprint('mean count:', round(dist.mean(), 4))"
+  },
+  "nchypergeom_fisher": {
+    "display": "Fisher's Noncentral Hypergeometric",
+    "params": [
+      {
+        "name": "M",
+        "default": 20,
+        "desc": "total number of objects in the bin"
+      },
+      {
+        "name": "n",
+        "default": 7,
+        "desc": "number of Type I objects in the bin"
+      },
+      {
+        "name": "N",
+        "default": 12,
+        "desc": "number of objects drawn (as a single handful)"
+      },
+      {
+        "name": "odds",
+        "default": 1.5,
+        "desc": "odds ratio favoring Type I objects being drawn"
+      }
+    ],
+    "formula": "p(x;M,n,N,\\omega) = \\frac{\\binom{n}{x}\\binom{M-n}{N-x}\\omega^x}{\\sum_{y}\\binom{n}{y}\\binom{M-n}{N-y}\\omega^y}",
+    "intuition": "Ordinary hypergeometric assumes every object is equally likely to be drawn, but Fisher's noncentral version adds a bias (the odds ratio) favoring one type over the other -- as if drawing a whole handful of biased marbles from a bag at once, all in one grab.",
+    "kid_story": "A jar has 7 red gumballs and 13 blue ones (20 total). A kid grabs a fistful of 12 gumballs all at once, but red gumballs are stickier and 1.5 times more likely to end up in the grab than blue ones.",
+    "kid_question": "What's the probability the kid's fistful contains exactly 5 red gumballs?",
+    "use_cases": [
+      "Genetic association studies (biased allele sampling)",
+      "Modeling biased urn/lottery draws where one group is favored"
+    ],
+    "code": "dist = stats.nchypergeom_fisher(M=20, n=7, N=12, odds=1.5)\nprint('P(exactly 5 red):', round(dist.pmf(5), 4))\nprint('expected red count:', round(dist.mean(), 4))"
+  },
+  "nchypergeom_wallenius": {
+    "display": "Wallenius' Noncentral Hypergeometric",
+    "params": [
+      {
+        "name": "M",
+        "default": 20,
+        "desc": "total number of objects in the bin"
+      },
+      {
+        "name": "n",
+        "default": 7,
+        "desc": "number of Type I objects in the bin"
+      },
+      {
+        "name": "N",
+        "default": 12,
+        "desc": "number of objects drawn (one at a time)"
+      },
+      {
+        "name": "odds",
+        "default": 1.5,
+        "desc": "odds ratio favoring Type I objects being drawn"
+      }
+    ],
+    "formula": "p(x;N,n,M,\\omega) = \\binom{n}{x}\\binom{M-n}{N-x}\\int_0^1\\left(1-t^{\\omega/D}\\right)^x\\left(1-t^{1/D}\\right)^{N-x}dt",
+    "intuition": "Wallenius' version models the same biased-draw idea as Fisher's, but for drawing objects one at a time (without replacement) rather than all in one handful -- the bias compounds sequentially as the pool of remaining objects shrinks, giving subtly different odds than Fisher's simultaneous-grab version.",
+    "kid_story": "Same jar of 7 red and 13 blue gumballs, but now the kid picks 12 of them out one at a time, and each time a sticky red gumball is 1.5 times more likely to be grabbed next than a blue one, updating as gumballs are removed.",
+    "kid_question": "What's the probability the kid ends up with exactly 5 red gumballs after picking one at a time?",
+    "use_cases": [
+      "Sequential biased sampling models in ecology and genetics",
+      "Modeling sports draft/selection processes with preferential picking"
+    ],
+    "code": "dist = stats.nchypergeom_wallenius(M=20, n=7, N=12, odds=1.5)\nprint('P(exactly 5 red):', round(dist.pmf(5), 4))\nprint('expected red count:', round(dist.mean(), 4))"
+  },
+  "nhypergeom": {
+    "display": "Negative Hypergeometric",
+    "params": [
+      {
+        "name": "M",
+        "default": 20,
+        "desc": "total population size"
+      },
+      {
+        "name": "n",
+        "default": 7,
+        "desc": "number of 'success' (red) objects in the population"
+      },
+      {
+        "name": "r",
+        "default": 5,
+        "desc": "number of 'failure' (blue) objects to wait for"
+      }
+    ],
+    "formula": "f(k;M,n,r) = \\frac{\\binom{k+r-1}{k}\\binom{M-r-k}{n-k}}{\\binom{M}{n}}, \\quad k=0,1,\\ldots,n",
+    "intuition": "Like drawing marbles from a bag without replacement, but instead of stopping after a fixed number of draws, you keep drawing until you've collected a target number of 'failures' -- the negative hypergeometric counts how many 'successes' you happened to pick up along the way.",
+    "kid_story": "A bin has 20 socks, 7 of them are the kid's favorite striped ones. The kid pulls socks out one at a time (without putting any back) until they've pulled out 5 plain (non-striped) socks, and counts how many striped socks they happened to grab in the process.",
+    "kid_question": "What's the probability the kid grabbed exactly 3 striped socks along the way?",
+    "use_cases": [
+      "Quality control acceptance sampling (draw until a fixed number of defects)",
+      "Ecological capture-recapture study design"
+    ],
+    "code": "dist = stats.nhypergeom(M=20, n=7, r=5)\nprint('P(exactly 3 striped):', round(dist.pmf(3), 4))\nprint('expected striped count:', round(dist.mean(), 4))"
+  },
+  "planck": {
+    "display": "Planck",
+    "params": [
+      {
+        "name": "lambda_",
+        "default": 0.5,
+        "desc": "decay rate parameter (higher = faster drop-off)"
+      }
+    ],
+    "formula": "f(k;\\lambda) = (1-e^{-\\lambda})e^{-\\lambda k}, \\quad k=0,1,2,\\ldots",
+    "intuition": "This is the discrete exponential distribution on all non-negative integers, named for its role in Planck's law of blackbody radiation describing how photon energy states are occupied -- it's mathematically identical to a geometric distribution, just re-parameterized in terms of a decay rate.",
+    "kid_story": "A vending machine dispenses a random number of extra bonus stickers with each purchase, and getting 0 extra stickers is most common, getting 1 extra is less common, and so on, dropping off at a steady exponential rate the more stickers you'd need.",
+    "kid_question": "What's the probability of getting exactly 2 bonus stickers?",
+    "use_cases": [
+      "Blackbody radiation photon occupation number modeling in physics",
+      "Discrete waiting-time and count modeling equivalent to the geometric distribution"
+    ],
+    "code": "dist = stats.planck(lambda_=0.5)\nprint('P(exactly 2 stickers):', round(dist.pmf(2), 4))\nprint('mean stickers:', round(dist.mean(), 4))"
+  },
+  "poisson_binom": {
+    "display": "Poisson Binomial",
+    "params": [
+      {
+        "name": "p",
+        "default": [
+          0.2,
+          0.5,
+          0.7,
+          0.3,
+          0.6
+        ],
+        "desc": "list of individual success probabilities, one per independent trial"
+      }
+    ],
+    "formula": "f(k;p_1,\\ldots,p_n) = \\sum_{A \\in F_k}\\ \\prod_{i \\in A}p_i \\prod_{j \\in A^c}(1-p_j)",
+    "intuition": "This generalizes the binomial distribution by letting every trial have its own different success probability instead of one shared p -- exactly what happens when you sum up several different biased coins (or, for example, several different students' independent chances of passing a quiz).",
+    "kid_story": "A kid has 5 differently-weighted trick coins in their pocket, each with its own personal chance of landing heads (20%, 50%, 70%, 30%, and 60%). They flip all 5 once and count the total number of heads.",
+    "kid_question": "What's the probability exactly 3 of the 5 coins land heads?",
+    "use_cases": [
+      "Election and voting outcome modeling with individually-varying voter probabilities",
+      "Reliability of systems built from non-identical independent components"
+    ],
+    "code": "dist = stats.poisson_binom(p=[0.2, 0.5, 0.7, 0.3, 0.6])\nprint('P(exactly 3 heads):', round(dist.pmf(3), 4))\nprint('expected heads:', round(dist.mean(), 4))"
+  },
+  "skellam": {
+    "display": "Skellam",
+    "params": [
+      {
+        "name": "mu1",
+        "default": 4,
+        "desc": "mean of the first (positive-contributing) Poisson process"
+      },
+      {
+        "name": "mu2",
+        "default": 2,
+        "desc": "mean of the second (negative-contributing) Poisson process"
+      }
+    ],
+    "formula": "f(k;\\mu_1,\\mu_2) = e^{-(\\mu_1+\\mu_2)}\\left(\\frac{\\mu_1}{\\mu_2}\\right)^{k/2}I_k\\!\\left(2\\sqrt{\\mu_1\\mu_2}\\right)",
+    "intuition": "Skellam is the distribution of the difference between two independent Poisson-counted quantities -- exactly the shape you get when you subtract 'goals scored by team B' from 'goals scored by team A,' where each team's scoring follows its own Poisson process.",
+    "kid_story": "Two soccer teams each score goals at their own steady average rate throughout a season of games. A kid tracks the difference in goals (team A's goals minus team B's goals) for each match, which follows the Skellam distribution.",
+    "kid_question": "What's the probability team A wins by exactly 2 goals?",
+    "use_cases": [
+      "Sports score-difference modeling (goal difference in soccer/hockey)",
+      "Modeling count differences between two independent Poisson processes"
+    ],
+    "code": "dist = stats.skellam(mu1=4, mu2=2)\nprint('P(win margin = 2):', round(dist.pmf(2), 4))\nprint('expected margin:', round(dist.mean(), 4))"
+  },
+  "yulesimon": {
+    "display": "Yule-Simon",
+    "params": [
+      {
+        "name": "alpha",
+        "default": 2.5,
+        "desc": "shape parameter controlling the power-law tail decay"
+      }
+    ],
+    "formula": "f(k;\\alpha) = \\alpha\\,B(k,\\alpha+1), \\quad k=1,2,3,\\ldots",
+    "intuition": "Yule-Simon arises from a 'rich get richer' preferential-attachment process -- new items are more likely to join whichever category is already popular -- producing a power-law tail that famously matches the sizes of biological genera, city populations, and the popularity of web links.",
+    "kid_story": "In a school where new kids always want to join whichever club is already the most popular, club sizes end up following the Yule-Simon distribution: most clubs stay tiny, but a few snowball into being enormous because popularity attracts even more popularity.",
+    "kid_question": "What's the probability a randomly chosen club has exactly 3 members?",
+    "use_cases": [
+      "Preferential attachment / 'rich get richer' network and popularity modeling",
+      "Word frequency and city population size-rank modeling (power-law tails)"
+    ],
+    "code": "dist = stats.yulesimon(alpha=2.5)\nprint('P(exactly 3 members):', round(dist.pmf(3), 4))\nprint('mean club size:', round(dist.mean(), 4))"
+  },
+  "zipf": {
+    "display": "Zipf (Zeta)",
+    "params": [
+      {
+        "name": "a",
+        "default": 2.5,
+        "desc": "shape parameter (tail exponent), a > 1"
+      }
+    ],
+    "formula": "f(k;a) = \\frac{1/k^a}{\\zeta(a)}, \\quad k=1,2,3,\\ldots",
+    "intuition": "Zipf's distribution is the discrete power law behind Zipf's law: the most common word in a language is used roughly twice as often as the second-most-common, three times as often as the third, and so on -- rank-1 items dominate, and popularity drops off fast but with a long tail.",
+    "kid_story": "A kid counts how often each word appears in their favorite book. The word 'the' shows up constantly, the next most common word shows up about half as often, and so on down a long tail of words that barely appear at all.",
+    "kid_question": "What's the probability a randomly picked word instance is the single most common word (rank 1)?",
+    "use_cases": [
+      "Word frequency modeling in linguistics and natural language processing (Zipf's law)",
+      "City population rank-size distribution modeling"
+    ],
+    "code": "dist = stats.zipf(a=2.5)\nprint('P(rank = 1):', round(dist.pmf(1), 4))\nprint('P(rank <= 5):', round(dist.cdf(5), 4))"
+  },
+  "zipfian": {
+    "display": "Zipfian",
+    "params": [
+      {
+        "name": "a",
+        "default": 1.2,
+        "desc": "shape parameter (tail exponent), a >= 0"
+      },
+      {
+        "name": "n",
+        "default": 10,
+        "desc": "number of distinct ranks (finite vocabulary size)"
+      }
+    ],
+    "formula": "f(k;a,n) = \\frac{1/k^a}{H_{n,a}}, \\quad k=1,2,\\ldots,n",
+    "intuition": "Zipfian is the finite-vocabulary version of the Zipf distribution -- instead of an infinite list of ranks, there are only n possible ranks (like the n most common words in a specific book), which matters when a=1 doesn't even work for infinite Zipf but works perfectly well here.",
+    "kid_story": "A kid's picture book only has 10 distinct words total. Some words (like 'the' and 'cat') repeat constantly while others barely show up, following the same rank-based power-law pattern as Zipf's law but capped at exactly 10 possible words.",
+    "kid_question": "What's the probability a randomly picked word instance is one of the top-3 most common words?",
+    "use_cases": [
+      "Word frequency modeling for finite vocabularies (limited corpora)",
+      "Recommendation system and catalog popularity modeling with a fixed item count"
+    ],
+    "code": "dist = stats.zipfian(a=1.2, n=10)\nprint('P(rank <= 3):', round(dist.cdf(3), 4))\nprint('mean rank:', round(dist.mean(), 4))"
+  }
+}

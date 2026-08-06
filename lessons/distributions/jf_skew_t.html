@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jones-Faddy Skew-t distribution (jf_skew_t) — Probability Distributions</title>
+<meta name="description" content="Jones and Faddy&#x27;s skew-t distribution generalizes the Student&#x27;s t distribution by letting the two tails have independently different weights (a contro">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Jones-Faddy Skew-t</h1>
+  <p class="scipy-name">scipy.stats.jf_skew_t</p>
+
+  <h2>Intuition</h2>
+  <p>Jones and Faddy&#x27;s skew-t distribution generalizes the Student&#x27;s t distribution by letting the two tails have independently different weights (a controls one side, b the other) -- when a equals b it reduces exactly to a symmetric t distribution with 2a degrees of freedom.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a,b) = C_{a,b}^{-1}\left(1+\frac{x}{\sqrt{a+b+x^2}}\right)^{a+1/2}\left(1-\frac{x}{\sqrt{a+b+x^2}}\right)^{b+1/2} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>2</code></td><td>left-tail shape parameter</td></tr><tr><td><code>b</code></td><td><code>8</code></td><td>right-tail shape parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Skewed financial return modeling with independently tunable tails</li><li>Robust regression error modeling with asymmetric outlier risk</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s grades on quizzes usually cluster tightly around their average, but they&#x27;re more likely to have one really bad surprise quiz than one incredibly lucky one -- the a and b knobs here let you dial in exactly how lopsided that surprise risk is.</p>
+    <p class="q">What&#x27;s the probability a quiz score falls more than 2 units below average?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.jf_skew_t(a=2, b=8)
+print(&#x27;P(X &lt; -2):&#x27;, round(dist.cdf(-2), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; -2): 0.6563
+mean: -3.1215</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/jf_skew_t.svg" alt="Jones-Faddy Skew-t chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

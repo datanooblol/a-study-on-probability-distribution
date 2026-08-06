@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laplace distribution (laplace) — Probability Distributions</title>
+<meta name="description" content="Two Exponential distributions glued back-to-back at the center -- a sharp peak with fatter tails than Normal. It models &#x27;usually pretty close, but wit">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Laplace</h1>
+  <p class="scipy-name">scipy.stats.laplace</p>
+
+  <h2>Intuition</h2>
+  <p>Two Exponential distributions glued back-to-back at the center -- a sharp peak with fatter tails than Normal. It models &#x27;usually pretty close, but with more frequent bigger misses than a bell curve would predict&#x27;, which is why it&#x27;s the statistical backbone of robust (outlier-tolerant) methods and L1-style penalties.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{2b} e^{-|x-\text{loc}|/b} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>loc</code></td><td><code>0</code></td><td>location (center)</td></tr><tr><td><code>scale</code></td><td><code>1</code></td><td>spread (b)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling errors with more outliers than a Normal distribution allows</li><li>Signal and image processing (edge/differences tend to be Laplace-shaped)</li><li>Statistical justification for L1 regularization / median-based robust regression</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A pretty good dart player usually lands very close to the bullseye, but every so often badly misjudges and lands quite far off, in either direction.</p>
+    <p class="q">What&#x27;s the chance a dart lands more than 2 units from the bullseye?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.laplace(loc=0, scale=1)
+print(&#x27;P(|miss| &gt; 2):&#x27;, round(2 * dist.sf(2), 4))</code></pre>
+  <div class="output">P(|miss| &gt; 2): 0.1353</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/laplace.svg" alt="Laplace chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

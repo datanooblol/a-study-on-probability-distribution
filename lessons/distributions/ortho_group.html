@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orthogonal Group distribution (ortho_group) — Probability Distributions</title>
+<meta name="description" content="Not a distribution over numbers but over *rotations and reflections*: every possible way to rigidly rotate or flip space is equally likely. Multiplyin">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Orthogonal Group</h1>
+  <p class="scipy-name">scipy.stats.ortho_group</p>
+
+  <h2>Intuition</h2>
+  <p>Not a distribution over numbers but over *rotations and reflections*: every possible way to rigidly rotate or flip space is equally likely. Multiplying any vector by one of these matrices spins or mirrors it without stretching or squashing it.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ \text{Uniform measure over } O(n) = \{\mathbf{Q} : \mathbf{Q}^T\mathbf{Q} = I\} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>dim</code></td><td><code>3</code></td><td>dimension of the random orthogonal matrix</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Random rotations in computer graphics and robotics</li><li>Random orthogonal projections/initializations in machine learning</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Randomly spinning (or sometimes mirror-flipping) a cube in space to a completely new orientation, with every possible orientation equally likely.</p>
+    <p class="q">What does one such random orientation matrix look like?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.ortho_group(dim=3)
+sample = dist.rvs(random_state=0)
+print(&#x27;one random orthogonal matrix:&#x27;)
+print(np.round(sample, 3))</code></pre>
+  <div class="output">one random orthogonal matrix:
+[[ 0.587 -0.485  0.648]
+ [ 0.745  0.636 -0.198]
+ [ 0.316 -0.6   -0.735]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/ortho_group.svg" alt="Orthogonal Group chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Johnson SB (bounded) distribution (johnsonsb) — Probability Distributions</title>
+<meta name="description" content="Johnson SB transforms a normal random variable through a logit-style function to squeeze it onto a bounded (0,1) interval -- it&#x27;s part of the Johnson ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Johnson SB (bounded)</h1>
+  <p class="scipy-name">scipy.stats.johnsonsb</p>
+
+  <h2>Intuition</h2>
+  <p>Johnson SB transforms a normal random variable through a logit-style function to squeeze it onto a bounded (0,1) interval -- it&#x27;s part of the Johnson system, a set of transformations built to fit almost any real dataset&#x27;s shape by matching its mean, variance, skewness and kurtosis.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a,b) = \frac{b}{x(1-x)\sqrt{2\pi}}\exp\!\left(-\frac{1}{2}\left(a+b\ln\frac{x}{1-x}\right)^2\right), \quad 0 < x < 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>1</code></td><td>shape parameter controlling skewness</td></tr><tr><td><code>b</code></td><td><code>2</code></td><td>shape parameter controlling how tightly mass concentrates</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Fitting bounded empirical data (percentages, proportions) to a flexible parametric shape</li><li>Financial modeling of bounded asset prices or ratios</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A teacher grades homework as a percentage from 0% to 100%. Rather than a plain uniform spread, the scores cluster and skew in a specific way that this bounded, transformed-normal shape captures well.</p>
+    <p class="q">What&#x27;s the probability a score falls below 0.4 (40%)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.johnsonsb(a=1, b=2)
+print(&#x27;P(X &lt; 0.4):&#x27;, round(dist.cdf(0.4), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; 0.4): 0.575
+mean: 0.384</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/johnsonsb.svg" alt="Johnson SB (bounded) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

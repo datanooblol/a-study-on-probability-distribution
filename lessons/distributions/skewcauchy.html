@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skew-Cauchy distribution (skewcauchy) — Probability Distributions</title>
+<meta name="description" content="This stretches one side of the notoriously wild, mean-less Cauchy distribution more than the other, still keeping the classic Cauchy&#x27;s extreme unpredi">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Skew-Cauchy</h1>
+  <p class="scipy-name">scipy.stats.skewcauchy</p>
+
+  <h2>Intuition</h2>
+  <p>This stretches one side of the notoriously wild, mean-less Cauchy distribution more than the other, still keeping the classic Cauchy&#x27;s extreme unpredictability but adding asymmetry -- useful for robust statistics when outliers are expected but not expected to be symmetric.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = \frac{1}{\pi\left(\dfrac{x^2}{(a\,\text{sign}(x)+1)^2}+1\right)} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>0.5</code></td><td>skewness parameter, -1 &lt; a &lt; 1</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Robust statistics with asymmetric heavy-tailed outlier modeling</li><li>Financial modeling of skewed, extreme return distributions</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A weather vane sometimes gets stuck and swings wildly in gusty wind, but a nearby wall makes it more likely to swing extra far to one particular side than the other, so its wild swings are Cauchy-like but lopsided.</p>
+    <p class="q">What&#x27;s the probability the vane&#x27;s reading exceeds 3 on the favored side?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.skewcauchy(a=0.5)
+print(&#x27;P(X &gt; 3):&#x27;, round(dist.sf(3), 4))
+print(&#x27;median:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(X &gt; 3): 0.2214
+median: 0.866</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/skewcauchy.svg" alt="Skew-Cauchy chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

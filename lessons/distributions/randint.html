@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discrete Uniform distribution (randint) — Probability Distributions</title>
+<meta name="description" content="Every whole number in a range is exactly equally likely -- no favorites. It&#x27;s the discrete cousin of the continuous Uniform distribution, and the simp">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Discrete Uniform</h1>
+  <p class="scipy-name">scipy.stats.randint</p>
+
+  <h2>Intuition</h2>
+  <p>Every whole number in a range is exactly equally likely -- no favorites. It&#x27;s the discrete cousin of the continuous Uniform distribution, and the simplest possible &#x27;fair&#x27; randomness.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = \frac{1}{\text{high} - \text{low}}, \quad k = \text{low}, \ldots, \text{high}-1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>low</code></td><td><code>1</code></td><td>smallest possible value (inclusive)</td></tr><tr><td><code>high</code></td><td><code>7</code></td><td>one past the largest possible value</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Simulating fair dice or lottery draws</li><li>Randomly sampling an index/ID from a fixed range</li><li>Shuffling and permutation tests in statistics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Rolling one ordinary, perfectly fair six-sided die.</p>
+    <p class="q">What&#x27;s the chance of rolling a 4, and what&#x27;s the chance of rolling a 4 or higher?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.randint(low=1, high=7)
+print(&#x27;P(roll a 4):&#x27;, round(dist.pmf(4), 4))
+print(&#x27;P(roll 4 or higher):&#x27;, round(dist.sf(3), 4))</code></pre>
+  <div class="output">P(roll a 4): 0.1667
+P(roll 4 or higher): 0.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/randint.svg" alt="Discrete Uniform chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

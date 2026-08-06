@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inverse Weibull (Frechet) distribution (invweibull) — Probability Distributions</title>
+<meta name="description" content="Also known as the Frechet distribution, this is one of the three classic extreme-value families and describes the distribution of the maximum of sampl">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Inverse Weibull (Frechet)</h1>
+  <p class="scipy-name">scipy.stats.invweibull</p>
+
+  <h2>Intuition</h2>
+  <p>Also known as the Frechet distribution, this is one of the three classic extreme-value families and describes the distribution of the maximum of samples drawn from a distribution with a heavy power-law tail -- think record-breaking rainfall or record stock gains.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = c\,x^{-c-1}e^{-x^{-c}}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>3</code></td><td>shape parameter controlling tail heaviness</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Extreme value theory for maxima of heavy-tailed data (Frechet family)</li><li>Modeling maximum wind speeds and flood peaks in climate risk</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid tracks the single biggest wave that rolls in each day at the beach. Most days the biggest wave is a fairly typical size, but the Frechet shape leaves real room for an occasional monster wave far bigger than the rest.</p>
+    <p class="q">What&#x27;s the probability the day&#x27;s biggest wave exceeds 2 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.invweibull(c=3)
+print(&#x27;P(wave &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median wave size:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(wave &gt; 2): 0.1175
+median wave size: 1.1299</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/invweibull.svg" alt="Inverse Weibull (Frechet) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

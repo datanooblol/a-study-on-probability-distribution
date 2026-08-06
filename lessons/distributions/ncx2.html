@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noncentral Chi-Squared distribution (ncx2) — Probability Distributions</title>
+<meta name="description" content="If you sum k squared normal variables that each have a nonzero mean instead of zero mean, you get a noncentral chi-squared -- the noncentrality parame">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Noncentral Chi-Squared</h1>
+  <p class="scipy-name">scipy.stats.ncx2</p>
+
+  <h2>Intuition</h2>
+  <p>If you sum k squared normal variables that each have a nonzero mean instead of zero mean, you get a noncentral chi-squared -- the noncentrality parameter lambda captures how far those means are from zero, and it&#x27;s the distribution behind statistical power calculations for chi-squared tests.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;k,\lambda) = \frac12 e^{-(x+\lambda)/2}\left(\frac{x}{\lambda}\right)^{k/4-1/2}I_{k/2-1}\!\left(\sqrt{\lambda x}\right), \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>df</code></td><td><code>5</code></td><td>degrees of freedom</td></tr><tr><td><code>nc</code></td><td><code>3</code></td><td>noncentrality parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Statistical power analysis for chi-squared goodness-of-fit tests</li><li>Signal detection theory (radar/sonar signal-plus-noise power)</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid throws 5 darts at a target, but their aim is slightly off-center rather than perfectly centered. The total squared distance of all 5 darts from the bullseye follows this noncentral chi-squared shape instead of the usual centered version.</p>
+    <p class="q">What&#x27;s the probability the total squared distance exceeds 10?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.ncx2(df=5, nc=3)
+print(&#x27;P(total &gt; 10):&#x27;, round(dist.sf(10), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(total &gt; 10): 0.2828
+mean: 8.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/ncx2.svg" alt="Noncentral Chi-Squared chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

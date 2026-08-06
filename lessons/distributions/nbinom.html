@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Negative Binomial distribution (nbinom) — Probability Distributions</title>
+<meta name="description" content="Geometric generalized: instead of stopping at the 1st success, keep going until the n-th success, and count the *failures* along the way. Geometric is">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Negative Binomial</h1>
+  <p class="scipy-name">scipy.stats.nbinom</p>
+
+  <h2>Intuition</h2>
+  <p>Geometric generalized: instead of stopping at the 1st success, keep going until the n-th success, and count the *failures* along the way. Geometric is the special case n=1. It&#x27;s popular in real data because it handles more spread-out (&#x27;overdispersed&#x27;) counts than Poisson.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = \binom{k+n-1}{k} p^{n}(1-p)^{k}, \quad k = 0, 1, 2, \ldots \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>n</code></td><td><code>5</code></td><td>number of successes we&#x27;re waiting for</td></tr><tr><td><code>p</code></td><td><code>0.4</code></td><td>probability of success on each attempt</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Insurance claim counts (more variable than Poisson allows)</li><li>Number of failed manufacturing attempts before r good units</li><li>Modeling overdispersed count data in ecology and biology</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid is fishing at a pond and wants to catch exactly 5 fish before going home. Each cast has a 40% chance of catching one.</p>
+    <p class="q">By the time they land their 5th fish, what&#x27;s the chance they had exactly 3 empty casts along the way?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.nbinom(n=5, p=0.4)
+print(&#x27;P(exactly 3 empty casts before 5th fish):&#x27;, round(dist.pmf(3), 4))
+print(&#x27;expected empty casts:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 3 empty casts before 5th fish): 0.0774
+expected empty casts: 7.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/nbinom.svg" alt="Negative Binomial chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

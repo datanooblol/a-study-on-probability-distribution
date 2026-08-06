@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beta-Binomial distribution (betabinom) — Probability Distributions</title>
+<meta name="description" content="Beta-binomial is what you get when the coin you&#x27;re flipping n times doesn&#x27;t have a fixed known bias -- instead, its success probability is itself rand">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> <span class="badge tier2">extended catalog</span>
+  <h1>Beta-Binomial</h1>
+  <p class="scipy-name">scipy.stats.betabinom</p>
+
+  <h2>Intuition</h2>
+  <p>Beta-binomial is what you get when the coin you&#x27;re flipping n times doesn&#x27;t have a fixed known bias -- instead, its success probability is itself random, drawn from a Beta distribution -- which produces more spread-out (&#x27;overdispersed&#x27;) counts than a plain binomial with a fixed p.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(k;n,a,b) = \binom{n}{k}\frac{B(k+a,n-k+b)}{B(a,b)}, \quad k=0,1,\ldots,n \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>n</code></td><td><code>10</code></td><td>number of trials</td></tr><tr><td><code>a</code></td><td><code>2</code></td><td>shape parameter of the underlying Beta success-probability, alpha</td></tr><tr><td><code>b</code></td><td><code>3</code></td><td>shape parameter of the underlying Beta success-probability, beta</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Overdispersed count data modeling in ecology and epidemiology</li><li>Bayesian A/B testing with variable per-user conversion rates</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid visits 10 different houses trick-or-treating, and each house has its own random chance of giving out candy (some houses are more generous than others, varying randomly). The total number of houses that give candy follows a beta-binomial, not a plain binomial, because the odds themselves vary house to house.</p>
+    <p class="q">What&#x27;s the probability exactly 6 out of the 10 houses give candy?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.betabinom(n=10, a=2, b=3)
+print(&#x27;P(exactly 6 houses):&#x27;, round(dist.pmf(6), 4))
+print(&#x27;expected houses:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 6 houses): 0.1049
+expected houses: 4.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/betabinom.svg" alt="Beta-Binomial chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generalized Normal distribution (gennorm) — Probability Distributions</title>
+<meta name="description" content="Generalized normal is a dial that morphs a pointy Laplace distribution (beta=1) into the familiar bell curve (beta=2) and onward toward a flat-topped,">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Generalized Normal</h1>
+  <p class="scipy-name">scipy.stats.gennorm</p>
+
+  <h2>Intuition</h2>
+  <p>Generalized normal is a dial that morphs a pointy Laplace distribution (beta=1) into the familiar bell curve (beta=2) and onward toward a flat-topped, nearly uniform shape (large beta) -- one formula, a whole spectrum of peakedness.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\beta) = \frac{\beta}{2\Gamma(1/\beta)}e^{-|x|^\beta} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>beta</code></td><td><code>1.5</code></td><td>shape parameter (2 gives normal, 1 gives Laplace, large values approach uniform)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling image and signal noise with tunable peakedness (image compression)</li><li>Robust statistics: interpolating between Laplace and normal error models</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A dartboard&#x27;s scatter pattern can be pointy-peaked like a tent, rounded like a normal bell, or nearly flat-topped depending on how a single &#x27;peakedness&#x27; dial is set on the dart-throwing machine.</p>
+    <p class="q">With the dial set to beta=1.5, what&#x27;s the probability a dart lands within 1 unit of the bullseye?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.gennorm(beta=1.5)
+print(&#x27;P(|X| &lt; 1):&#x27;, round(dist.cdf(1) - dist.cdf(-1), 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(|X| &lt; 1): 0.7752
+variance: 0.7385</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/gennorm.svg" alt="Generalized Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

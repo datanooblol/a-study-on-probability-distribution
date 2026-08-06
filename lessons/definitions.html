@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Definitions — Probability Distributions</title>
+<meta name="description" content="Discrete vs continuous, PMF vs PDF vs CDF, and how to use scipy.stats wisely.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="index.html">Index</a>
+  <a href="definitions.html">Definitions</a>
+  <a href="connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <h1>Definitions</h1>
+  <p class="lede">The vocabulary every distribution page uses — read this once and every
+  other page will make sense.</p>
+
+  <h2>Discrete vs. continuous</h2>
+  <p>A <strong>discrete</strong> random variable can only take specific, separated values —
+  usually whole numbers you could list: 0, 1, 2, 3, … (number of heads, number of claims,
+  number of customers). A <strong>continuous</strong> random variable can take any value on a
+  range — there's always another value between any two you pick (height, waiting time,
+  temperature). This distinction is the first thing to check about any random quantity,
+  because it decides which function you reach for: PMF for discrete, PDF for continuous.</p>
+
+  <h2>PMF, PDF, CDF, SF, PPF</h2>
+  <table class="def-table">
+    <tr><th>Name</th><th>scipy method</th><th>Applies to</th><th>Answers</th></tr>
+    <tr><td>Probability Mass Function (PMF)</td><td><code>dist.pmf(x)</code></td><td>discrete</td>
+        <td>The exact probability that X equals x: P(X = x). This <em>is</em> a probability, always between 0 and 1.</td></tr>
+    <tr><td>Probability Density Function (PDF)</td><td><code>dist.pdf(x)</code></td><td>continuous</td>
+        <td>The <em>density</em> of probability at x — not a probability itself (it can exceed 1).
+        Only an area under the curve, over some range, is a probability.</td></tr>
+    <tr><td>Cumulative Distribution Function (CDF)</td><td><code>dist.cdf(x)</code></td><td>both</td>
+        <td>P(X ≤ x) — the probability of x or anything smaller/earlier.</td></tr>
+    <tr><td>Survival Function (SF)</td><td><code>dist.sf(x)</code></td><td>both</td>
+        <td>P(X &gt; x) = 1 − CDF(x) — the upper tail.</td></tr>
+    <tr><td>Percent Point Function (PPF)</td><td><code>dist.ppf(q)</code></td><td>both</td>
+        <td>The inverse of the CDF: "what x gives cumulative probability q?" — i.e. a quantile.</td></tr>
+  </table>
+
+  <p><strong>Why the PDF is not a probability:</strong> for a continuous variable, the
+  probability of hitting any single exact value is zero (there are infinitely many
+  possible values). <code>pdf(x)</code> only tells you the relative likelihood <em>density</em>
+  near x; you get an actual probability by integrating it over an interval — which is
+  exactly what <code>cdf(b) - cdf(a)</code> does for you, i.e. P(a &lt; X ≤ b).</p>
+
+  <h2>Worked side-by-side example</h2>
+  <p>Ten coin flips, fair coin — discrete, <code>scipy.stats.binom(n=10, p=0.5)</code>:</p>
+  <pre><code>dist = stats.binom(n=10, p=0.5)
+dist.pmf(5)   # P(exactly 5 heads)
+dist.cdf(5)   # P(5 or fewer heads)
+dist.sf(5)    # P(more than 5 heads)</code></pre>
+  <div class="output">P(exactly 5 heads) = 0.2461
+P(5 or fewer heads) = 0.623
+P(more than 5 heads) = 0.377</div>
+
+  <p>Standard normal — continuous, <code>scipy.stats.norm(loc=0, scale=1)</code>:</p>
+  <pre><code>dist = stats.norm(loc=0, scale=1)
+dist.pdf(1.96)    # density at x=1.96 (NOT a probability)
+dist.cdf(1.96)    # P(X <= 1.96)
+dist.sf(1.96)     # P(X > 1.96), the upper tail
+dist.ppf(0.975)   # the x whose CDF is 0.975</code></pre>
+  <div class="output">density at x=1.96 = 0.0584   (not a probability — can exceed 1 for narrow distributions)
+P(X &lt;= 1.96) = 0.975
+P(X &gt; 1.96) = 0.025
+x such that P(X &lt;= x) = 0.975  →  x = 1.96</div>
+
+  <h2>Using them wisely</h2>
+  <ul class="use-cases">
+    <li><strong>Prefer <code>sf(x)</code> over <code>1 - cdf(x)</code> for tail probabilities.</strong>
+        When x is far in the tail, <code>cdf(x)</code> rounds to 1.0 in floating point, and
+        <code>1 - cdf(x)</code> silently becomes 0. <code>sf</code> is computed directly and
+        keeps precision far into the tail.</li>
+    <li><strong>Use <code>ppf</code> for critical values / quantiles</strong> — e.g. the 95th
+        percentile, a confidence interval bound, or a value-at-risk threshold, instead of
+        solving the CDF equation by hand.</li>
+    <li><strong>Never compare a PDF value across distributions with different scales</strong>
+        and call it a probability comparison — densities depend on the units of x. Compare
+        CDF differences (areas) instead.</li>
+    <li><strong>Every scipy distribution also exposes <code>.mean()</code>, <code>.var()</code>,
+        <code>.std()</code>, <code>.median()</code>, and <code>.rvs(size=n)</code></strong> for
+        random sampling — useful for simulation once you've picked the right shape.</li>
+    <li><strong>Discrete CDFs are step functions</strong> — <code>P(X &lt; x)</code> and
+        <code>P(X ≤ x)</code> are genuinely different for discrete variables (use
+        <code>dist.cdf(x - 1)</code> for the strict version), whereas for continuous variables
+        they're the same because any single point has probability zero.</li>
+  </ul>
+
+  <div class="footer-nav">
+    <a href="index.html">&larr; Back to index</a>
+    <a href="connections.html">Next: how distributions connect &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

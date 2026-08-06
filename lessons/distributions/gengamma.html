@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generalized Gamma distribution (gengamma) — Probability Distributions</title>
+<meta name="description" content="Generalized gamma adds a power-transform knob c on top of the ordinary gamma distribution, letting it mimic gamma, Weibull, exponential, and half-norm">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Generalized Gamma</h1>
+  <p class="scipy-name">scipy.stats.gengamma</p>
+
+  <h2>Intuition</h2>
+  <p>Generalized gamma adds a power-transform knob c on top of the ordinary gamma distribution, letting it mimic gamma, Weibull, exponential, and half-normal distributions all as special cases just by adjusting a and c.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a,c) = \frac{|c|\,x^{ca-1}e^{-x^c}}{\Gamma(a)}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>5</code></td><td>shape parameter (like gamma&#x27;s shape)</td></tr><tr><td><code>c</code></td><td><code>2</code></td><td>power-transform shape parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Flexible lifetime/survival modeling that nests Weibull and gamma as special cases</li><li>Hydrology: modeling rainfall and streamflow amounts</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A vending machine dispenses candy after a random wait, and by tuning two knobs -- how many &#x27;stages&#x27; of waiting (a) and how the wait stretches or compresses (c) -- you can make the machine behave like several different familiar waiting-time toys, all with one master dial.</p>
+    <p class="q">What&#x27;s the probability the wait exceeds 2 units, and what&#x27;s the expected wait?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.gengamma(a=5, c=2)
+print(&#x27;P(wait &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;expected wait:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(wait &gt; 2): 0.6288
+expected wait: 2.1809</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/gengamma.svg" alt="Generalized Gamma chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

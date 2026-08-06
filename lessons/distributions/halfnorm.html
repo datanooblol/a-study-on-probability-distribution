@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Half-Normal distribution (halfnorm) — Probability Distributions</title>
+<meta name="description" content="The positive half of a normal distribution centered at zero -- this is exactly the distribution of the absolute value (magnitude) of any zero-mean nor">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Half-Normal</h1>
+  <p class="scipy-name">scipy.stats.halfnorm</p>
+
+  <h2>Intuition</h2>
+  <p>The positive half of a normal distribution centered at zero -- this is exactly the distribution of the absolute value (magnitude) of any zero-mean normal random variable, so it naturally models measurement errors when you only care about size, not sign.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \sqrt{2/\pi}\,e^{-x^2/2}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling magnitude of zero-centered measurement error</li><li>Bayesian prior for standard deviation parameters</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s tape measure has a normal-random reading error centered on zero, but the kid only ever records how far off the reading was, never in which direction, so all the errors fold up into positive-only half-normal distances.</p>
+    <p class="q">What&#x27;s the probability the measurement error exceeds 1 unit in size?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.halfnorm()
+print(&#x27;P(|error| &gt; 1):&#x27;, round(dist.sf(1), 4))
+print(&#x27;mean error size:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(|error| &gt; 1): 0.3173
+mean error size: 0.7979</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/halfnorm.svg" alt="Half-Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

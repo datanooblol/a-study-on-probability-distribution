@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trapezoidal distribution (trapezoid) — Probability Distributions</title>
+<meta name="description" content="A ramp up, a flat plateau, then a ramp down -- trapezoidal is the natural choice when you&#x27;re confident a quantity lies somewhere in a central &#x27;most li">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Trapezoidal</h1>
+  <p class="scipy-name">scipy.stats.trapezoid</p>
+
+  <h2>Intuition</h2>
+  <p>A ramp up, a flat plateau, then a ramp down -- trapezoidal is the natural choice when you&#x27;re confident a quantity lies somewhere in a central &#x27;most likely&#x27; range but want to allow gradually tapering probability toward the edges, a common expert-elicitation shape in risk analysis.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c,d) = \begin{cases} \dfrac{2x}{c(d-c+1)}, & 0 \le x < c \\[6pt] \dfrac{2}{d-c+1}, & c \le x < d \\[6pt] \dfrac{2(1-x)}{(1-d)(d-c+1)}, & d \le x \le 1 \end{cases} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>0.3</code></td><td>start of the flat plateau, as a fraction of the support</td></tr><tr><td><code>d</code></td><td><code>0.7</code></td><td>end of the flat plateau, as a fraction of the support</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Risk analysis and expert-elicited uncertainty modeling (project scheduling)</li><li>Fuzzy logic membership function construction</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid guesses how long a movie will take to finish loading: it&#x27;s very unlikely to load instantly or take forever, and there&#x27;s one central stretch of time (the plateau) where it&#x27;s equally likely to finish at any moment.</p>
+    <p class="q">What&#x27;s the probability the movie finishes loading during the flat &#x27;most likely&#x27; plateau, between x=0.3 and x=0.7?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.trapezoid(c=0.3, d=0.7)
+print(&#x27;P(0.3 &lt; X &lt; 0.7):&#x27;, round(dist.cdf(0.7) - dist.cdf(0.3), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(0.3 &lt; X &lt; 0.7): 0.5714
+mean: 0.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/trapezoid.svg" alt="Trapezoidal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gompertz distribution (gompertz) — Probability Distributions</title>
+<meta name="description" content="The Gompertz distribution models a hazard rate that grows exponentially with time -- the classic pattern of human aging, where your risk of dying keep">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Gompertz</h1>
+  <p class="scipy-name">scipy.stats.gompertz</p>
+
+  <h2>Intuition</h2>
+  <p>The Gompertz distribution models a hazard rate that grows exponentially with time -- the classic pattern of human aging, where your risk of dying keeps accelerating the older you get, which is exactly why it&#x27;s used in actuarial mortality tables.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = c\,e^x\exp\!\left(-c(e^x-1)\right), \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1</code></td><td>shape parameter controlling how quickly the mortality/hazard rate rises</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Actuarial mortality and life-table modeling</li><li>Modeling accelerating failure/hazard rates in aging populations</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s grandparent explains that as people get older, the chance something goes wrong with their health each year climbs faster and faster, unlike a young kid&#x27;s fairly constant, low, day-to-day risk.</p>
+    <p class="q">What&#x27;s the probability a person (in these standardized age units) survives past age 1.5, and what&#x27;s their expected lifetime?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.gompertz(c=1)
+print(&#x27;P(survives past 1.5):&#x27;, round(dist.sf(1.5), 4))
+print(&#x27;expected lifetime:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(survives past 1.5): 0.0308
+expected lifetime: 0.5963</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/gompertz.svg" alt="Gompertz chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

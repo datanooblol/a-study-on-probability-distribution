@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geometric distribution (geom) — Probability Distributions</title>
+<meta name="description" content="Instead of counting successes in a fixed number of Bernoulli trials (that&#x27;s Binomial), Geometric flips the question: keep trying until the *first* suc">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Geometric</h1>
+  <p class="scipy-name">scipy.stats.geom</p>
+
+  <h2>Intuition</h2>
+  <p>Instead of counting successes in a fixed number of Bernoulli trials (that&#x27;s Binomial), Geometric flips the question: keep trying until the *first* success, and count how many tries that took. It&#x27;s the &#x27;how long do I have to wait&#x27; distribution.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>p</code></td><td><code>0.3</code></td><td>probability of success on each attempt</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Number of sales calls until the first sale</li><li>Number of job applications until the first offer</li><li>Number of spins until a slot machine pays out</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>You really want that golden gumball (30% chance each try), so you keep feeding coins into the machine, one at a time, until you finally get one.</p>
+    <p class="q">What&#x27;s the chance your very first golden gumball comes on your 4th try, and how many tries do you expect to need on average?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.geom(p=0.3)
+print(&#x27;P(first gold on try 4):&#x27;, round(dist.pmf(4), 4))
+print(&#x27;expected tries needed:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(first gold on try 4): 0.1029
+expected tries needed: 3.3333</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/geom.svg" alt="Geometric chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

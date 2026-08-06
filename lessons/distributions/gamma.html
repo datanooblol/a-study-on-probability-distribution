@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gamma distribution (gamma) — Probability Distributions</title>
+<meta name="description" content="Chain several independent Exponential waits back to back and ask for the *total* time -- that sum follows a Gamma distribution. Shape parameter a is &#x27;">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Gamma</h1>
+  <p class="scipy-name">scipy.stats.gamma</p>
+
+  <h2>Intuition</h2>
+  <p>Chain several independent Exponential waits back to back and ask for the *total* time -- that sum follows a Gamma distribution. Shape parameter a is &#x27;how many waits&#x27;, so Gamma with a=1 is just Exponential itself.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{x^{a-1} e^{-x/\text{scale}}}{\Gamma(a)\,\text{scale}^{a}}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>3</code></td><td>shape -- how many exponential waits are being summed</td></tr><tr><td><code>scale</code></td><td><code>2</code></td><td>scale of each underlying wait</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Insurance claim severity / total claim amount modeling</li><li>Rainfall accumulation over a storm</li><li>Modeling total waiting time across multiple sequential events</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>An ice-cream truck passes by every 2 minutes on average (Exponential). A kid wants to know how long until the 3rd truck shows up.</p>
+    <p class="q">What&#x27;s the chance the 3rd truck arrives within 4 minutes, and what&#x27;s the expected total wait?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.gamma(a=3, scale=2)
+print(&#x27;P(3rd truck within 4 min):&#x27;, round(dist.cdf(4), 4))
+print(&#x27;expected wait for 3rd truck:&#x27;, dist.mean())</code></pre>
+  <div class="output">P(3rd truck within 4 min): 0.3233
+expected wait for 3rd truck: 6.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/gamma.svg" alt="Gamma chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

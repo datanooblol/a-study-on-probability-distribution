@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studentized Range distribution (studentized_range) — Probability Distributions</title>
+<meta name="description" content="This is the distribution of the range (max minus min) of k sample means divided by their estimated standard error -- the exact tool behind Tukey&#x27;s HSD">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Studentized Range</h1>
+  <p class="scipy-name">scipy.stats.studentized_range</p>
+
+  <h2>Intuition</h2>
+  <p>This is the distribution of the range (max minus min) of k sample means divided by their estimated standard error -- the exact tool behind Tukey&#x27;s HSD post-hoc test, which compares every pair of group means after an ANOVA without inflating the false-positive rate.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;k,\nu) = \frac{k(k-1)\nu^{\nu/2}}{\Gamma(\nu/2)2^{\nu/2-1}}\int_0^\infty\!\int_{-\infty}^\infty s^\nu e^{-\nu s^2/2}\phi(z)\phi(sx+z)\left[\Phi(sx+z)-\Phi(z)\right]^{k-2}dz\,ds \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>k</code></td><td><code>3</code></td><td>number of groups/samples being compared</td></tr><tr><td><code>df</code></td><td><code>10</code></td><td>degrees of freedom for the variance estimate</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Tukey&#x27;s HSD post-hoc multiple comparison test after ANOVA</li><li>Quality control range-chart statistical process control</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A science class splits into 3 teams to grow plants under different lights, then compares the tallest team&#x27;s average against the shortest team&#x27;s average. This distribution tells you how big that gap needs to be before it&#x27;s more than what random luck alone would explain.</p>
+    <p class="q">What&#x27;s the probability the range between the tallest and shortest team averages exceeds 4 (in standardized units)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.studentized_range(k=3, df=10)
+print(&#x27;P(range &gt; 4):&#x27;, round(dist.sf(4), 4))
+print(&#x27;mean range:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(range &gt; 4): 0.0433
+mean range: 1.8343</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/studentized_range.svg" alt="Studentized Range chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

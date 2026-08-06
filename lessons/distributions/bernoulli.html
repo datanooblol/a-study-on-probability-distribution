@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bernoulli distribution (bernoulli) — Probability Distributions</title>
+<meta name="description" content="The atom of probability: one single yes/no trial. Everything else in the discrete family -- Binomial, Geometric, Negative Binomial, Multinomial -- is ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Bernoulli</h1>
+  <p class="scipy-name">scipy.stats.bernoulli</p>
+
+  <h2>Intuition</h2>
+  <p>The atom of probability: one single yes/no trial. Everything else in the discrete family -- Binomial, Geometric, Negative Binomial, Multinomial -- is Bernoulli repeated, counted, or generalized. If a question has exactly two outcomes and one fixed chance of &#x27;success&#x27;, it&#x27;s a Bernoulli trial.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = p^{k}(1-p)^{1-k}, \quad k \in \{0, 1\} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>p</code></td><td><code>0.3</code></td><td>probability of success (the golden gumball)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Whether a single coin flip lands heads</li><li>Whether one visitor clicks an ad</li><li>Whether one manufactured part passes inspection</li><li>Whether one email gets opened</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>There&#x27;s a magic gumball machine. Every time you put in a coin, there&#x27;s a 30% chance you get a shiny golden gumball, and a 70% chance you get a plain one.</p>
+    <p class="q">If you put in exactly one coin, what&#x27;s the chance you get the golden gumball?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.bernoulli(p=0.3)
+print(&#x27;P(golden gumball):&#x27;, round(dist.pmf(1), 4))
+print(&#x27;P(plain gumball):&#x27;, round(dist.pmf(0), 4))</code></pre>
+  <div class="output">P(golden gumball): 0.3
+P(plain gumball): 0.7</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/bernoulli.svg" alt="Bernoulli chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

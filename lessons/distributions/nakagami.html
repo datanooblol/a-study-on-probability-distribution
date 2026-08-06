@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nakagami distribution (nakagami) — Probability Distributions</title>
+<meta name="description" content="Developed to model radio signal fading, Nakagami generalizes the Rayleigh distribution (which it equals at nu=1) with a single shape parameter that co">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Nakagami</h1>
+  <p class="scipy-name">scipy.stats.nakagami</p>
+
+  <h2>Intuition</h2>
+  <p>Developed to model radio signal fading, Nakagami generalizes the Rayleigh distribution (which it equals at nu=1) with a single shape parameter that controls how severely a wireless signal&#x27;s strength fluctuates as it bounces off buildings and obstacles on its way to your phone.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\nu) = \frac{2\nu^\nu}{\Gamma(\nu)}x^{2\nu-1}e^{-\nu x^2}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>nu</code></td><td><code>1.5</code></td><td>shape parameter (fading/spread parameter, nu &gt;= 0.5)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Wireless and radio signal fading models in telecommunications engineering</li><li>Ultrasound and medical imaging signal amplitude modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s walkie-talkie signal gets stronger and weaker as they walk around a big building, bouncing off walls and corners in unpredictable ways. The Nakagami distribution describes exactly how those signal-strength bounces are spread out.</p>
+    <p class="q">What&#x27;s the probability the signal strength exceeds 1.5 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.nakagami(nu=1.5)
+print(&#x27;P(signal &gt; 1.5):&#x27;, round(dist.sf(1.5), 4))
+print(&#x27;mean signal strength:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(signal &gt; 1.5): 0.0803
+mean signal strength: 0.9213</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/nakagami.svg" alt="Nakagami chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

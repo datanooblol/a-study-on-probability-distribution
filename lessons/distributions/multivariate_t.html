@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multivariate t distribution (multivariate_t) — Probability Distributions</title>
+<meta name="description" content="Multivariate Normal&#x27;s fatter-tailed cousin: the same idea of several correlated wobbling quantities, but with a higher chance of an occasional extreme">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge multivariate">Multivariate</span> <span class="badge tier2">extended catalog</span>
+  <h1>Multivariate t</h1>
+  <p class="scipy-name">scipy.stats.multivariate_t</p>
+
+  <h2>Intuition</h2>
+  <p>Multivariate Normal&#x27;s fatter-tailed cousin: the same idea of several correlated wobbling quantities, but with a higher chance of an occasional extreme joint move in several dimensions at once -- useful whenever &#x27;everything crashes together&#x27; matters.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{x}) \propto \left(1 + \tfrac{1}{df}(\mathbf{x}-\mu)^T \Sigma^{-1} (\mathbf{x}-\mu)\right)^{-\frac{df+k}{2}} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>loc</code></td><td><code>[0, 0]</code></td><td>center point in each dimension</td></tr><tr><td><code>shape</code></td><td><code>[[1, 0.3], [0.3, 1]]</code></td><td>spread/correlation matrix</td></tr><tr><td><code>df</code></td><td><code>5</code></td><td>degrees of freedom (lower = fatter tails)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Robust portfolio risk modeling (fat-tailed joint asset moves)</li><li>Robust multivariate regression error modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>The dart robot from the Multivariate Normal example, except on rare days its whole arm has a &#x27;bad day&#x27; and throws wildly off in both directions together, more often than a calm bell curve would suggest.</p>
+    <p class="q">How much more/less likely is a joint miss to (1,1) compared to landing exactly on target, versus the calmer Normal version?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.multivariate_t(loc=[0, 0], shape=[[1, 0.3], [0.3, 1]], df=5)
+print(&#x27;density at (1,1):&#x27;, round(float(dist.pdf([1, 1])), 4))
+print(&#x27;density at (0,0):&#x27;, round(float(dist.pdf([0, 0])), 4))</code></pre>
+  <div class="output">density at (1,1): 0.0652
+density at (0,0): 0.1668</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/multivariate_t.svg" alt="Multivariate t chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

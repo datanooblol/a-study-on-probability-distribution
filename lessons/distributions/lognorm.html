@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log-normal distribution (lognorm) — Probability Distributions</title>
+<meta name="description" content="If a quantity&#x27;s *logarithm* is Normally distributed, the quantity itself is Log-normal: always positive, with a long right tail. This is what happens ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Log-normal</h1>
+  <p class="scipy-name">scipy.stats.lognorm</p>
+
+  <h2>Intuition</h2>
+  <p>If a quantity&#x27;s *logarithm* is Normally distributed, the quantity itself is Log-normal: always positive, with a long right tail. This is what happens when many small effects multiply together rather than add -- exactly the pattern behind house prices, incomes, and stock prices, where a few outcomes end up enormous.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{xs\sqrt{2\pi}} e^{-\frac{(\ln x)^2}{2s^2}}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>s</code></td><td><code>0.5</code></td><td>sigma of the underlying normal (shape)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Household income and wealth distributions</li><li>Stock prices and financial returns (multiplicative growth)</li><li>City/company sizes, and particle size distributions</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>House sizes in a neighborhood: most houses are modest, a fair number are a bit bigger, and a rare few are giant mansions -- never negative, and skewed toward the big side.</p>
+    <p class="q">What fraction of houses are bigger than double the &#x27;typical&#x27; size?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.lognorm(s=0.5)
+print(&#x27;P(size &gt; 2x typical):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median size:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(size &gt; 2x typical): 0.0828
+median size: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/lognorm.svg" alt="Log-normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

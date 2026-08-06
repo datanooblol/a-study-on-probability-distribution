@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weibull Maximum distribution (weibull_max) — Probability Distributions</title>
+<meta name="description" content="The mirror image of the ordinary (minimum) Weibull distribution, reflected onto the negative numbers -- it&#x27;s the exact distribution of the maximum of ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Weibull Maximum</h1>
+  <p class="scipy-name">scipy.stats.weibull_max</p>
+
+  <h2>Intuition</h2>
+  <p>The mirror image of the ordinary (minimum) Weibull distribution, reflected onto the negative numbers -- it&#x27;s the exact distribution of the maximum of many Weibull-tailed values, used whenever the quantity of interest is naturally capped from above rather than below.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = c\,(-x)^{c-1}\exp\!\left(-(-x)^c\right), \quad x \le 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1.5</code></td><td>shape parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling maximum values with a hard upper physical limit</li><li>Extreme value theory: minimal-strength-link reflected onto maxima</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid tracks the highest score anyone gets across many rounds of a game where scores are Weibull-shaped and can never exceed a hard ceiling of 0 (measured as &#x27;distance below the maximum possible score&#x27;), so it always comes out negative or zero.</p>
+    <p class="q">What&#x27;s the probability the score is above -1 (close to the ceiling)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.weibull_max(c=1.5)
+print(&#x27;P(X &gt; -1):&#x27;, round(dist.sf(-1), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &gt; -1): 0.6321
+mean: -0.9027</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/weibull_max.svg" alt="Weibull Maximum chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

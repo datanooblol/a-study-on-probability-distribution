@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log-Laplace distribution (loglaplace) — Probability Distributions</title>
+<meta name="description" content="Just as the Laplace distribution is a sharp double-exponential peak on the linear scale, log-Laplace is that same sharp peak transferred onto a multip">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Log-Laplace</h1>
+  <p class="scipy-name">scipy.stats.loglaplace</p>
+
+  <h2>Intuition</h2>
+  <p>Just as the Laplace distribution is a sharp double-exponential peak on the linear scale, log-Laplace is that same sharp peak transferred onto a multiplicative (log) scale -- it&#x27;s a popular alternative to the lognormal for financial returns and city/firm sizes because it has a sharper peak and heavier tails.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \begin{cases} \dfrac{c}{2}x^{c-1}, & 0 < x < 1 \\[4pt] \dfrac{c}{2}x^{-c-1}, & x \ge 1 \end{cases} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>3</code></td><td>shape parameter controlling how sharply the peak falls off on the log scale</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Alternative to lognormal for financial asset price and return modeling</li><li>City and firm size distribution modeling with sharper peaks</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid tracks the price of a rare trading card over months. It usually stays close to a typical price, but the log-Laplace shape means sudden multiplicative jumps up or down happen more dramatically than a smooth lognormal curve would suggest.</p>
+    <p class="q">What&#x27;s the probability the card&#x27;s price ratio exceeds 2 (i.e. more than doubles)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.loglaplace(c=3)
+print(&#x27;P(price ratio &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median price ratio:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(price ratio &gt; 2): 0.0625
+median price ratio: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/loglaplace.svg" alt="Log-Laplace chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

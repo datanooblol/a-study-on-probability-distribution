@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tukey Lambda distribution (tukeylambda) — Probability Distributions</title>
+<meta name="description" content="Tukey lambda is defined by its quantile (inverse-CDF) function rather than a closed-form pdf, and a single knob lambda smoothly sweeps through shapes ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Tukey Lambda</h1>
+  <p class="scipy-name">scipy.stats.tukeylambda</p>
+
+  <h2>Intuition</h2>
+  <p>Tukey lambda is defined by its quantile (inverse-CDF) function rather than a closed-form pdf, and a single knob lambda smoothly sweeps through shapes from heavy-tailed logistic, through something extremely close to normal (near lambda=0.14), all the way to the flat uniform distribution (lambda=1).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ Q(p;\lambda) = \frac{p^\lambda-(1-p)^\lambda}{\lambda} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>lam</code></td><td><code>0.14</code></td><td>shape parameter (0 gives logistic, 0.14 approximates normal, 1 gives uniform)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Flexible family for exploratory data analysis and QQ-plot shape diagnostics</li><li>Simulating data with tunable tail weight for robustness studies</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A toy &#x27;shape machine&#x27; has one dial: turn it one way and the output looks like a fat-tailed logistic curve, turn it to the sweet spot and it looks almost exactly like a normal bell curve, turn it further and it flattens all the way out to a uniform block.</p>
+    <p class="q">At the near-normal setting (lambda=0.14), what&#x27;s the probability the output falls between -1 and 1?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.tukeylambda(lam=0.14)
+print(&#x27;P(-1 &lt; X &lt; 1):&#x27;, round(dist.cdf(1) - dist.cdf(-1), 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(-1 &lt; X &lt; 1): 0.5095
+variance: 2.1103</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/tukeylambda.svg" alt="Tukey Lambda chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

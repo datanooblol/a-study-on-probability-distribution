@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kappa 3 distribution (kappa3) — Probability Distributions</title>
+<meta name="description" content="A flexible three-parameter-family member (here with location/scale fixed) developed by Mielke and Johnson for meteorological data, particularly precip">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Kappa 3</h1>
+  <p class="scipy-name">scipy.stats.kappa3</p>
+
+  <h2>Intuition</h2>
+  <p>A flexible three-parameter-family member (here with location/scale fixed) developed by Mielke and Johnson for meteorological data, particularly precipitation amounts, since it can capture a wide range of skewness with just one free shape parameter.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = a\left(a+x^a\right)^{-(a+1)/a}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>2</code></td><td>shape parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Precipitation and meteorological extreme data modeling</li><li>Flexible skewed-data fitting with a single shape parameter</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A weather station records how much rain falls during each storm. Most storms drop a modest, similar amount, but the kappa-3 shape&#x27;s single knob lets meteorologists tune exactly how often a storm dumps way more rain than usual.</p>
+    <p class="q">What&#x27;s the probability a storm&#x27;s rainfall exceeds 2 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.kappa3(a=2)
+print(&#x27;P(rainfall &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;mean rainfall:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(rainfall &gt; 2): 0.1835
+mean rainfall: 1.4142</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/kappa3.svg" alt="Kappa 3 chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

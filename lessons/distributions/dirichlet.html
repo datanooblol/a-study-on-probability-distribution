@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dirichlet distribution (dirichlet) — Probability Distributions</title>
+<meta name="description" content="Beta generalized from one proportion to a whole set of proportions that must add up to 1 -- it&#x27;s the distribution *of the probability vector itself*, ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge multivariate">Multivariate</span> 
+  <h1>Dirichlet</h1>
+  <p class="scipy-name">scipy.stats.dirichlet</p>
+
+  <h2>Intuition</h2>
+  <p>Beta generalized from one proportion to a whole set of proportions that must add up to 1 -- it&#x27;s the distribution *of the probability vector itself*, and is Multinomial&#x27;s mathematical partner the same way Beta is Binomial&#x27;s.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x_1,\ldots,x_k) = \frac{1}{B(\alpha)}\prod_{i=1}^{k} x_i^{\alpha_i - 1}, \quad \sum_i x_i = 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>alpha</code></td><td><code>[2, 3, 5]</code></td><td>concentration for each of the k proportions</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Bayesian prior for Multinomial category probabilities</li><li>Topic modeling (Latent Dirichlet Allocation) in NLP</li><li>Any &#x27;proportions that must sum to 1&#x27; modeling problem</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Three friends are randomly splitting one whole pizza. Based on past pizza nights, one friend usually ends up with the biggest share, another usually gets a medium share, and the third usually gets the smallest -- but it varies night to night.</p>
+    <p class="q">What&#x27;s the relative likelihood of an even 1/3-1/3-1/3 split compared to a lopsided 20%-30%-50% split?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.dirichlet(alpha=[2, 3, 5])
+print(&#x27;density at even split (1/3,1/3,1/3):&#x27;, round(dist.pdf([1/3, 1/3, 1/3]), 4))
+print(&#x27;density at lopsided split (0.2,0.3,0.5):&#x27;, round(dist.pdf([0.2, 0.3, 0.5]), 4))</code></pre>
+  <div class="output">density at even split (1/3,1/3,1/3): 3.4568
+density at lopsided split (0.2,0.3,0.5): 8.505</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/dirichlet.svg" alt="Dirichlet chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

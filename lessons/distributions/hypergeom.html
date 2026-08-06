@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hypergeometric distribution (hypergeom) — Probability Distributions</title>
+<meta name="description" content="Binomial&#x27;s sibling for sampling *without* replacement. Once you grab a candy from the jar, it&#x27;s gone, so each draw changes the odds for the next one -">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Hypergeometric</h1>
+  <p class="scipy-name">scipy.stats.hypergeom</p>
+
+  <h2>Intuition</h2>
+  <p>Binomial&#x27;s sibling for sampling *without* replacement. Once you grab a candy from the jar, it&#x27;s gone, so each draw changes the odds for the next one -- unlike Binomial, where every trial has the exact same probability.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = \frac{\binom{n}{k}\binom{M-n}{N-k}}{\binom{M}{N}} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>M</code></td><td><code>20</code></td><td>total population size</td></tr><tr><td><code>n</code></td><td><code>7</code></td><td>number of &#x27;success&#x27; items in the population</td></tr><tr><td><code>N</code></td><td><code>10</code></td><td>number of items drawn (sample size)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Quality control: sampling defective items from a finite batch without replacement</li><li>Card game probabilities (drawing specific cards from a deck)</li><li>Ecology: capture-recapture population estimates</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A jar has 20 candies, 7 of which are red, the rest are other colors. A kid grabs a big handful of 10 candies all at once, without looking.</p>
+    <p class="q">What&#x27;s the chance exactly 4 of the 10 candies they grabbed are red?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.hypergeom(M=20, n=7, N=10)
+print(&#x27;P(exactly 4 red candies):&#x27;, round(dist.pmf(4), 4))
+print(&#x27;expected red candies:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 4 red candies): 0.3251
+expected red candies: 3.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/hypergeom.svg" alt="Hypergeometric chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

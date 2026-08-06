@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rice distribution (rice) — Probability Distributions</title>
+<meta name="description" content="The Rice distribution is the magnitude of a 2D vector with a fixed nonzero &#x27;signal&#x27; component plus independent normal noise in both directions -- it&#x27;s">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Rice</h1>
+  <p class="scipy-name">scipy.stats.rice</p>
+
+  <h2>Intuition</h2>
+  <p>The Rice distribution is the magnitude of a 2D vector with a fixed nonzero &#x27;signal&#x27; component plus independent normal noise in both directions -- it&#x27;s exactly what happens to radio or radar signal strength when a real signal is present but corrupted by Gaussian noise (it reduces to Rayleigh when there&#x27;s no signal at all).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;b) = x\exp\!\left(-\frac{x^2+b^2}{2}\right)I_0(xb), \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>b</code></td><td><code>2</code></td><td>noncentrality shape parameter, ratio of signal strength to noise std dev</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Radar and radio signal detection with Gaussian noise (signal-plus-noise magnitude)</li><li>MRI image magnitude noise modeling in medical imaging</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid uses a metal detector that&#x27;s genuinely picking up a buried coin (a real signal), but the reading also jitters around from random electrical noise in both the north-south and east-west directions -- the detector&#x27;s total reading strength follows the Rice distribution.</p>
+    <p class="q">What&#x27;s the probability the detector reading exceeds 3?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.rice(b=2)
+print(&#x27;P(reading &gt; 3):&#x27;, round(dist.sf(3), 4))
+print(&#x27;mean reading:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(reading &gt; 3): 0.2144
+mean reading: 2.2724</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/rice.svg" alt="Rice chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

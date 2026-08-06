@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Levy (left-skewed) distribution (levy_l) — Probability Distributions</title>
+<meta name="description" content="The mirror image of the Levy distribution reflected onto the negative numbers -- same extremely heavy, infinite-mean tail, just facing the other direc">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Levy (left-skewed)</h1>
+  <p class="scipy-name">scipy.stats.levy_l</p>
+
+  <h2>Intuition</h2>
+  <p>The mirror image of the Levy distribution reflected onto the negative numbers -- same extremely heavy, infinite-mean tail, just facing the other direction, useful whenever the &#x27;wild jump&#x27; phenomenon naturally points toward negative values (like sudden negative shocks).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \sqrt{\frac{1}{2\pi |x|^3}}\exp\!\left(-\frac{1}{2|x|}\right), \quad x \le 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling sudden negative shocks or jumps in a process</li><li>Stable-distribution theory (alpha=0.5 stable family member)</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Instead of a seagull hopping toward food, imagine a marble rolling down a hill that occasionally takes one enormous unpredictable tumble further downhill, in an unbounded &#x27;always toward negative&#x27; direction.</p>
+    <p class="q">What&#x27;s the probability the marble&#x27;s tumble distance is more negative than -3?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.levy_l()
+print(&#x27;P(X &lt; -3):&#x27;, round(dist.cdf(-3), 4))
+print(&#x27;median:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(X &lt; -3): 0.4363
+median: -2.1981</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/levy_l.svg" alt="Levy (left-skewed) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

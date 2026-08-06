@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folded Cauchy distribution (foldcauchy) — Probability Distributions</title>
+<meta name="description" content="Take a Cauchy distribution (famous for wild, mean-less outliers) and fold the negative half onto the positive side by taking absolute values -- you ge">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Folded Cauchy</h1>
+  <p class="scipy-name">scipy.stats.foldcauchy</p>
+
+  <h2>Intuition</h2>
+  <p>Take a Cauchy distribution (famous for wild, mean-less outliers) and fold the negative half onto the positive side by taking absolute values -- you get a distribution of magnitudes that still has the Cauchy&#x27;s notoriously heavy, unpredictable tail.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{1}{\pi(1+(x-c)^2)} + \frac{1}{\pi(1+(x+c)^2)}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1</code></td><td>location of the original (pre-folding) Cauchy peak</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling absolute measurement error magnitude with heavy tails</li><li>Robustness testing for statistical estimators against extreme outliers</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A weather vane&#x27;s compass error is Cauchy-distributed around a slightly off-center reading, and a kid only cares about the size of the error, not its direction, so all the negative errors get folded on top of the positive ones.</p>
+    <p class="q">What&#x27;s the probability the folded error exceeds 3 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.foldcauchy(c=1)
+print(&#x27;P(|error| &gt; 3):&#x27;, round(dist.sf(3), 4))
+print(&#x27;median error magnitude:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(|error| &gt; 3): 0.2256
+median error magnitude: 1.4142</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/foldcauchy.svg" alt="Folded Cauchy chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

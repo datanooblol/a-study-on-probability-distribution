@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Levy distribution (levy) — Probability Distributions</title>
+<meta name="description" content="One of only a few stable distributions with a known closed-form pdf, Levy is extremely heavy-tailed -- it has infinite mean and variance -- and descri">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Levy</h1>
+  <p class="scipy-name">scipy.stats.levy</p>
+
+  <h2>Intuition</h2>
+  <p>One of only a few stable distributions with a known closed-form pdf, Levy is extremely heavy-tailed -- it has infinite mean and variance -- and describes the first time a simple random walk returns to its starting point, which is why it also appears at the heart of Levy flight foraging models in biology.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \sqrt{\frac{1}{2\pi x^3}}\exp\!\left(-\frac{1}{2x}\right), \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Levy flight foraging models in animal movement ecology</li><li>First-return-time modeling for one-dimensional random walks</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A hungry seagull hops around a beach looking for food, mostly taking short hops but every so often taking one wildly long hop far across the sand -- this unpredictable mix of mostly-short-but-occasionally-huge hops is a Levy flight, powered by the Levy distribution.</p>
+    <p class="q">What&#x27;s the probability the seagull&#x27;s next hop distance exceeds 3 units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.levy()
+print(&#x27;P(hop distance &gt; 3):&#x27;, round(dist.sf(3), 4))
+print(&#x27;median hop distance:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(hop distance &gt; 3): 0.4363
+median hop distance: 2.1981</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/levy.svg" alt="Levy chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wishart distribution (wishart) — Probability Distributions</title>
+<meta name="description" content="The distribution of a sample covariance matrix itself: draw df random vectors, form their covariance, and that covariance matrix is Wishart-distribute">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge matrix">Matrix / Group</span> <span class="badge tier2">extended catalog</span>
+  <h1>Wishart</h1>
+  <p class="scipy-name">scipy.stats.wishart</p>
+
+  <h2>Intuition</h2>
+  <p>The distribution of a sample covariance matrix itself: draw df random vectors, form their covariance, and that covariance matrix is Wishart-distributed. It&#x27;s the matrix-valued generalization of the Chi-square distribution (in fact Wishart with a 1x1 scale matrix *is* a Chi-square).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{X}) \propto |\mathbf{X}|^{\frac{df-p-1}{2}} e^{-\frac{1}{2}\text{tr}(\Sigma^{-1}\mathbf{X})} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>df</code></td><td><code>5</code></td><td>degrees of freedom (number of samples averaged into it)</td></tr><tr><td><code>scale</code></td><td><code>[[1, 0], [0, 1]]</code></td><td>the underlying scale matrix</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Covariance matrix estimation and hypothesis testing</li><li>Bayesian statistics: the natural prior/likelihood for covariance matrices</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Instead of one wobbly dart-throwing robot, imagine averaging together the &#x27;wobble patterns&#x27; from 5 different robots -- the result is a whole matrix describing typical combined spread and correlation, and that matrix itself is random.</p>
+    <p class="q">What does a single random draw of that combined-wobble matrix look like?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.wishart(df=5, scale=np.eye(2))
+sample = dist.rvs(random_state=0)
+print(&#x27;one sampled covariance matrix:&#x27;)
+print(np.round(sample, 3))</code></pre>
+  <div class="output">one sampled covariance matrix:
+[[5.621 4.182]
+ [4.182 3.349]]</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/wishart.svg" alt="Wishart chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burr (Type XII, Burr-12 mirrored) distribution (burr) — Probability Distributions</title>
+<meta name="description" content="The Burr distribution is a flexible two-shape-parameter family widely used to fit income, wealth, and insurance-loss data because it can produce a wid">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Burr (Type XII, Burr-12 mirrored)</h1>
+  <p class="scipy-name">scipy.stats.burr</p>
+
+  <h2>Intuition</h2>
+  <p>The Burr distribution is a flexible two-shape-parameter family widely used to fit income, wealth, and insurance-loss data because it can produce a wide range of skewness and tail-heaviness just by tuning c and d.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c,d) = c\,d\,x^{-c-1}(1+x^{-c})^{-d-1}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>10.5</code></td><td>shape parameter controlling the tail&#x27;s power-law decay rate</td></tr><tr><td><code>d</code></td><td><code>4.3</code></td><td>second shape parameter controlling density near the origin</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Income and wealth distribution modeling in economics</li><li>Insurance claim size and reliability/failure-time modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid collects trading cards and tracks how many hours each card took to trade away. Most cards trade fast, but the c and d knobs on this distribution let statisticians dial in exactly how many stubborn, slow-to-trade cards show up in the long tail.</p>
+    <p class="q">What&#x27;s the probability a card takes more than 2 hours to trade, and what&#x27;s the median trading time?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.burr(c=10.5, d=4.3)
+print(&#x27;P(X &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(X &gt; 2): 0.003
+median: 1.1806</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/burr.svg" alt="Burr (Type XII, Burr-12 mirrored) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

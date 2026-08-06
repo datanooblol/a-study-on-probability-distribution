@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probability Distributions — Table of Contents</title>
+<meta name="description" content="Full scipy.stats distribution catalog with intuition, formulas, and worked examples.">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="index.html">Index</a>
+  <a href="definitions.html">Definitions</a>
+  <a href="connections.html">Connections</a>
+</nav>
+
+<div class="container wide">
+  <div class="hero">
+    <h1>A Study on Probability Distributions</h1>
+    <p class="lede">Every distribution in <code>scipy.stats</code> (145 of them),
+    explained from intuition to formula to a working <code>scipy.stats</code> example
+    — with a kid-friendly story for each one.</p>
+  </div>
+
+  <div class="hub-links">
+    <a href="definitions.html">
+      <span class="hub-title">Definitions</span>
+      <span class="hub-desc">Discrete vs. continuous, PMF vs. PDF vs. CDF, and how to use each one wisely.</span>
+    </a>
+    <a href="connections.html">
+      <span class="hub-title">Connections</span>
+      <span class="hub-desc">How distributions build on each other — Bernoulli → Binomial → Poisson, and more.</span>
+    </a>
+  </div>
+
+  <input id="filter-box" type="search" placeholder="Filter 145 distributions by name…" autocomplete="off">
+
+  
+    <div class="category-section">
+      <h2>Discrete <span class="scipy-name">(21)</span></h2>
+      <p class="category-note">Countable outcomes — number of successes, arrivals, defects, ranks.</p>
+      <div class="dist-grid">
+      <div class="dist-card" data-name="bernoulli Bernoulli">
+        <a href="distributions/bernoulli.html">Bernoulli</a>
+        <span class="scipy-name">scipy.stats.bernoulli</span>
+        <div class="chart-caption">The atom of probability: one single yes/no trial. Everything else in the discrete family -…</div>
+      </div>
+      <div class="dist-card" data-name="betabinom Beta-Binomial">
+        <a href="distributions/betabinom.html">Beta-Binomial</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.betabinom</span>
+        <div class="chart-caption">Beta-binomial is what you get when the coin you&#x27;re flipping n times doesn&#x27;t have a fixed k…</div>
+      </div>
+      <div class="dist-card" data-name="betanbinom Beta-Negative-Binomial">
+        <a href="distributions/betanbinom.html">Beta-Negative-Binomial</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.betanbinom</span>
+        <div class="chart-caption">Just as beta-binomial adds randomness to the success probability of a binomial count, beta…</div>
+      </div>
+      <div class="dist-card" data-name="binom Binomial">
+        <a href="distributions/binom.html">Binomial</a>
+        <span class="scipy-name">scipy.stats.binom</span>
+        <div class="chart-caption">Binomial is just Bernoulli repeated n independent times and the successes summed up. Each …</div>
+      </div>
+      <div class="dist-card" data-name="boltzmann Boltzmann">
+        <a href="distributions/boltzmann.html">Boltzmann</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.boltzmann</span>
+        <div class="chart-caption">This is the discrete, truncated version of the exponential distribution -- named for the p…</div>
+      </div>
+      <div class="dist-card" data-name="dlaplace Discrete Laplace">
+        <a href="distributions/dlaplace.html">Discrete Laplace</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.dlaplace</span>
+        <div class="chart-caption">The integer-valued cousin of the Laplace distribution: a sharp peak at zero with two symme…</div>
+      </div>
+      <div class="dist-card" data-name="geom Geometric">
+        <a href="distributions/geom.html">Geometric</a>
+        <span class="scipy-name">scipy.stats.geom</span>
+        <div class="chart-caption">Instead of counting successes in a fixed number of Bernoulli trials (that&#x27;s Binomial), Geo…</div>
+      </div>
+      <div class="dist-card" data-name="hypergeom Hypergeometric">
+        <a href="distributions/hypergeom.html">Hypergeometric</a>
+        <span class="scipy-name">scipy.stats.hypergeom</span>
+        <div class="chart-caption">Binomial&#x27;s sibling for sampling *without* replacement. Once you grab a candy from the jar,…</div>
+      </div>
+      <div class="dist-card" data-name="logser Logarithmic Series">
+        <a href="distributions/logser.html">Logarithmic Series</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.logser</span>
+        <div class="chart-caption">The logarithmic series distribution is the classic model in ecology for &#x27;species abundance…</div>
+      </div>
+      <div class="dist-card" data-name="nbinom Negative Binomial">
+        <a href="distributions/nbinom.html">Negative Binomial</a>
+        <span class="scipy-name">scipy.stats.nbinom</span>
+        <div class="chart-caption">Geometric generalized: instead of stopping at the 1st success, keep going until the n-th s…</div>
+      </div>
+      <div class="dist-card" data-name="nchypergeom_fisher Fisher&#x27;s Noncentral Hypergeometric">
+        <a href="distributions/nchypergeom_fisher.html">Fisher&#x27;s Noncentral Hypergeometric</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.nchypergeom_fisher</span>
+        <div class="chart-caption">Ordinary hypergeometric assumes every object is equally likely to be drawn, but Fisher&#x27;s n…</div>
+      </div>
+      <div class="dist-card" data-name="nchypergeom_wallenius Wallenius&#x27; Noncentral Hypergeometric">
+        <a href="distributions/nchypergeom_wallenius.html">Wallenius&#x27; Noncentral Hypergeometric</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.nchypergeom_wallenius</span>
+        <div class="chart-caption">Wallenius&#x27; version models the same biased-draw idea as Fisher&#x27;s, but for drawing objects o…</div>
+      </div>
+      <div class="dist-card" data-name="nhypergeom Negative Hypergeometric">
+        <a href="distributions/nhypergeom.html">Negative Hypergeometric</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.nhypergeom</span>
+        <div class="chart-caption">Like drawing marbles from a bag without replacement, but instead of stopping after a fixed…</div>
+      </div>
+      <div class="dist-card" data-name="planck Planck">
+        <a href="distributions/planck.html">Planck</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.planck</span>
+        <div class="chart-caption">This is the discrete exponential distribution on all non-negative integers, named for its …</div>
+      </div>
+      <div class="dist-card" data-name="poisson Poisson">
+        <a href="distributions/poisson.html">Poisson</a>
+        <span class="scipy-name">scipy.stats.poisson</span>
+        <div class="chart-caption">The distribution of rare, independent events counted over a fixed window of time or space,…</div>
+      </div>
+      <div class="dist-card" data-name="poisson_binom Poisson Binomial">
+        <a href="distributions/poisson_binom.html">Poisson Binomial</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.poisson_binom</span>
+        <div class="chart-caption">This generalizes the binomial distribution by letting every trial have its own different s…</div>
+      </div>
+      <div class="dist-card" data-name="randint Discrete Uniform">
+        <a href="distributions/randint.html">Discrete Uniform</a>
+        <span class="scipy-name">scipy.stats.randint</span>
+        <div class="chart-caption">Every whole number in a range is exactly equally likely -- no favorites. It&#x27;s the discrete…</div>
+      </div>
+      <div class="dist-card" data-name="skellam Skellam">
+        <a href="distributions/skellam.html">Skellam</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.skellam</span>
+        <div class="chart-caption">Skellam is the distribution of the difference between two independent Poisson-counted quan…</div>
+      </div>
+      <div class="dist-card" data-name="yulesimon Yule-Simon">
+        <a href="distributions/yulesimon.html">Yule-Simon</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.yulesimon</span>
+        <div class="chart-caption">Yule-Simon arises from a &#x27;rich get richer&#x27; preferential-attachment process -- new items ar…</div>
+      </div>
+      <div class="dist-card" data-name="zipf Zipf (Zeta)">
+        <a href="distributions/zipf.html">Zipf (Zeta)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.zipf</span>
+        <div class="chart-caption">Zipf&#x27;s distribution is the discrete power law behind Zipf&#x27;s law: the most common word in a…</div>
+      </div>
+      <div class="dist-card" data-name="zipfian Zipfian">
+        <a href="distributions/zipfian.html">Zipfian</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.zipfian</span>
+        <div class="chart-caption">Zipfian is the finite-vocabulary version of the Zipf distribution -- instead of an infinit…</div>
+      </div>
+      </div>
+    </div>
+    <div class="category-section">
+      <h2>Continuous <span class="scipy-name">(110)</span></h2>
+      <p class="category-note">Measurements on a continuum — time, distance, magnitude, ratios.</p>
+      <div class="dist-grid">
+      <div class="dist-card" data-name="alpha Alpha">
+        <a href="distributions/alpha.html">Alpha</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.alpha</span>
+        <div class="chart-caption">Alpha comes from taking the reciprocal of a shifted normal variable, which squashes most o…</div>
+      </div>
+      <div class="dist-card" data-name="anglit Anglit">
+        <a href="distributions/anglit.html">Anglit</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.anglit</span>
+        <div class="chart-caption">Anglit is a simple bounded, symmetric bump built from a cosine wave -- it&#x27;s mostly a textb…</div>
+      </div>
+      <div class="dist-card" data-name="arcsine Arcsine">
+        <a href="distributions/arcsine.html">Arcsine</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.arcsine</span>
+        <div class="chart-caption">The arcsine distribution describes quantities that spend most of their &#x27;time&#x27; near the edg…</div>
+      </div>
+      <div class="dist-card" data-name="argus ARGUS">
+        <a href="distributions/argus.html">ARGUS</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.argus</span>
+        <div class="chart-caption">Built by particle physicists at the ARGUS experiment, this distribution models the reconst…</div>
+      </div>
+      <div class="dist-card" data-name="beta Beta">
+        <a href="distributions/beta.html">Beta</a>
+        <span class="scipy-name">scipy.stats.beta</span>
+        <div class="chart-caption">The distribution *of a probability itself* -- always squeezed between 0 and 1, its shape c…</div>
+      </div>
+      <div class="dist-card" data-name="betaprime Beta Prime">
+        <a href="distributions/betaprime.html">Beta Prime</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.betaprime</span>
+        <div class="chart-caption">Beta prime is what you get when you take the odds ratio p/(1-p) of a Beta-distributed prob…</div>
+      </div>
+      <div class="dist-card" data-name="bradford Bradford">
+        <a href="distributions/bradford.html">Bradford</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.bradford</span>
+        <div class="chart-caption">Bradford&#x27;s distribution captures a &#x27;law of scattering&#x27; observed in library science: items …</div>
+      </div>
+      <div class="dist-card" data-name="burr Burr (Type XII, Burr-12 mirrored)">
+        <a href="distributions/burr.html">Burr (Type XII, Burr-12 mirrored)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.burr</span>
+        <div class="chart-caption">The Burr distribution is a flexible two-shape-parameter family widely used to fit income, …</div>
+      </div>
+      <div class="dist-card" data-name="burr12 Burr Type XII">
+        <a href="distributions/burr12.html">Burr Type XII</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.burr12</span>
+        <div class="chart-caption">Burr Type XII is the &#x27;mirror&#x27; of the Burr distribution above (it&#x27;s the reciprocal-transfor…</div>
+      </div>
+      <div class="dist-card" data-name="cauchy Cauchy">
+        <a href="distributions/cauchy.html">Cauchy</a>
+        <span class="scipy-name">scipy.stats.cauchy</span>
+        <div class="chart-caption">Looks bell-shaped like Normal but is far wilder: it has no defined mean or variance, becau…</div>
+      </div>
+      <div class="dist-card" data-name="chi Chi">
+        <a href="distributions/chi.html">Chi</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.chi</span>
+        <div class="chart-caption">If you take k independent standard-normal &#x27;wiggles&#x27; (one per dimension), the chi distribut…</div>
+      </div>
+      <div class="dist-card" data-name="chi2 Chi-square">
+        <a href="distributions/chi2.html">Chi-square</a>
+        <span class="scipy-name">scipy.stats.chi2</span>
+        <div class="chart-caption">Take several independent standard-Normal &#x27;wobbles&#x27;, square each one (so they&#x27;re all positi…</div>
+      </div>
+      <div class="dist-card" data-name="cosine Cosine">
+        <a href="distributions/cosine.html">Cosine</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.cosine</span>
+        <div class="chart-caption">The cosine distribution is a smooth, bell-shaped alternative to the normal distribution on…</div>
+      </div>
+      <div class="dist-card" data-name="crystalball Crystal Ball">
+        <a href="distributions/crystalball.html">Crystal Ball</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.crystalball</span>
+        <div class="chart-caption">Named after the crystal-ball fortune-telling prop, this distribution is a normal curve tha…</div>
+      </div>
+      <div class="dist-card" data-name="dgamma Double Gamma">
+        <a href="distributions/dgamma.html">Double Gamma</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.dgamma</span>
+        <div class="chart-caption">Double gamma glues two mirror-image gamma distributions together at zero, giving a symmetr…</div>
+      </div>
+      <div class="dist-card" data-name="dpareto_lognorm Double Pareto-Lognormal">
+        <a href="distributions/dpareto_lognorm.html">Double Pareto-Lognormal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.dpareto_lognorm</span>
+        <div class="chart-caption">This distribution behaves like a lognormal in the middle (most values cluster around a typ…</div>
+      </div>
+      <div class="dist-card" data-name="dweibull Double Weibull">
+        <a href="distributions/dweibull.html">Double Weibull</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.dweibull</span>
+        <div class="chart-caption">Double Weibull mirrors a Weibull distribution around zero, producing a symmetric distribut…</div>
+      </div>
+      <div class="dist-card" data-name="erlang Erlang">
+        <a href="distributions/erlang.html">Erlang</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.erlang</span>
+        <div class="chart-caption">Erlang is the waiting time until the a-th event of a Poisson process happens -- it&#x27;s the s…</div>
+      </div>
+      <div class="dist-card" data-name="expon Exponential">
+        <a href="distributions/expon.html">Exponential</a>
+        <span class="scipy-name">scipy.stats.expon</span>
+        <div class="chart-caption">The waiting time between events that happen randomly and independently at a constant avera…</div>
+      </div>
+      <div class="dist-card" data-name="exponnorm Exponentially Modified Normal">
+        <a href="distributions/exponnorm.html">Exponentially Modified Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.exponnorm</span>
+        <div class="chart-caption">This is what you get when you add a normal random variable to an independent exponential o…</div>
+      </div>
+      <div class="dist-card" data-name="exponpow Exponential Power">
+        <a href="distributions/exponpow.html">Exponential Power</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.exponpow</span>
+        <div class="chart-caption">Exponential power stacks an exponential function on top of a power, which crushes the tail…</div>
+      </div>
+      <div class="dist-card" data-name="exponweib Exponentiated Weibull">
+        <a href="distributions/exponweib.html">Exponentiated Weibull</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.exponweib</span>
+        <div class="chart-caption">This generalizes the Weibull distribution by raising its CDF to a power, which lets it pro…</div>
+      </div>
+      <div class="dist-card" data-name="f F">
+        <a href="distributions/f.html">F</a>
+        <span class="scipy-name">scipy.stats.f</span>
+        <div class="chart-caption">The distribution of a *ratio* of two independent Chi-square variables (each divided by its…</div>
+      </div>
+      <div class="dist-card" data-name="fatiguelife Fatigue Life (Birnbaum-Saunders)">
+        <a href="distributions/fatiguelife.html">Fatigue Life (Birnbaum-Saunders)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.fatiguelife</span>
+        <div class="chart-caption">Derived from a physical model of material fatigue -- microscopic cracks accumulate randoml…</div>
+      </div>
+      <div class="dist-card" data-name="fisk Fisk (Log-Logistic)">
+        <a href="distributions/fisk.html">Fisk (Log-Logistic)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.fisk</span>
+        <div class="chart-caption">Fisk, also called the log-logistic distribution, is what you get if the logarithm of your …</div>
+      </div>
+      <div class="dist-card" data-name="foldcauchy Folded Cauchy">
+        <a href="distributions/foldcauchy.html">Folded Cauchy</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.foldcauchy</span>
+        <div class="chart-caption">Take a Cauchy distribution (famous for wild, mean-less outliers) and fold the negative hal…</div>
+      </div>
+      <div class="dist-card" data-name="foldnorm Folded Normal">
+        <a href="distributions/foldnorm.html">Folded Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.foldnorm</span>
+        <div class="chart-caption">If a measurement error is normally distributed around some nonzero true value but you can …</div>
+      </div>
+      <div class="dist-card" data-name="gamma Gamma">
+        <a href="distributions/gamma.html">Gamma</a>
+        <span class="scipy-name">scipy.stats.gamma</span>
+        <div class="chart-caption">Chain several independent Exponential waits back to back and ask for the *total* time -- t…</div>
+      </div>
+      <div class="dist-card" data-name="gausshyper Gauss Hypergeometric">
+        <a href="distributions/gausshyper.html">Gauss Hypergeometric</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gausshyper</span>
+        <div class="chart-caption">This is a Beta distribution that&#x27;s been given an extra &#x27;tilt&#x27; knob (z, c) allowing it to s…</div>
+      </div>
+      <div class="dist-card" data-name="genexpon Generalized Exponential">
+        <a href="distributions/genexpon.html">Generalized Exponential</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genexpon</span>
+        <div class="chart-caption">This generalizes the plain exponential distribution by letting the &#x27;risk rate&#x27; change over…</div>
+      </div>
+      <div class="dist-card" data-name="genextreme Generalized Extreme Value">
+        <a href="distributions/genextreme.html">Generalized Extreme Value</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genextreme</span>
+        <div class="chart-caption">The single distribution that describes the maximum of many independent random values, no m…</div>
+      </div>
+      <div class="dist-card" data-name="gengamma Generalized Gamma">
+        <a href="distributions/gengamma.html">Generalized Gamma</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gengamma</span>
+        <div class="chart-caption">Generalized gamma adds a power-transform knob c on top of the ordinary gamma distribution,…</div>
+      </div>
+      <div class="dist-card" data-name="genhalflogistic Generalized Half-Logistic">
+        <a href="distributions/genhalflogistic.html">Generalized Half-Logistic</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genhalflogistic</span>
+        <div class="chart-caption">This stretches the half-logistic distribution&#x27;s infinite tail into a hard, finite cutoff a…</div>
+      </div>
+      <div class="dist-card" data-name="genhyperbolic Generalized Hyperbolic">
+        <a href="distributions/genhyperbolic.html">Generalized Hyperbolic</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genhyperbolic</span>
+        <div class="chart-caption">A very flexible bell-shaped family that can be tuned to look normal, exponential-tailed, o…</div>
+      </div>
+      <div class="dist-card" data-name="geninvgauss Generalized Inverse Gaussian">
+        <a href="distributions/geninvgauss.html">Generalized Inverse Gaussian</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.geninvgauss</span>
+        <div class="chart-caption">This family generalizes the inverse Gaussian distribution with an extra power-law knob p, …</div>
+      </div>
+      <div class="dist-card" data-name="genlogistic Generalized Logistic">
+        <a href="distributions/genlogistic.html">Generalized Logistic</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genlogistic</span>
+        <div class="chart-caption">Generalized logistic stretches one tail of the ordinary (symmetric) logistic distribution,…</div>
+      </div>
+      <div class="dist-card" data-name="gennorm Generalized Normal">
+        <a href="distributions/gennorm.html">Generalized Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gennorm</span>
+        <div class="chart-caption">Generalized normal is a dial that morphs a pointy Laplace distribution (beta=1) into the f…</div>
+      </div>
+      <div class="dist-card" data-name="genpareto Generalized Pareto">
+        <a href="distributions/genpareto.html">Generalized Pareto</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.genpareto</span>
+        <div class="chart-caption">This is the universal shape that the tail of almost any distribution converges to once you…</div>
+      </div>
+      <div class="dist-card" data-name="gibrat Gibrat">
+        <a href="distributions/gibrat.html">Gibrat</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gibrat</span>
+        <div class="chart-caption">Gibrat&#x27;s distribution is simply a lognormal with the underlying normal fixed at mean 0 and…</div>
+      </div>
+      <div class="dist-card" data-name="gompertz Gompertz">
+        <a href="distributions/gompertz.html">Gompertz</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gompertz</span>
+        <div class="chart-caption">The Gompertz distribution models a hazard rate that grows exponentially with time -- the c…</div>
+      </div>
+      <div class="dist-card" data-name="gumbel_l Gumbel (left-skewed / minimum)">
+        <a href="distributions/gumbel_l.html">Gumbel (left-skewed / minimum)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gumbel_l</span>
+        <div class="chart-caption">Gumbel-left is the mirror image of the standard Gumbel: it describes the distribution of t…</div>
+      </div>
+      <div class="dist-card" data-name="gumbel_r Gumbel (right-skewed / maximum)">
+        <a href="distributions/gumbel_r.html">Gumbel (right-skewed / maximum)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.gumbel_r</span>
+        <div class="chart-caption">Gumbel-right describes the distribution of the maximum of many independent random values -…</div>
+      </div>
+      <div class="dist-card" data-name="halfcauchy Half-Cauchy">
+        <a href="distributions/halfcauchy.html">Half-Cauchy</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.halfcauchy</span>
+        <div class="chart-caption">Take a Cauchy distribution and fold it at zero: you get a distribution that&#x27;s zero most li…</div>
+      </div>
+      <div class="dist-card" data-name="halfgennorm Half Generalized Normal">
+        <a href="distributions/halfgennorm.html">Half Generalized Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.halfgennorm</span>
+        <div class="chart-caption">This is the one-sided (positive-only) version of the generalized normal, sliding smoothly …</div>
+      </div>
+      <div class="dist-card" data-name="halflogistic Half-Logistic">
+        <a href="distributions/halflogistic.html">Half-Logistic</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.halflogistic</span>
+        <div class="chart-caption">The positive half of the logistic distribution, folded at zero -- it behaves like a slight…</div>
+      </div>
+      <div class="dist-card" data-name="halfnorm Half-Normal">
+        <a href="distributions/halfnorm.html">Half-Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.halfnorm</span>
+        <div class="chart-caption">The positive half of a normal distribution centered at zero -- this is exactly the distrib…</div>
+      </div>
+      <div class="dist-card" data-name="hypsecant Hyperbolic Secant">
+        <a href="distributions/hypsecant.html">Hyperbolic Secant</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.hypsecant</span>
+        <div class="chart-caption">A symmetric, bell-shaped curve that sits between the normal and Cauchy distributions in ta…</div>
+      </div>
+      <div class="dist-card" data-name="invgamma Inverse Gamma">
+        <a href="distributions/invgamma.html">Inverse Gamma</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.invgamma</span>
+        <div class="chart-caption">The inverse gamma is exactly what you get by taking 1/X when X follows a gamma distributio…</div>
+      </div>
+      <div class="dist-card" data-name="invgauss Inverse Gaussian (Wald)">
+        <a href="distributions/invgauss.html">Inverse Gaussian (Wald)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.invgauss</span>
+        <div class="chart-caption">Despite the name, this has nothing to do with the normal distribution&#x27;s shape -- it&#x27;s the …</div>
+      </div>
+      <div class="dist-card" data-name="invweibull Inverse Weibull (Frechet)">
+        <a href="distributions/invweibull.html">Inverse Weibull (Frechet)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.invweibull</span>
+        <div class="chart-caption">Also known as the Frechet distribution, this is one of the three classic extreme-value fam…</div>
+      </div>
+      <div class="dist-card" data-name="irwinhall Irwin-Hall">
+        <a href="distributions/irwinhall.html">Irwin-Hall</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.irwinhall</span>
+        <div class="chart-caption">Irwin-Hall is simply the sum of n independent standard uniform random numbers -- roll n di…</div>
+      </div>
+      <div class="dist-card" data-name="jf_skew_t Jones-Faddy Skew-t">
+        <a href="distributions/jf_skew_t.html">Jones-Faddy Skew-t</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.jf_skew_t</span>
+        <div class="chart-caption">Jones and Faddy&#x27;s skew-t distribution generalizes the Student&#x27;s t distribution by letting …</div>
+      </div>
+      <div class="dist-card" data-name="johnsonsb Johnson SB (bounded)">
+        <a href="distributions/johnsonsb.html">Johnson SB (bounded)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.johnsonsb</span>
+        <div class="chart-caption">Johnson SB transforms a normal random variable through a logit-style function to squeeze i…</div>
+      </div>
+      <div class="dist-card" data-name="johnsonsu Johnson SU (unbounded)">
+        <a href="distributions/johnsonsu.html">Johnson SU (unbounded)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.johnsonsu</span>
+        <div class="chart-caption">Johnson SU transforms a normal variable through an inverse-hyperbolic-sine function to pro…</div>
+      </div>
+      <div class="dist-card" data-name="kappa3 Kappa 3">
+        <a href="distributions/kappa3.html">Kappa 3</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.kappa3</span>
+        <div class="chart-caption">A flexible three-parameter-family member (here with location/scale fixed) developed by Mie…</div>
+      </div>
+      <div class="dist-card" data-name="kappa4 Kappa 4">
+        <a href="distributions/kappa4.html">Kappa 4</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.kappa4</span>
+        <div class="chart-caption">Kappa 4 is a &#x27;master&#x27; distribution: by dialing its two shape parameters h and k, it reprod…</div>
+      </div>
+      <div class="dist-card" data-name="ksone Kolmogorov-Smirnov One-Sided">
+        <a href="distributions/ksone.html">Kolmogorov-Smirnov One-Sided</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.ksone</span>
+        <div class="chart-caption">This is the exact sampling distribution of the one-sided Kolmogorov-Smirnov statistic -- t…</div>
+      </div>
+      <div class="dist-card" data-name="kstwo Kolmogorov-Smirnov Two-Sided">
+        <a href="distributions/kstwo.html">Kolmogorov-Smirnov Two-Sided</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.kstwo</span>
+        <div class="chart-caption">The two-sided cousin of ksone, this is the exact finite-sample distribution of the largest…</div>
+      </div>
+      <div class="dist-card" data-name="kstwobign Kolmogorov (asymptotic two-sided KS)">
+        <a href="distributions/kstwobign.html">Kolmogorov (asymptotic two-sided KS)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.kstwobign</span>
+        <div class="chart-caption">This is the limiting shape of the two-sided KS statistic as the sample size n grows to inf…</div>
+      </div>
+      <div class="dist-card" data-name="landau Landau">
+        <a href="distributions/landau.html">Landau</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.landau</span>
+        <div class="chart-caption">The Landau distribution describes the energy lost by a fast charged particle passing throu…</div>
+      </div>
+      <div class="dist-card" data-name="laplace Laplace">
+        <a href="distributions/laplace.html">Laplace</a>
+        <span class="scipy-name">scipy.stats.laplace</span>
+        <div class="chart-caption">Two Exponential distributions glued back-to-back at the center -- a sharp peak with fatter…</div>
+      </div>
+      <div class="dist-card" data-name="laplace_asymmetric Asymmetric Laplace">
+        <a href="distributions/laplace_asymmetric.html">Asymmetric Laplace</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.laplace_asymmetric</span>
+        <div class="chart-caption">This stretches the classic &#x27;double exponential&#x27; Laplace distribution so one side decays fa…</div>
+      </div>
+      <div class="dist-card" data-name="levy Levy">
+        <a href="distributions/levy.html">Levy</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.levy</span>
+        <div class="chart-caption">One of only a few stable distributions with a known closed-form pdf, Levy is extremely hea…</div>
+      </div>
+      <div class="dist-card" data-name="levy_l Levy (left-skewed)">
+        <a href="distributions/levy_l.html">Levy (left-skewed)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.levy_l</span>
+        <div class="chart-caption">The mirror image of the Levy distribution reflected onto the negative numbers -- same extr…</div>
+      </div>
+      <div class="dist-card" data-name="levy_stable Levy-Stable">
+        <a href="distributions/levy_stable.html">Levy-Stable</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.levy_stable</span>
+        <div class="chart-caption">The stable distributions are the only distributions that a sum of many i.i.d. random varia…</div>
+      </div>
+      <div class="dist-card" data-name="loggamma Log-Gamma">
+        <a href="distributions/loggamma.html">Log-Gamma</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.loggamma</span>
+        <div class="chart-caption">This is the distribution of the logarithm of a gamma-distributed random variable -- it tur…</div>
+      </div>
+      <div class="dist-card" data-name="logistic Logistic">
+        <a href="distributions/logistic.html">Logistic</a>
+        <span class="scipy-name">scipy.stats.logistic</span>
+        <div class="chart-caption">Very close to Normal in shape but with a simple S-shaped CDF and slightly fatter tails -- …</div>
+      </div>
+      <div class="dist-card" data-name="loglaplace Log-Laplace">
+        <a href="distributions/loglaplace.html">Log-Laplace</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.loglaplace</span>
+        <div class="chart-caption">Just as the Laplace distribution is a sharp double-exponential peak on the linear scale, l…</div>
+      </div>
+      <div class="dist-card" data-name="lognorm Log-normal">
+        <a href="distributions/lognorm.html">Log-normal</a>
+        <span class="scipy-name">scipy.stats.lognorm</span>
+        <div class="chart-caption">If a quantity&#x27;s *logarithm* is Normally distributed, the quantity itself is Log-normal: al…</div>
+      </div>
+      <div class="dist-card" data-name="loguniform Log-Uniform (Reciprocal)">
+        <a href="distributions/loguniform.html">Log-Uniform (Reciprocal)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.loguniform</span>
+        <div class="chart-caption">A distribution that&#x27;s uniform on the logarithmic scale rather than the linear scale -- it …</div>
+      </div>
+      <div class="dist-card" data-name="lomax Lomax (Pareto Type II)">
+        <a href="distributions/lomax.html">Lomax (Pareto Type II)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.lomax</span>
+        <div class="chart-caption">Lomax is just a Pareto distribution shifted so it starts at zero instead of one -- it&#x27;s th…</div>
+      </div>
+      <div class="dist-card" data-name="maxwell Maxwell">
+        <a href="distributions/maxwell.html">Maxwell</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.maxwell</span>
+        <div class="chart-caption">The Maxwell (Maxwell-Boltzmann) distribution is the speed of a gas molecule bouncing aroun…</div>
+      </div>
+      <div class="dist-card" data-name="mielke Mielke (Dagum)">
+        <a href="distributions/mielke.html">Mielke (Dagum)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.mielke</span>
+        <div class="chart-caption">Also known as the Dagum distribution in economics, this is a close cousin of the Burr dist…</div>
+      </div>
+      <div class="dist-card" data-name="moyal Moyal">
+        <a href="distributions/moyal.html">Moyal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.moyal</span>
+        <div class="chart-caption">Moyal&#x27;s distribution is a close, easier-to-compute approximation to the Landau distributio…</div>
+      </div>
+      <div class="dist-card" data-name="nakagami Nakagami">
+        <a href="distributions/nakagami.html">Nakagami</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.nakagami</span>
+        <div class="chart-caption">Developed to model radio signal fading, Nakagami generalizes the Rayleigh distribution (wh…</div>
+      </div>
+      <div class="dist-card" data-name="ncf Noncentral F">
+        <a href="distributions/ncf.html">Noncentral F</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.ncf</span>
+        <div class="chart-caption">This is the distribution of the F-statistic in ANOVA when the null hypothesis (no real gro…</div>
+      </div>
+      <div class="dist-card" data-name="nct Noncentral t">
+        <a href="distributions/nct.html">Noncentral t</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.nct</span>
+        <div class="chart-caption">This is the distribution of a t-statistic when the true effect being tested isn&#x27;t actually…</div>
+      </div>
+      <div class="dist-card" data-name="ncx2 Noncentral Chi-Squared">
+        <a href="distributions/ncx2.html">Noncentral Chi-Squared</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.ncx2</span>
+        <div class="chart-caption">If you sum k squared normal variables that each have a nonzero mean instead of zero mean, …</div>
+      </div>
+      <div class="dist-card" data-name="norm Normal (Gaussian)">
+        <a href="distributions/norm.html">Normal (Gaussian)</a>
+        <span class="scipy-name">scipy.stats.norm</span>
+        <div class="chart-caption">The famous bell curve: values cluster near the mean and get rarer the further out you go, …</div>
+      </div>
+      <div class="dist-card" data-name="norminvgauss Normal Inverse Gaussian">
+        <a href="distributions/norminvgauss.html">Normal Inverse Gaussian</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.norminvgauss</span>
+        <div class="chart-caption">Built by mixing a normal distribution with random variance drawn from an inverse Gaussian,…</div>
+      </div>
+      <div class="dist-card" data-name="pareto Pareto">
+        <a href="distributions/pareto.html">Pareto</a>
+        <span class="scipy-name">scipy.stats.pareto</span>
+        <div class="chart-caption">The &#x27;80/20 rule&#x27; distribution -- a small number of cases account for most of the total. It…</div>
+      </div>
+      <div class="dist-card" data-name="pearson3 Pearson Type III">
+        <a href="distributions/pearson3.html">Pearson Type III</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.pearson3</span>
+        <div class="chart-caption">Pearson Type III is a shifted, scaled gamma distribution reparameterized directly in terms…</div>
+      </div>
+      <div class="dist-card" data-name="powerlaw Power Function">
+        <a href="distributions/powerlaw.html">Power Function</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.powerlaw</span>
+        <div class="chart-caption">The simplest possible bounded power-law shape: a raw x^(a-1) density on [0,1] that&#x27;s the a…</div>
+      </div>
+      <div class="dist-card" data-name="powerlognorm Power Lognormal">
+        <a href="distributions/powerlognorm.html">Power Lognormal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.powerlognorm</span>
+        <div class="chart-caption">This raises the survival function of a lognormal distribution to a power c, which is exact…</div>
+      </div>
+      <div class="dist-card" data-name="powernorm Power Normal">
+        <a href="distributions/powernorm.html">Power Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.powernorm</span>
+        <div class="chart-caption">Like power lognormal but built from a normal core instead: raising the normal survival fun…</div>
+      </div>
+      <div class="dist-card" data-name="rayleigh Rayleigh">
+        <a href="distributions/rayleigh.html">Rayleigh</a>
+        <span class="scipy-name">scipy.stats.rayleigh</span>
+        <div class="chart-caption">If you take two independent, equally-spread-out Normal &#x27;wiggles&#x27; (say, sideways and forwar…</div>
+      </div>
+      <div class="dist-card" data-name="rdist R-distribution">
+        <a href="distributions/rdist.html">R-distribution</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.rdist</span>
+        <div class="chart-caption">The R-distribution is the exact distribution of a single coordinate of a random point pick…</div>
+      </div>
+      <div class="dist-card" data-name="recipinvgauss Reciprocal Inverse Gaussian">
+        <a href="distributions/recipinvgauss.html">Reciprocal Inverse Gaussian</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.recipinvgauss</span>
+        <div class="chart-caption">This is exactly what you get by taking 1/X when X follows an inverse Gaussian distribution…</div>
+      </div>
+      <div class="dist-card" data-name="reciprocal Reciprocal (Log-Uniform, alias)">
+        <a href="distributions/reciprocal.html">Reciprocal (Log-Uniform, alias)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.reciprocal</span>
+        <div class="chart-caption">Reciprocal is scipy&#x27;s alias for exactly the same distribution as loguniform: it&#x27;s uniform …</div>
+      </div>
+      <div class="dist-card" data-name="rel_breitwigner Relativistic Breit-Wigner">
+        <a href="distributions/rel_breitwigner.html">Relativistic Breit-Wigner</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.rel_breitwigner</span>
+        <div class="chart-caption">Physicists use this to model the measured mass of a short-lived particle resonance: quantu…</div>
+      </div>
+      <div class="dist-card" data-name="rice Rice">
+        <a href="distributions/rice.html">Rice</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.rice</span>
+        <div class="chart-caption">The Rice distribution is the magnitude of a 2D vector with a fixed nonzero &#x27;signal&#x27; compon…</div>
+      </div>
+      <div class="dist-card" data-name="semicircular Wigner Semicircle">
+        <a href="distributions/semicircular.html">Wigner Semicircle</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.semicircular</span>
+        <div class="chart-caption">Famous in random matrix theory: the eigenvalues of a large random symmetric matrix, proper…</div>
+      </div>
+      <div class="dist-card" data-name="skewcauchy Skew-Cauchy">
+        <a href="distributions/skewcauchy.html">Skew-Cauchy</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.skewcauchy</span>
+        <div class="chart-caption">This stretches one side of the notoriously wild, mean-less Cauchy distribution more than t…</div>
+      </div>
+      <div class="dist-card" data-name="skewnorm Skew-Normal">
+        <a href="distributions/skewnorm.html">Skew-Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.skewnorm</span>
+        <div class="chart-caption">Skew-normal takes the familiar bell curve and tilts it, letting one tail stretch out furth…</div>
+      </div>
+      <div class="dist-card" data-name="studentized_range Studentized Range">
+        <a href="distributions/studentized_range.html">Studentized Range</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.studentized_range</span>
+        <div class="chart-caption">This is the distribution of the range (max minus min) of k sample means divided by their e…</div>
+      </div>
+      <div class="dist-card" data-name="t Student&#x27;s t">
+        <a href="distributions/t.html">Student&#x27;s t</a>
+        <span class="scipy-name">scipy.stats.t</span>
+        <div class="chart-caption">Looks like the Normal bell curve but with fatter tails -- it shows up when you estimate an…</div>
+      </div>
+      <div class="dist-card" data-name="trapezoid Trapezoidal">
+        <a href="distributions/trapezoid.html">Trapezoidal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.trapezoid</span>
+        <div class="chart-caption">A ramp up, a flat plateau, then a ramp down -- trapezoidal is the natural choice when you&#x27;…</div>
+      </div>
+      <div class="dist-card" data-name="triang Triangular">
+        <a href="distributions/triang.html">Triangular</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.triang</span>
+        <div class="chart-caption">The simplest possible &#x27;best guess plus a range&#x27; distribution: given only a minimum, maximu…</div>
+      </div>
+      <div class="dist-card" data-name="truncexpon Truncated Exponential">
+        <a href="distributions/truncexpon.html">Truncated Exponential</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.truncexpon</span>
+        <div class="chart-caption">An exponential distribution that&#x27;s been given a hard ceiling -- useful whenever a naturall…</div>
+      </div>
+      <div class="dist-card" data-name="truncnorm Truncated Normal">
+        <a href="distributions/truncnorm.html">Truncated Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.truncnorm</span>
+        <div class="chart-caption">A normal distribution with the tails chopped off and the remaining middle rescaled to stil…</div>
+      </div>
+      <div class="dist-card" data-name="truncpareto Truncated Pareto">
+        <a href="distributions/truncpareto.html">Truncated Pareto</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.truncpareto</span>
+        <div class="chart-caption">Pure Pareto distributions have an infinite upper tail, but real-world &#x27;power law&#x27; quantiti…</div>
+      </div>
+      <div class="dist-card" data-name="truncweibull_min Truncated Weibull Minimum">
+        <a href="distributions/truncweibull_min.html">Truncated Weibull Minimum</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.truncweibull_min</span>
+        <div class="chart-caption">A Weibull lifetime distribution restricted to a known observation window -- exactly what h…</div>
+      </div>
+      <div class="dist-card" data-name="tukeylambda Tukey Lambda">
+        <a href="distributions/tukeylambda.html">Tukey Lambda</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.tukeylambda</span>
+        <div class="chart-caption">Tukey lambda is defined by its quantile (inverse-CDF) function rather than a closed-form p…</div>
+      </div>
+      <div class="dist-card" data-name="uniform Uniform">
+        <a href="distributions/uniform.html">Uniform</a>
+        <span class="scipy-name">scipy.stats.uniform</span>
+        <div class="chart-caption">Any value in a range is equally likely, and there are infinitely many possible values -- s…</div>
+      </div>
+      <div class="dist-card" data-name="vonmises Von Mises">
+        <a href="distributions/vonmises.html">Von Mises</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.vonmises</span>
+        <div class="chart-caption">The &#x27;circular normal&#x27; distribution: it plays the same role for angles and directions that …</div>
+      </div>
+      <div class="dist-card" data-name="vonmises_line Von Mises (linear support)">
+        <a href="distributions/vonmises_line.html">Von Mises (linear support)</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.vonmises_line</span>
+        <div class="chart-caption">This uses the exact same formula as the circular von Mises distribution, but scipy treats …</div>
+      </div>
+      <div class="dist-card" data-name="wald Wald">
+        <a href="distributions/wald.html">Wald</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.wald</span>
+        <div class="chart-caption">Wald is simply the inverse Gaussian distribution with its mean locked at exactly 1 -- a fi…</div>
+      </div>
+      <div class="dist-card" data-name="weibull_max Weibull Maximum">
+        <a href="distributions/weibull_max.html">Weibull Maximum</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.weibull_max</span>
+        <div class="chart-caption">The mirror image of the ordinary (minimum) Weibull distribution, reflected onto the negati…</div>
+      </div>
+      <div class="dist-card" data-name="weibull_min Weibull">
+        <a href="distributions/weibull_min.html">Weibull</a>
+        <span class="scipy-name">scipy.stats.weibull_min</span>
+        <div class="chart-caption">Exponential&#x27;s more flexible cousin for &#x27;time until failure&#x27; -- it lets the failure risk ch…</div>
+      </div>
+      <div class="dist-card" data-name="wrapcauchy Wrapped Cauchy">
+        <a href="distributions/wrapcauchy.html">Wrapped Cauchy</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.wrapcauchy</span>
+        <div class="chart-caption">Take the notoriously heavy-tailed Cauchy distribution and wrap it around a circle like win…</div>
+      </div>
+      </div>
+    </div>
+    <div class="category-section">
+      <h2>Multivariate <span class="scipy-name">(7)</span></h2>
+      <p class="category-note">Several random quantities at once, with their own joint shape.</p>
+      <div class="dist-grid">
+      <div class="dist-card" data-name="dirichlet Dirichlet">
+        <a href="distributions/dirichlet.html">Dirichlet</a>
+        <span class="scipy-name">scipy.stats.dirichlet</span>
+        <div class="chart-caption">Beta generalized from one proportion to a whole set of proportions that must add up to 1 -…</div>
+      </div>
+      <div class="dist-card" data-name="dirichlet_multinomial Dirichlet-Multinomial">
+        <a href="distributions/dirichlet_multinomial.html">Dirichlet-Multinomial</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.dirichlet_multinomial</span>
+        <div class="chart-caption">Multinomial, but the category probabilities themselves are randomly redrawn from a Dirichl…</div>
+      </div>
+      <div class="dist-card" data-name="multinomial Multinomial">
+        <a href="distributions/multinomial.html">Multinomial</a>
+        <span class="scipy-name">scipy.stats.multinomial</span>
+        <div class="chart-caption">Binomial generalized from two outcomes to k outcomes: spin a weighted, multi-sided spinner…</div>
+      </div>
+      <div class="dist-card" data-name="multivariate_hypergeom Multivariate Hypergeometric">
+        <a href="distributions/multivariate_hypergeom.html">Multivariate Hypergeometric</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.multivariate_hypergeom</span>
+        <div class="chart-caption">Hypergeometric extended to more than two categories: a bag has several colors of marbles, …</div>
+      </div>
+      <div class="dist-card" data-name="multivariate_normal Multivariate Normal">
+        <a href="distributions/multivariate_normal.html">Multivariate Normal</a>
+        <span class="scipy-name">scipy.stats.multivariate_normal</span>
+        <div class="chart-caption">Normal in more than one dimension at once, where the variables can wobble together instead…</div>
+      </div>
+      <div class="dist-card" data-name="multivariate_t Multivariate t">
+        <a href="distributions/multivariate_t.html">Multivariate t</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.multivariate_t</span>
+        <div class="chart-caption">Multivariate Normal&#x27;s fatter-tailed cousin: the same idea of several correlated wobbling q…</div>
+      </div>
+      <div class="dist-card" data-name="vonmises_fisher Von Mises-Fisher">
+        <a href="distributions/vonmises_fisher.html">Von Mises-Fisher</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.vonmises_fisher</span>
+        <div class="chart-caption">The Normal distribution&#x27;s equivalent for directions instead of positions: points are const…</div>
+      </div>
+      </div>
+    </div>
+    <div class="category-section">
+      <h2>Matrix / Group <span class="scipy-name">(7)</span></h2>
+      <p class="category-note">Random matrices — covariance structures, rotations, correlation matrices.</p>
+      <div class="dist-grid">
+      <div class="dist-card" data-name="invwishart Inverse Wishart">
+        <a href="distributions/invwishart.html">Inverse Wishart</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.invwishart</span>
+        <div class="chart-caption">The matrix version of &#x27;flip it upside down&#x27;: if a covariance matrix is Wishart-distributed…</div>
+      </div>
+      <div class="dist-card" data-name="matrix_normal Matrix Normal">
+        <a href="distributions/matrix_normal.html">Matrix Normal</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.matrix_normal</span>
+        <div class="chart-caption">Multivariate Normal stretched across a whole grid instead of a single vector: every cell i…</div>
+      </div>
+      <div class="dist-card" data-name="ortho_group Orthogonal Group">
+        <a href="distributions/ortho_group.html">Orthogonal Group</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.ortho_group</span>
+        <div class="chart-caption">Not a distribution over numbers but over *rotations and reflections*: every possible way t…</div>
+      </div>
+      <div class="dist-card" data-name="random_correlation Random Correlation Matrix">
+        <a href="distributions/random_correlation.html">Random Correlation Matrix</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.random_correlation</span>
+        <div class="chart-caption">Generates a random, valid correlation matrix (1&#x27;s on the diagonal, everything between -1 a…</div>
+      </div>
+      <div class="dist-card" data-name="special_ortho_group Special Orthogonal Group">
+        <a href="distributions/special_ortho_group.html">Special Orthogonal Group</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.special_ortho_group</span>
+        <div class="chart-caption">Just like the Orthogonal Group, but mirror-flips are excluded -- only genuine, physically-…</div>
+      </div>
+      <div class="dist-card" data-name="unitary_group Unitary Group">
+        <a href="distributions/unitary_group.html">Unitary Group</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.unitary_group</span>
+        <div class="chart-caption">The complex-number version of the Orthogonal Group -- random &#x27;rotations&#x27; in complex vector…</div>
+      </div>
+      <div class="dist-card" data-name="wishart Wishart">
+        <a href="distributions/wishart.html">Wishart</a> <span class="badge tier2">ext.</span>
+        <span class="scipy-name">scipy.stats.wishart</span>
+        <div class="chart-caption">The distribution of a sample covariance matrix itself: draw df random vectors, form their …</div>
+      </div>
+      </div>
+    </div>
+</div>
+<script>
+  const box = document.getElementById('filter-box');
+  const cards = Array.from(document.querySelectorAll('.dist-card'));
+  box.addEventListener('input', () => {
+    const q = box.value.trim().toLowerCase();
+    cards.forEach(c => {
+      const hit = c.dataset.name.toLowerCase().includes(q);
+      c.classList.toggle('hidden', !hit);
+    });
+    document.querySelectorAll('.category-section').forEach(sec => {
+      const anyVisible = Array.from(sec.querySelectorAll('.dist-card')).some(c => !c.classList.contains('hidden'));
+      sec.style.display = anyVisible ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

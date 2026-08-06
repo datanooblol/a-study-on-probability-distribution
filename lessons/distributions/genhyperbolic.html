@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generalized Hyperbolic distribution (genhyperbolic) — Probability Distributions</title>
+<meta name="description" content="A very flexible bell-shaped family that can be tuned to look normal, exponential-tailed, or heavy-tailed, and skewed in either direction -- it&#x27;s the w">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Generalized Hyperbolic</h1>
+  <p class="scipy-name">scipy.stats.genhyperbolic</p>
+
+  <h2>Intuition</h2>
+  <p>A very flexible bell-shaped family that can be tuned to look normal, exponential-tailed, or heavy-tailed, and skewed in either direction -- it&#x27;s the workhorse behind modern financial return models because real asset prices have fatter tails and more skew than a normal curve allows.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;p,a,b) = \frac{(a^2-b^2)^{p/2}}{\sqrt{2\pi}\,a^{p-1/2}K_p\!\left(\sqrt{a^2-b^2}\right)}\,e^{bx}\,\frac{K_{p-1/2}\!\left(a\sqrt{1+x^2}\right)}{\left(\sqrt{1+x^2}\right)^{1/2-p}} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>p</code></td><td><code>0.5</code></td><td>tail/shape parameter, lambda</td></tr><tr><td><code>a</code></td><td><code>2</code></td><td>tail-heaviness parameter, alpha (a &gt; 0)</td></tr><tr><td><code>b</code></td><td><code>1</code></td><td>skewness parameter, beta (|b| &lt; a)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Financial asset return modeling (fat tails and skew)</li><li>Turbulence and particle physics data with heavy-tailed fluctuations</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s weekly allowance savings usually grows by a typical, predictable amount, but every so often -- a bit more often than a plain bell curve would suggest -- there&#x27;s either a windfall or an unexpectedly bad week, and the swings aren&#x27;t perfectly symmetric either.</p>
+    <p class="q">What&#x27;s the probability this week&#x27;s change is negative, and what&#x27;s the expected change?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.genhyperbolic(p=0.5, a=2, b=1)
+print(&#x27;P(X &lt; 0):&#x27;, round(dist.cdf(0), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; 0): 0.194
+mean: 0.9107</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/genhyperbolic.svg" alt="Generalized Hyperbolic chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

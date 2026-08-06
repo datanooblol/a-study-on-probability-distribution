@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asymmetric Laplace distribution (laplace_asymmetric) — Probability Distributions</title>
+<meta name="description" content="This stretches the classic &#x27;double exponential&#x27; Laplace distribution so one side decays faster than the other, giving a sharp peak with two differentl">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Asymmetric Laplace</h1>
+  <p class="scipy-name">scipy.stats.laplace_asymmetric</p>
+
+  <h2>Intuition</h2>
+  <p>This stretches the classic &#x27;double exponential&#x27; Laplace distribution so one side decays faster than the other, giving a sharp peak with two differently-weighted tails -- it&#x27;s the backbone of quantile regression, since minimizing an asymmetric loss naturally produces this distribution.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\kappa) = \begin{cases} \dfrac{1}{\kappa+\kappa^{-1}}e^{-x\kappa}, & x \ge 0 \\[4pt] \dfrac{1}{\kappa+\kappa^{-1}}e^{x/\kappa}, & x < 0 \end{cases} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>kappa</code></td><td><code>2</code></td><td>asymmetry parameter (1 gives the ordinary symmetric Laplace)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Quantile regression and asymmetric loss modeling in statistics</li><li>Financial modeling of asymmetric gains/losses</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s daily walk to school usually takes about the same time, but when they&#x27;re late they tend to be only a little late, while on lucky fast days they can sometimes shave off a lot more time than usual -- the two sides of their timing error aren&#x27;t equally spread.</p>
+    <p class="q">What&#x27;s the probability the time deviation is more negative than -1 (running notably early)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.laplace_asymmetric(kappa=2)
+print(&#x27;P(X &lt; -1):&#x27;, round(dist.cdf(-1), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; -1): 0.4852
+mean: -1.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/laplace_asymmetric.svg" alt="Asymmetric Laplace chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triangular distribution (triang) — Probability Distributions</title>
+<meta name="description" content="The simplest possible &#x27;best guess plus a range&#x27; distribution: given only a minimum, maximum, and single most-likely value, the triangular distribution">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Triangular</h1>
+  <p class="scipy-name">scipy.stats.triang</p>
+
+  <h2>Intuition</h2>
+  <p>The simplest possible &#x27;best guess plus a range&#x27; distribution: given only a minimum, maximum, and single most-likely value, the triangular distribution is the natural shape to draw between them, which is why it&#x27;s a staple of project-planning and simulation software.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \begin{cases} \dfrac{2x}{c}, & 0 \le x \le c \\[4pt] \dfrac{2(1-x)}{1-c}, & c \le x \le 1 \end{cases} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>0.5</code></td><td>location of the peak, as a fraction of the support</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Project management time/cost estimation (PERT-style triangular estimates)</li><li>Monte Carlo simulation input when only min/max/mode are known</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid estimates how long it&#x27;ll take to finish a jigsaw puzzle: it definitely won&#x27;t be done in 5 minutes, definitely won&#x27;t take 3 hours, and their best single guess is right around 45 minutes -- so the probability ramps up to that guess and back down.</p>
+    <p class="q">What&#x27;s the probability the puzzle takes less time than the peak guess (X &lt; 0.5)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.triang(c=0.5)
+print(&#x27;P(X &lt; 0.5):&#x27;, round(dist.cdf(0.5), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; 0.5): 0.5
+mean: 0.5</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/triang.svg" alt="Triangular chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

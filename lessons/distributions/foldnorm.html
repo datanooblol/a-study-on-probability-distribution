@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folded Normal distribution (foldnorm) — Probability Distributions</title>
+<meta name="description" content="If a measurement error is normally distributed around some nonzero true value but you can only observe its magnitude (like a distance, which can&#x27;t be ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Folded Normal</h1>
+  <p class="scipy-name">scipy.stats.foldnorm</p>
+
+  <h2>Intuition</h2>
+  <p>If a measurement error is normally distributed around some nonzero true value but you can only observe its magnitude (like a distance, which can&#x27;t be negative), the result is a folded normal -- a normal curve with its negative half flipped up on top of the positive half.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \sqrt{\frac{2}{\pi}}\cosh(cx)\exp\!\left(-\frac{x^2+c^2}{2}\right), \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1.5</code></td><td>location of the original (pre-folding) normal mean, in std-dev units</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling absolute measurement error when only magnitude is observable</li><li>Manufacturing tolerance analysis for dimensions that can&#x27;t be negative</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s toy car is supposed to stop exactly 1.5 meters from a wall, but bumps and wobbles push it a normal-random amount off target in either direction. Since the kid only measures how far the car ended up from the target (never which direction), the negative misses get folded into positive distances.</p>
+    <p class="q">What&#x27;s the probability the car&#x27;s measured distance from target exceeds 1 meter?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.foldnorm(c=1.5)
+print(&#x27;P(distance &gt; 1):&#x27;, round(dist.sf(1), 4))
+print(&#x27;mean distance:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(distance &gt; 1): 0.6977
+mean distance: 1.5586</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/foldnorm.svg" alt="Folded Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

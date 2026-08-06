@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fisk (Log-Logistic) distribution (fisk) — Probability Distributions</title>
+<meta name="description" content="Fisk, also called the log-logistic distribution, is what you get if the logarithm of your data follows a logistic curve -- it looks similar to the log">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Fisk (Log-Logistic)</h1>
+  <p class="scipy-name">scipy.stats.fisk</p>
+
+  <h2>Intuition</h2>
+  <p>Fisk, also called the log-logistic distribution, is what you get if the logarithm of your data follows a logistic curve -- it looks similar to the lognormal but has a heavier, slower-decaying tail, which makes it popular for income and survival data.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{c\,x^{c-1}}{(1+x^c)^2}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>3.5</code></td><td>shape parameter controlling tail heaviness</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Income distribution and economic inequality modeling</li><li>Survival analysis with a non-monotonic hazard rate</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid tracks how long each of their paper airplanes stays in the air. Most fly for a typical, similar amount of time, but this distribution&#x27;s heavier tail means the occasional lucky plane rides a breeze for way longer than you&#x27;d expect from a plain bell curve.</p>
+    <p class="q">What&#x27;s the probability a flight lasts longer than 2 (scaled) time units, and what&#x27;s the median flight time?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.fisk(c=3.5)
+print(&#x27;P(flight time &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median flight time:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(flight time &gt; 2): 0.0812
+median flight time: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/fisk.svg" alt="Fisk (Log-Logistic) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

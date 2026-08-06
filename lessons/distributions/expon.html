@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exponential distribution (expon) — Probability Distributions</title>
+<meta name="description" content="The waiting time between events that happen randomly and independently at a constant average rate -- the continuous-time twin of the Poisson count. It">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Exponential</h1>
+  <p class="scipy-name">scipy.stats.expon</p>
+
+  <h2>Intuition</h2>
+  <p>The waiting time between events that happen randomly and independently at a constant average rate -- the continuous-time twin of the Poisson count. It&#x27;s &#x27;memoryless&#x27;: no matter how long you&#x27;ve already waited, the time left to wait has the exact same distribution as if you&#x27;d just started.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{\text{scale}} e^{-x/\text{scale}}, \quad x \ge 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>scale</code></td><td><code>5</code></td><td>mean waiting time (1/rate)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Time between customer arrivals or phone calls</li><li>Lifetime of an electronic component with a constant failure rate</li><li>Time between radioactive decay events</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Buses arrive randomly at a stop, on average once every 5 minutes.</p>
+    <p class="q">If you just arrived at the stop, what&#x27;s the chance you&#x27;ll wait more than 8 minutes for the next bus?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.expon(scale=5)
+print(&#x27;P(wait &gt; 8 min):&#x27;, round(dist.sf(8), 4))
+print(&#x27;expected wait:&#x27;, dist.mean())</code></pre>
+  <div class="output">P(wait &gt; 8 min): 0.2019
+expected wait: 5.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/expon.svg" alt="Exponential chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosine distribution (cosine) — Probability Distributions</title>
+<meta name="description" content="The cosine distribution is a smooth, bell-shaped alternative to the normal distribution on a bounded interval -- it&#x27;s often used as a cheap, closed-fo">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Cosine</h1>
+  <p class="scipy-name">scipy.stats.cosine</p>
+
+  <h2>Intuition</h2>
+  <p>The cosine distribution is a smooth, bell-shaped alternative to the normal distribution on a bounded interval -- it&#x27;s often used as a cheap, closed-form stand-in for the normal curve because it has similar shape but simple, exact formulas.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{2\pi}\left(1+\cos(x)\right), \quad -\pi \le x \le \pi \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Closed-form approximation to the normal distribution</li><li>Directional/angular data smoothing</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A pendulum swings gently and you photograph its angle at a random moment. It&#x27;s most often caught hovering near the middle of its swing and progressively rarer as you look toward the far edges.</p>
+    <p class="q">What&#x27;s the probability the pendulum&#x27;s angle is caught within 1 radian of center?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.cosine()
+print(&#x27;P(-1 &lt; X &lt; 1):&#x27;, round(dist.cdf(1) - dist.cdf(-1), 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(-1 &lt; X &lt; 1): 0.5862
+variance: 1.2899</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/cosine.svg" alt="Cosine chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skew-Normal distribution (skewnorm) — Probability Distributions</title>
+<meta name="description" content="Skew-normal takes the familiar bell curve and tilts it, letting one tail stretch out further than the other while keeping most of the normal distribut">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Skew-Normal</h1>
+  <p class="scipy-name">scipy.stats.skewnorm</p>
+
+  <h2>Intuition</h2>
+  <p>Skew-normal takes the familiar bell curve and tilts it, letting one tail stretch out further than the other while keeping most of the normal distribution&#x27;s convenient mathematics -- exactly what you want when data is roughly bell-shaped but has a noticeable lean.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = 2\,\phi(x)\,\Phi(ax) \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>4</code></td><td>skewness parameter (0 recovers the ordinary normal distribution)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling skewed near-normal biological and physical measurements</li><li>Selection-effect modeling in econometrics and biostatistics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid measures how many minutes late the school bus is each morning. It&#x27;s almost never early, occasionally exactly on time, and most often just a couple minutes late -- but some mornings it&#x27;s dramatically late, giving the timing a distinct rightward lean.</p>
+    <p class="q">What&#x27;s the probability the bus is more than 1 unit late (in standardized minutes)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.skewnorm(a=4)
+print(&#x27;P(X &gt; 1):&#x27;, round(dist.sf(1), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &gt; 1): 0.3173
+mean: 0.7741</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/skewnorm.svg" alt="Skew-Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alpha distribution (alpha) — Probability Distributions</title>
+<meta name="description" content="Alpha comes from taking the reciprocal of a shifted normal variable, which squashes most of the mass close to zero but leaves a very heavy right tail ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Alpha</h1>
+  <p class="scipy-name">scipy.stats.alpha</p>
+
+  <h2>Intuition</h2>
+  <p>Alpha comes from taking the reciprocal of a shifted normal variable, which squashes most of the mass close to zero but leaves a very heavy right tail -- so heavy that its mean is technically infinite. It shows up when you model a quantity as &#x27;1 over something roughly normal&#x27;.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = \frac{1}{x^2\,\Phi(a)\sqrt{2\pi}} \exp\left(-\frac{1}{2}\left(a-\frac{1}{x}\right)^2\right), \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>3.5</code></td><td>shape parameter controlling how tightly mass clusters near zero</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling reciprocal transformations of normal measurement errors</li><li>Reliability engineering for extreme-tail failure-time modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A toy robot&#x27;s speed is &#x27;1 divided by how nervous it is,&#x27; and nervousness wobbles like a bell curve. Most days it&#x27;s only a little nervous, so it zooms off fast, but every once in a great while it&#x27;s almost perfectly calm and shoots away impossibly fast.</p>
+    <p class="q">What&#x27;s the probability the robot&#x27;s speed value is below 1, and what&#x27;s its median speed?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.alpha(a=3.5)
+print(&#x27;P(X &lt; 1):&#x27;, round(dist.cdf(1), 4))
+print(&#x27;median:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(X &lt; 1): 0.994
+median: 0.2857</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/alpha.svg" alt="Alpha chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

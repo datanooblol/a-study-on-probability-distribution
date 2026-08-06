@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power Function distribution (powerlaw) — Probability Distributions</title>
+<meta name="description" content="The simplest possible bounded power-law shape: a raw x^(a-1) density on [0,1] that&#x27;s the a-th order statistic pattern of uniform samples -- when a&gt;1 m">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Power Function</h1>
+  <p class="scipy-name">scipy.stats.powerlaw</p>
+
+  <h2>Intuition</h2>
+  <p>The simplest possible bounded power-law shape: a raw x^(a-1) density on [0,1] that&#x27;s the a-th order statistic pattern of uniform samples -- when a&gt;1 mass piles up near 1, when a&lt;1 it piles up near 0, and a=1 reduces exactly to the uniform distribution.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;a) = a\,x^{a-1}, \quad 0 \le x \le 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>2.5</code></td><td>shape (power) parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Order statistics: distribution of the maximum of uniform samples</li><li>Modeling skewed bounded proportions in reliability testing</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid runs a raffle where the ticket that gets picked already has a bias baked in: because of how the power-law dial is set, tickets with higher numbers (closer to the top of the range) are more likely to win than lower ones.</p>
+    <p class="q">What&#x27;s the probability the winning ticket value is below 0.5?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.powerlaw(a=2.5)
+print(&#x27;P(X &lt; 0.5):&#x27;, round(dist.cdf(0.5), 4))
+print(&#x27;mean:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(X &lt; 0.5): 0.1768
+mean: 0.7143</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/powerlaw.svg" alt="Power Function chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

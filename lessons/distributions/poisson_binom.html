@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poisson Binomial distribution (poisson_binom) — Probability Distributions</title>
+<meta name="description" content="This generalizes the binomial distribution by letting every trial have its own different success probability instead of one shared p -- exactly what h">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> <span class="badge tier2">extended catalog</span>
+  <h1>Poisson Binomial</h1>
+  <p class="scipy-name">scipy.stats.poisson_binom</p>
+
+  <h2>Intuition</h2>
+  <p>This generalizes the binomial distribution by letting every trial have its own different success probability instead of one shared p -- exactly what happens when you sum up several different biased coins (or, for example, several different students&#x27; independent chances of passing a quiz).</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(k;p_1,\ldots,p_n) = \sum_{A \in F_k}\ \prod_{i \in A}p_i \prod_{j \in A^c}(1-p_j) \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>p</code></td><td><code>[0.2, 0.5, 0.7, 0.3, 0.6]</code></td><td>list of individual success probabilities, one per independent trial</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Election and voting outcome modeling with individually-varying voter probabilities</li><li>Reliability of systems built from non-identical independent components</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid has 5 differently-weighted trick coins in their pocket, each with its own personal chance of landing heads (20%, 50%, 70%, 30%, and 60%). They flip all 5 once and count the total number of heads.</p>
+    <p class="q">What&#x27;s the probability exactly 3 of the 5 coins land heads?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.poisson_binom(p=[0.2, 0.5, 0.7, 0.3, 0.6])
+print(&#x27;P(exactly 3 heads):&#x27;, round(dist.pmf(3), 4))
+print(&#x27;expected heads:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 3 heads): 0.3022
+expected heads: 2.3</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/poisson_binom.svg" alt="Poisson Binomial chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

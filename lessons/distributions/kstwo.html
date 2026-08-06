@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolmogorov-Smirnov Two-Sided distribution (kstwo) — Probability Distributions</title>
+<meta name="description" content="The two-sided cousin of ksone, this is the exact finite-sample distribution of the largest gap in either direction between an empirical CDF built from">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Kolmogorov-Smirnov Two-Sided</h1>
+  <p class="scipy-name">scipy.stats.kstwo</p>
+
+  <h2>Intuition</h2>
+  <p>The two-sided cousin of ksone, this is the exact finite-sample distribution of the largest gap in either direction between an empirical CDF built from n points and the true distribution -- it&#x27;s what scipy&#x27;s kstest function actually uses to compute p-values.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ F_n(d) = P(D_n \le d), \quad D_n = \sup_x |F_{\text{emp}}(x) - F(x)| \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>n</code></td><td><code>20</code></td><td>sample size used in the two-sided KS test statistic</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Kolmogorov-Smirnov two-sided goodness-of-fit testing</li><li>Computing exact p-values for the scipy.stats.kstest function</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>Same die-rolling kid as before, but now checking the biggest gap between their tally chart and the fair-die ideal in either direction (too high or too low), not just one specific direction.</p>
+    <p class="q">With 20 rolls, what&#x27;s the probability that biggest two-sided gap exceeds 0.3?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.kstwo(n=20)
+print(&#x27;P(D &gt; 0.3):&#x27;, round(dist.sf(0.3), 4))
+print(&#x27;mean D:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(D &gt; 0.3): 0.0431
+mean D: 0.1863</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/kstwo.svg" alt="Kolmogorov-Smirnov Two-Sided chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

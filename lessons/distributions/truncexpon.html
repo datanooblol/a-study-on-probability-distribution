@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truncated Exponential distribution (truncexpon) — Probability Distributions</title>
+<meta name="description" content="An exponential distribution that&#x27;s been given a hard ceiling -- useful whenever a naturally exponential wait time or lifetime is physically capped, su">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Truncated Exponential</h1>
+  <p class="scipy-name">scipy.stats.truncexpon</p>
+
+  <h2>Intuition</h2>
+  <p>An exponential distribution that&#x27;s been given a hard ceiling -- useful whenever a naturally exponential wait time or lifetime is physically capped, such as a lightbulb that&#x27;s guaranteed to be replaced during scheduled maintenance before it can burn out naturally.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;b) = \frac{e^{-x}}{1-e^{-b}}, \quad 0 \le x \le b \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>b</code></td><td><code>4.5</code></td><td>upper truncation point (in units of the scale)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling capped/censored lifetime data in reliability engineering</li><li>Scheduled-maintenance replacement time modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s phone battery drains following an exponential-like pattern, but the kid always plugs it in to recharge by bedtime (4.5 hours after unplugging it at the latest), so the battery life is never allowed to run past that cutoff.</p>
+    <p class="q">What&#x27;s the probability the battery lasts longer than 3 hours (out of the capped 4.5)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.truncexpon(b=4.5)
+print(&#x27;P(lasts &gt; 3 hrs):&#x27;, round(dist.sf(3), 4))
+print(&#x27;mean lifetime:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(lasts &gt; 3 hrs): 0.0391
+mean lifetime: 0.9494</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/truncexpon.svg" alt="Truncated Exponential chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

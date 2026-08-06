@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truncated Pareto distribution (truncpareto) — Probability Distributions</title>
+<meta name="description" content="Pure Pareto distributions have an infinite upper tail, but real-world &#x27;power law&#x27; quantities (city populations, crater sizes, word frequencies) always">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Truncated Pareto</h1>
+  <p class="scipy-name">scipy.stats.truncpareto</p>
+
+  <h2>Intuition</h2>
+  <p>Pure Pareto distributions have an infinite upper tail, but real-world &#x27;power law&#x27; quantities (city populations, crater sizes, word frequencies) always run into a practical ceiling -- truncated Pareto keeps the classic power-law shape while enforcing that hard upper limit.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;b,c) = \frac{b}{1-c^{-b}}\,\frac{1}{x^{b+1}}, \quad 1 \le x \le c \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>b</code></td><td><code>2</code></td><td>Pareto shape (tail index)</td></tr><tr><td><code>c</code></td><td><code>10</code></td><td>upper truncation point (standardized so support is [1, c])</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling power-law data with a known physical or empirical upper limit</li><li>City size, crater size, and word-frequency distributions with finite bounds</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid catalogs the sizes of craters on the moon in a textbook. Crater sizes follow a power-law pattern where small craters vastly outnumber large ones, but the biggest crater in the book can&#x27;t be bigger than the single largest one ever recorded.</p>
+    <p class="q">What&#x27;s the probability a randomly chosen crater size (in these units) exceeds 5?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.truncpareto(b=2, c=10)
+print(&#x27;P(size &gt; 5):&#x27;, round(dist.sf(5), 4))
+print(&#x27;mean size:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(size &gt; 5): 0.0303
+mean size: 1.8182</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/truncpareto.svg" alt="Truncated Pareto chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

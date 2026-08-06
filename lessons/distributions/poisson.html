@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poisson distribution (poisson) — Probability Distributions</title>
+<meta name="description" content="The distribution of rare, independent events counted over a fixed window of time or space, when you only know the *average* rate. It&#x27;s the limit of Bi">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> 
+  <h1>Poisson</h1>
+  <p class="scipy-name">scipy.stats.poisson</p>
+
+  <h2>Intuition</h2>
+  <p>The distribution of rare, independent events counted over a fixed window of time or space, when you only know the *average* rate. It&#x27;s the limit of Binomial when n is huge, p is tiny, and n*p settles on a fixed average -- lots of chances, each individually unlikely.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ P(X=k) = \frac{e^{-\mu}\mu^{k}}{k!}, \quad k = 0, 1, 2, \ldots \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mu</code></td><td><code>4</code></td><td>average number of events in the interval (lambda)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Customer arrivals per hour at a store</li><li>Number of typos per page in a book</li><li>Server requests per second, or website hits per minute</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>On a clear night, a kid lying in the backyard sees on average 4 shooting stars per hour.</p>
+    <p class="q">What&#x27;s the chance they see exactly 6 shooting stars in the next hour?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.poisson(mu=4)
+print(&#x27;P(exactly 6 shooting stars):&#x27;, round(dist.pmf(6), 4))
+print(&#x27;P(more than 6):&#x27;, round(dist.sf(6), 4))</code></pre>
+  <div class="output">P(exactly 6 shooting stars): 0.1042
+P(more than 6): 0.1107</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/poisson.svg" alt="Poisson chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

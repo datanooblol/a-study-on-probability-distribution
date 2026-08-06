@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pearson Type III distribution (pearson3) — Probability Distributions</title>
+<meta name="description" content="Pearson Type III is a shifted, scaled gamma distribution reparameterized directly in terms of skewness, letting you dial in exactly how lopsided the c">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Pearson Type III</h1>
+  <p class="scipy-name">scipy.stats.pearson3</p>
+
+  <h2>Intuition</h2>
+  <p>Pearson Type III is a shifted, scaled gamma distribution reparameterized directly in terms of skewness, letting you dial in exactly how lopsided the curve is -- it&#x27;s the officially recommended distribution for U.S. flood-frequency analysis (as the log-Pearson III) because real river flow data is rarely symmetric.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\gamma) = \frac{|\beta|}{\Gamma(\alpha)}\bigl(\beta(x-\zeta)\bigr)^{\alpha-1}e^{-\beta(x-\zeta)}, \quad \beta=\frac{2}{\gamma},\ \alpha=\frac{4}{\gamma^2},\ \zeta=-\frac{\alpha}{\beta} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>skew</code></td><td><code>1.5</code></td><td>skewness of the distribution (0 recovers the normal distribution)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Flood-frequency analysis (log-Pearson III is the US federal standard)</li><li>Hydrology and streamflow data modeling</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid records the water level of a creek every spring. Most years it&#x27;s a fairly typical level, occasionally it&#x27;s notably higher, but it almost never drops far below normal -- the skew parameter dials in exactly that kind of lopsided spread.</p>
+    <p class="q">What&#x27;s the probability the water level exceeds 2 units above baseline?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.pearson3(skew=1.5)
+print(&#x27;P(level &gt; 2):&#x27;, round(dist.sf(2), 4))
+print(&#x27;mean level:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(level &gt; 2): 0.0473
+mean level: 0.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/pearson3.svg" alt="Pearson Type III chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

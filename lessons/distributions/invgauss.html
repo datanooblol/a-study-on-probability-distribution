@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inverse Gaussian (Wald) distribution (invgauss) — Probability Distributions</title>
+<meta name="description" content="Despite the name, this has nothing to do with the normal distribution&#x27;s shape -- it&#x27;s the exact distribution of the first time a random walk with a st">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Inverse Gaussian (Wald)</h1>
+  <p class="scipy-name">scipy.stats.invgauss</p>
+
+  <h2>Intuition</h2>
+  <p>Despite the name, this has nothing to do with the normal distribution&#x27;s shape -- it&#x27;s the exact distribution of the first time a random walk with a steady drift crosses a fixed level, which is why it naturally models &#x27;time to reach a goal&#x27; processes.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;\mu) = \frac{1}{\sqrt{2\pi x^3}}\exp\!\left(-\frac{(x-\mu)^2}{2\mu^2 x}\right), \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mu</code></td><td><code>1</code></td><td>mean of the distribution, in units of the scale</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>First-passage time modeling for drift-diffusion processes</li><li>Modeling reaction times and response latencies in cognitive science</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A snail crawls toward a lettuce leaf, drifting steadily forward but wobbling randomly side to side and even backward sometimes. The inverse Gaussian distribution is exactly how long it takes the snail to finally reach the leaf.</p>
+    <p class="q">What&#x27;s the probability the snail reaches the leaf within 1.5 time units?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.invgauss(mu=1)
+print(&#x27;P(reaches leaf by t=1.5):&#x27;, round(dist.cdf(1.5), 4))
+print(&#x27;mean time:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(reaches leaf by t=1.5): 0.8108
+mean time: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/invgauss.svg" alt="Inverse Gaussian (Wald) chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

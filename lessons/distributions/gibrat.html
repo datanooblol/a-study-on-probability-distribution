@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gibrat distribution (gibrat) — Probability Distributions</title>
+<meta name="description" content="Gibrat&#x27;s distribution is simply a lognormal with the underlying normal fixed at mean 0 and standard deviation 1 -- it embodies &#x27;Gibrat&#x27;s law,&#x27; the cla">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Gibrat</h1>
+  <p class="scipy-name">scipy.stats.gibrat</p>
+
+  <h2>Intuition</h2>
+  <p>Gibrat&#x27;s distribution is simply a lognormal with the underlying normal fixed at mean 0 and standard deviation 1 -- it embodies &#x27;Gibrat&#x27;s law,&#x27; the classic finding that firm and city sizes grow by random multiplicative percentage shocks rather than fixed additive amounts.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{1}{x\sqrt{2\pi}}e^{-(\ln x)^2/2}, \quad x > 0 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Gibrat&#x27;s law: modeling proportional growth of firm and city sizes</li><li>Multiplicative random-growth processes in economics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid&#x27;s lemonade stand doubles or shrinks by a random percentage each month rather than gaining or losing a fixed number of dollars -- run that multiplicative randomness for a while and the stand&#x27;s eventual size follows Gibrat&#x27;s distribution.</p>
+    <p class="q">What&#x27;s the probability the lemonade stand&#x27;s relative size ends up above 2 (i.e. more than double the baseline)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.gibrat()
+print(&#x27;P(size &gt; 2x):&#x27;, round(dist.sf(2), 4))
+print(&#x27;median size:&#x27;, round(dist.median(), 4))</code></pre>
+  <div class="output">P(size &gt; 2x): 0.2441
+median size: 1.0</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/gibrat.svg" alt="Gibrat chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

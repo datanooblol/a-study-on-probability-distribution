@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wigner Semicircle distribution (semicircular) — Probability Distributions</title>
+<meta name="description" content="Famous in random matrix theory: the eigenvalues of a large random symmetric matrix, properly rescaled, pile up into this exact semicircular shape (Wig">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Wigner Semicircle</h1>
+  <p class="scipy-name">scipy.stats.semicircular</p>
+
+  <h2>Intuition</h2>
+  <p>Famous in random matrix theory: the eigenvalues of a large random symmetric matrix, properly rescaled, pile up into this exact semicircular shape (Wigner&#x27;s semicircle law) -- a strikingly universal pattern that appears regardless of the details of how the random matrix was built.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{2}{\pi}\sqrt{1-x^2}, \quad -1 \le x \le 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Random matrix theory: eigenvalue distribution (Wigner&#x27;s semicircle law)</li><li>Nuclear physics energy-level spacing statistics</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid builds a big grid of dominoes tied together with random-strength springs and measures the natural &#x27;wobble frequencies&#x27; of the whole connected system. Plot enough of those frequencies and they trace out a perfect semicircle, no matter the fine details of the springs.</p>
+    <p class="q">What&#x27;s the probability a randomly chosen wobble frequency falls between -0.5 and 0.5?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.semicircular()
+print(&#x27;P(-0.5 &lt; X &lt; 0.5):&#x27;, round(dist.cdf(0.5) - dist.cdf(-0.5), 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(-0.5 &lt; X &lt; 0.5): 0.609
+variance: 0.25</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/semicircular.svg" alt="Wigner Semicircle chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

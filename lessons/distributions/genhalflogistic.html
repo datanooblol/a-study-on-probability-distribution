@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generalized Half-Logistic distribution (genhalflogistic) — Probability Distributions</title>
+<meta name="description" content="This stretches the half-logistic distribution&#x27;s infinite tail into a hard, finite cutoff at 1/c -- useful whenever a quantity behaves like a logistic ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>Generalized Half-Logistic</h1>
+  <p class="scipy-name">scipy.stats.genhalflogistic</p>
+
+  <h2>Intuition</h2>
+  <p>This stretches the half-logistic distribution&#x27;s infinite tail into a hard, finite cutoff at 1/c -- useful whenever a quantity behaves like a logistic decay but is physically guaranteed to stop at some maximum value.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{2(1-cx)^{1/c-1}}{\left(1+(1-cx)^{1/c}\right)^2}, \quad 0 \le x \le 1/c \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>0.5</code></td><td>shape parameter setting the finite upper bound at 1/c</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Modeling bounded lifetime or decay data with a hard physical limit</li><li>Truncated hazard-rate modeling in reliability engineering</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid slides down a playground slide whose length is fixed. Their speed decays the way a half-logistic distribution would, but no matter what, they can never travel past the very end of the slide.</p>
+    <p class="q">What&#x27;s the probability the kid&#x27;s measured distance exceeds 1.5 units, given the slide effectively caps out at 1/c = 2?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.genhalflogistic(c=0.5)
+print(&#x27;support upper bound:&#x27;, round(dist.support()[1], 4))
+print(&#x27;P(X &gt; 1.5):&#x27;, round(dist.sf(1.5), 4))</code></pre>
+  <div class="output">support upper bound: 2.0
+P(X &gt; 1.5): 0.1176</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/genhalflogistic.svg" alt="Generalized Half-Logistic chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

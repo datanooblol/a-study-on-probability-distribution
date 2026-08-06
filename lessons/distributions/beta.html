@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beta distribution (beta) — Probability Distributions</title>
+<meta name="description" content="The distribution *of a probability itself* -- always squeezed between 0 and 1, its shape controlled by two &#x27;pseudo-counts&#x27; that pull the mass toward 1">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Beta</h1>
+  <p class="scipy-name">scipy.stats.beta</p>
+
+  <h2>Intuition</h2>
+  <p>The distribution *of a probability itself* -- always squeezed between 0 and 1, its shape controlled by two &#x27;pseudo-counts&#x27; that pull the mass toward 1 or toward 0. It&#x27;s the natural way to express uncertainty about a rate or proportion, and it&#x27;s the mathematical partner (&#x27;conjugate prior&#x27;) of the Binomial distribution.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{x^{a-1}(1-x)^{b-1}}{B(a,b)}, \quad 0 \le x \le 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>a</code></td><td><code>2</code></td><td>pseudo-count of &#x27;successes&#x27; (shapes the curve toward 1)</td></tr><tr><td><code>b</code></td><td><code>5</code></td><td>pseudo-count of &#x27;failures&#x27; (shapes the curve toward 0)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Bayesian estimate of a conversion rate or click-through rate</li><li>Modeling any quantity that&#x27;s naturally a proportion (0 to 1)</li><li>A/B testing: uncertainty about the true success probability</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid is guessing how full a candy jar looks based on a few early scoops -- somewhere between completely empty (0) and completely full (1), but they&#x27;re not sure exactly where.</p>
+    <p class="q">Given what they&#x27;ve seen so far (leaning toward &#x27;not very full&#x27;), what&#x27;s the chance the jar is judged to be more than 50% full?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.beta(a=2, b=5)
+print(&#x27;P(fullness &gt; 0.5):&#x27;, round(dist.sf(0.5), 4))
+print(&#x27;most likely fullness (mean):&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(fullness &gt; 0.5): 0.1094
+most likely fullness (mean): 0.2857</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/beta.svg" alt="Beta chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

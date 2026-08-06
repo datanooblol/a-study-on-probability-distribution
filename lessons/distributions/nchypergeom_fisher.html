@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fisher&#x27;s Noncentral Hypergeometric distribution (nchypergeom_fisher) — Probability Distributions</title>
+<meta name="description" content="Ordinary hypergeometric assumes every object is equally likely to be drawn, but Fisher&#x27;s noncentral version adds a bias (the odds ratio) favoring one ">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge discrete">Discrete</span> <span class="badge tier2">extended catalog</span>
+  <h1>Fisher&#x27;s Noncentral Hypergeometric</h1>
+  <p class="scipy-name">scipy.stats.nchypergeom_fisher</p>
+
+  <h2>Intuition</h2>
+  <p>Ordinary hypergeometric assumes every object is equally likely to be drawn, but Fisher&#x27;s noncentral version adds a bias (the odds ratio) favoring one type over the other -- as if drawing a whole handful of biased marbles from a bag at once, all in one grab.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ p(x;M,n,N,\omega) = \frac{\binom{n}{x}\binom{M-n}{N-x}\omega^x}{\sum_{y}\binom{n}{y}\binom{M-n}{N-y}\omega^y} \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>M</code></td><td><code>20</code></td><td>total number of objects in the bin</td></tr><tr><td><code>n</code></td><td><code>7</code></td><td>number of Type I objects in the bin</td></tr><tr><td><code>N</code></td><td><code>12</code></td><td>number of objects drawn (as a single handful)</td></tr><tr><td><code>odds</code></td><td><code>1.5</code></td><td>odds ratio favoring Type I objects being drawn</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Genetic association studies (biased allele sampling)</li><li>Modeling biased urn/lottery draws where one group is favored</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A jar has 7 red gumballs and 13 blue ones (20 total). A kid grabs a fistful of 12 gumballs all at once, but red gumballs are stickier and 1.5 times more likely to end up in the grab than blue ones.</p>
+    <p class="q">What&#x27;s the probability the kid&#x27;s fistful contains exactly 5 red gumballs?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.nchypergeom_fisher(M=20, n=7, N=12, odds=1.5)
+print(&#x27;P(exactly 5 red):&#x27;, round(dist.pmf(5), 4))
+print(&#x27;expected red count:&#x27;, round(dist.mean(), 4))</code></pre>
+  <div class="output">P(exactly 5 red): 0.3604
+expected red count: 4.6575</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/nchypergeom_fisher.svg" alt="Fisher&#x27;s Noncentral Hypergeometric chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

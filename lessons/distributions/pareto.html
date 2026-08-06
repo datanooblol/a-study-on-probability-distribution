@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pareto distribution (pareto) — Probability Distributions</title>
+<meta name="description" content="The &#x27;80/20 rule&#x27; distribution -- a small number of cases account for most of the total. It has a long, heavy tail: values far above the minimum are ra">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> 
+  <h1>Pareto</h1>
+  <p class="scipy-name">scipy.stats.pareto</p>
+
+  <h2>Intuition</h2>
+  <p>The &#x27;80/20 rule&#x27; distribution -- a small number of cases account for most of the total. It has a long, heavy tail: values far above the minimum are rare but not negligible, which is exactly the shape of wealth, city sizes, and file sizes.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x) = \frac{b}{x^{b+1}}, \quad x \ge 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>b</code></td><td><code>2.5</code></td><td>shape -- how quickly the tail thins out</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Wealth and income distribution (the 80/20 rule)</li><li>File size distributions on computer systems</li><li>City population sizes and word-frequency (Zipf-like) phenomena</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>In a make-believe kingdom, most families own a modest plot of land, but a handful of families own absolutely enormous estates.</p>
+    <p class="q">What fraction of families own more than 3 times the smallest possible plot?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.pareto(b=2.5)
+print(&#x27;P(land &gt; 3x minimum):&#x27;, round(dist.sf(3), 4))</code></pre>
+  <div class="output">P(land &gt; 3x minimum): 0.0642</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/pareto.svg" alt="Pareto chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

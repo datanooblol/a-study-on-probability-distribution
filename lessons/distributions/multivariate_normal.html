@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multivariate Normal distribution (multivariate_normal) — Probability Distributions</title>
+<meta name="description" content="Normal in more than one dimension at once, where the variables can wobble together instead of independently -- the covariance matrix says both how spr">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge multivariate">Multivariate</span> 
+  <h1>Multivariate Normal</h1>
+  <p class="scipy-name">scipy.stats.multivariate_normal</p>
+
+  <h2>Intuition</h2>
+  <p>Normal in more than one dimension at once, where the variables can wobble together instead of independently -- the covariance matrix says both how spread out each one is, and how much they lean in the same direction as each other.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^k|\Sigma|}} \exp\!\left(-\tfrac{1}{2}(\mathbf{x}-\mu)^T \Sigma^{-1} (\mathbf{x}-\mu)\right) \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>mean</code></td><td><code>[0, 0]</code></td><td>center point in each dimension</td></tr><tr><td><code>cov</code></td><td><code>[[1, 0.5], [0.5, 1]]</code></td><td>covariance matrix (spread and correlation)</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Correlated returns of multiple assets in a financial portfolio</li><li>Sensor noise modeling in robotics and tracking</li><li>Gaussian mixture models and Gaussian processes in machine learning</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A dart robot&#x27;s arm wobbles left-right and up-down like before, but this time a shaky elbow means when it drifts left it also tends to drift up a little -- the two wobbles aren&#x27;t quite independent.</p>
+    <p class="q">What&#x27;s the relative density of darts landing near the point (1, 1) compared to landing exactly on the bullseye (0, 0)?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.multivariate_normal(mean=[0, 0], cov=[[1, 0.5], [0.5, 1]])
+print(&#x27;density at (1,1):&#x27;, round(dist.pdf([1, 1]), 4))
+print(&#x27;density at (0,0):&#x27;, round(dist.pdf([0, 0]), 4))</code></pre>
+  <div class="output">density at (1,1): 0.0944
+density at (0,0): 0.1838</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/multivariate_normal.svg" alt="Multivariate Normal chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>

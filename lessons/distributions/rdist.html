@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>R-distribution distribution (rdist) — Probability Distributions</title>
+<meta name="description" content="The R-distribution is the exact distribution of a single coordinate of a random point picked uniformly on the surface of a c-dimensional sphere -- it&#x27;">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '\\[', right: '\\]', display: true},
+    {left: '\\(', right: '\\)', display: false}
+  ]});"></script>
+
+</head>
+<body>
+<nav class="nav">
+  <span class="brand">🎲 Probability Distributions</span>
+  <a href="../index.html">Index</a>
+  <a href="../definitions.html">Definitions</a>
+  <a href="../connections.html">Connections</a>
+</nav>
+
+<div class="container">
+  <span class="badge continuous">Continuous</span> <span class="badge tier2">extended catalog</span>
+  <h1>R-distribution</h1>
+  <p class="scipy-name">scipy.stats.rdist</p>
+
+  <h2>Intuition</h2>
+  <p>The R-distribution is the exact distribution of a single coordinate of a random point picked uniformly on the surface of a c-dimensional sphere -- it&#x27;s bounded between -1 and 1 and its shape parameter directly reflects how many dimensions that sphere lives in.</p>
+
+  <h2>Formula</h2>
+  <div class="formula">\[ f(x;c) = \frac{(1-x^2)^{c/2-1}}{B(1/2,\,c/2)}, \quad -1 \le x \le 1 \]</div>
+  <table class="def-table">
+    <tr><th>parameter</th><th>default used here</th><th>meaning</th></tr>
+    <tr><td><code>c</code></td><td><code>1.5</code></td><td>shape parameter</td></tr>
+  </table>
+
+  <h2>Use cases</h2>
+  <ul class="use-cases"><li>Directional statistics: coordinate distribution of points on a hypersphere</li><li>Correlation coefficient sampling distribution derivations</li></ul>
+
+  <h2>A funny example</h2>
+  <div class="story">
+    <p>A kid spins a bubble-shaped ball randomly and marks where a fixed dot on its equator ends up, projected flat onto a ruler from -1 to 1. Where that dot lands follows the R-distribution, shaped by how many dimensions the &#x27;ball&#x27; really has.</p>
+    <p class="q">What&#x27;s the probability the mark falls between -0.5 and 0.5?</p>
+  </div>
+
+  <h2>Solve it with <code>scipy.stats</code></h2>
+  <pre><code>import scipy.stats as stats
+import numpy as np
+
+dist = stats.rdist(c=1.5)
+print(&#x27;P(-0.5 &lt; X &lt; 0.5):&#x27;, round(dist.cdf(0.5) - dist.cdf(-0.5), 4))
+print(&#x27;variance:&#x27;, round(dist.var(), 4))</code></pre>
+  <div class="output">P(-0.5 &lt; X &lt; 0.5): 0.427
+variance: 0.4</div>
+
+  
+<div class="chart-card">
+  <img src="../assets/img/rdist.svg" alt="R-distribution chart" loading="lazy">
+  <div class="chart-caption">Theoretical shape at the default parameters above (blue = density/PMF, orange = CDF).</div>
+</div>
+
+  <div class="footer-nav">
+    <a href="../index.html">&larr; Back to index</a>
+    <a href="../connections.html">See how it connects to other distributions &rarr;</a>
+  </div>
+</div>
+
+</body>
+</html>
